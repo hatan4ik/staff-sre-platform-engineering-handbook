@@ -33,6 +33,20 @@ curriculum-map.md            Question-to-core-chapter mapping
 MIGRATION_PLAN.md            Consolidation status and source ownership
 ```
 
+## Canonical chapters now available
+
+### Linux internals
+
+- [`core/linux/README.md`](core/linux/README.md) — module map, debugging model, and interview method.
+- [`core/linux/01-architecture-boot-syscalls.md`](core/linux/01-architecture-boot-syscalls.md) — kernel architecture, boot, PID 1, systemd, syscalls, faults, interrupts, and crash evidence.
+- [`core/linux/02-processes-scheduler.md`](core/linux/02-processes-scheduler.md) — tasks, scheduling, cgroup CPU, interrupts, load, affinity, and latency.
+- [`core/linux/03-memory.md`](core/linux/03-memory.md) — virtual memory, page cache, NUMA, reclaim, PSI, cgroup memory, and OOM.
+- [`core/linux/04-storage-io.md`](core/linux/04-storage-io.md) — VFS, durability, filesystems, block queues, NVMe, capacity, and tail latency.
+
+### eBPF and runtime security
+
+- [`core/ebpf-security/cilium-hubble-falco-tetragon.md`](core/ebpf-security/cilium-hubble-falco-tetragon.md) — Linux hook selection, Cilium dataplane and policy, Hubble evidence, Falco detection, Tetragon enforcement, failure modes, and safe migration.
+
 ## Canonical ownership rule
 
 A topic belongs in `core/` when it can answer questions for more than one company or role.
@@ -54,19 +68,19 @@ A track must not reproduce an entire Linux, Kubernetes, Terraform, service-mesh,
 - [Netflix-scale DevOps interview track](https://github.com/hatan4ik/netflix-devops-interview)
 - [Tesla SRE interview track](https://github.com/hatan4ik/tesla-sre-interview)
 
-## Initial canonical migrations
+## Coordination
 
-The first shared chapters being consolidated are:
+- [`curriculum-map.md`](curriculum-map.md) assigns canonical ownership and maps company scenarios to shared prerequisites.
+- [`MIGRATION_PLAN.md`](MIGRATION_PLAN.md) records completed migrations, transitional duplicates, and the next chapters.
 
-- Fine-grained service discovery with Kubernetes, Envoy, and Istio.
-- eBPF, Cilium, Hubble, Falco, and Tetragon.
+## Next canonical migrations
+
+- Linux networking, namespaces, containers, cgroups, and host security.
+- Linux observability, profiling, eBPF, and incident labs.
+- Fine-grained service discovery with Kubernetes, Envoy, Istio, and xDS.
 - Multi-cloud routing, workload identity, and secrets.
-- Kubernetes/EKS node failure detection, fencing, and repair.
-- Custom node-image and AMI qualification.
-- Business-aware probes and graceful degradation.
-- DNS failure analysis.
-- Terraform state integrity and recovery.
-- Autoscaling control loops.
+- Kubernetes node failure detection, fencing, repair, and node-image qualification.
+- Business-aware probes, DNS failure analysis, Terraform state integrity, and autoscaling control loops.
 - SLOs, incident response, multi-region resilience, chaos, and modernization ROI.
 
 ## Core principle
