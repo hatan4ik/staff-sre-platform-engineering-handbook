@@ -65,9 +65,9 @@ canonical technical chapter
 | VFS, filesystem, and block I/O | Tesla Linux chapter | `core/linux/04-storage-io.md` | Migrated and normalized |
 | Networking, containers, cgroups, and Linux security | Tesla Linux plan | `core/linux/05-networking-containers-security.md` | Next |
 | Linux observability, eBPF, and incident debugging | Tesla Linux plan | `core/linux/06-observability-debugging.md` | Next |
-| eBPF/Cilium/Hubble/Falco/Tetragon | Netflix chapter 2 | `core/ebpf-cilium-runtime-security/README.md` | Consolidated canonical chapter created |
+| eBPF/Cilium/Hubble/Falco/Tetragon | Netflix chapter 2 | `core/ebpf-security/cilium-hubble-falco-tetragon.md` | Migrated and normalized |
 | Fine-grained Envoy/Istio discovery | Netflix chapter 1 | `core/service-mesh/fine-grained-service-discovery.md` | Planned |
-| Terraform state and recovery | Both tracks | `core/terraform/state-integrity-and-recovery.md` | Planned |
+| Terraform state and recovery | Both tracks | `core/infrastructure-as-code/terraform-state-integrity.md` | Planned |
 | SLOs, incidents, multi-region, and chaos | Both tracks | `core/reliability/` | Planned |
 
 ## No-duplication workflow
