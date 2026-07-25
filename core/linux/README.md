@@ -19,9 +19,9 @@ By completing this module, you should be able to:
 2. [Processes, threads, scheduling, interrupts, and load](02-processes-scheduler.md)
 3. [Virtual memory, page cache, NUMA, reclaim, and OOM](03-memory.md)
 4. [VFS, filesystems, block I/O, NVMe, and latency](04-storage-io.md)
-5. Networking, namespaces, cgroups, containers, and Linux security — planned
-6. Observability, profiling, eBPF, and production debugging — planned
-7. Interview drills, incident scenarios, and hands-on labs — planned
+5. [Networking, namespaces, cgroups, containers, and Linux security](05-networking-containers-security.md)
+6. [Observability, profiling, eBPF, and production debugging](06-observability-debugging.md)
+7. Interview drills, integrated incident scenarios, and hands-on labs — next
 
 ## Staff-level mental model
 
