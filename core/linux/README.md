@@ -21,7 +21,7 @@ By completing this module, you should be able to:
 4. [VFS, filesystems, block I/O, NVMe, and latency](04-storage-io.md)
 5. [Networking, namespaces, cgroups, containers, and Linux security](05-networking-containers-security.md)
 6. [Observability, profiling, eBPF, and production debugging](06-observability-debugging.md)
-7. Interview drills, integrated incident scenarios, and hands-on labs — next
+7. [Linux incident labs and production failure scenarios](07-linux-incident-labs.md)
 
 ## Staff-level mental model
 
