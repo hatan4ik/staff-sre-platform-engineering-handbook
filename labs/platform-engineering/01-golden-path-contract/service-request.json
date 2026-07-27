@@ -1,0 +1,20 @@
+{
+  "apiVersion": "platform.example.com/v1",
+  "kind": "ServiceRequest",
+  "metadata": {
+    "name": "orders-api",
+    "requestId": "req-2026-0001"
+  },
+  "spec": {
+    "owner": "team-orders",
+    "environment": "production",
+    "region": "us-east-1",
+    "serviceTier": "critical",
+    "dataClassification": "confidential",
+    "publicExposure": false,
+    "recovery": {
+      "rpoMinutes": 5,
+      "rtoMinutes": 30
+    }
+  }
+}
