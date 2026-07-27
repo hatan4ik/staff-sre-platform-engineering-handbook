@@ -1,0 +1,50 @@
+{
+  "tenant": {
+    "name": "team-payments",
+    "trustLevel": "cooperative-internal",
+    "namespace": "payments-prod",
+    "environment": "production"
+  },
+  "namespaceLabels": {
+    "platform.example.com/owner": "team-payments",
+    "pod-security.kubernetes.io/enforce": "restricted",
+    "pod-security.kubernetes.io/enforce-version": "v1.36"
+  },
+  "rbac": {
+    "humanGroup": "group:team-payments",
+    "allowClusterAdmin": false,
+    "allowRoleEscalation": false,
+    "allowImpersonation": false
+  },
+  "network": {
+    "defaultDenyIngress": true,
+    "defaultDenyEgress": true,
+    "allowedEgress": [
+      "platform-dns",
+      "payments-database",
+      "telemetry-gateway"
+    ]
+  },
+  "quota": {
+    "cpuRequests": "20",
+    "memoryRequestsGiB": 64,
+    "pods": 100,
+    "servicesLoadBalancers": 2
+  },
+  "identity": {
+    "serviceAccount": "payments-api",
+    "cloudRole": "payments-prod-api",
+    "trustedNamespace": "payments-prod",
+    "trustedServiceAccount": "payments-api",
+    "allowNodeRoleFallback": false
+  },
+  "storage": {
+    "allowHostPath": false,
+    "encryptionRequired": true,
+    "deletionProtection": true
+  },
+  "observability": {
+    "tenantScopedBackendAuthorization": true,
+    "crossTenantQueryAllowed": false
+  }
+}
