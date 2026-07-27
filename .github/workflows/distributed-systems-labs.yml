@@ -56,3 +56,11 @@ jobs:
           compare
           --json
           > /tmp/fencing-result.json
+
+      - name: Smoke-test cache race demo
+        run: >-
+          python3 labs/distributed-systems/04-cache-races/cache_race_demo.py
+          all
+          --requests 100
+          --json
+          > /tmp/cache-result.json
