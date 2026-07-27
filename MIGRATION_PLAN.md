@@ -69,8 +69,8 @@ The GitHub connector used for this work cannot create a new top-level repository
 - S3 backend implementation, current lock-file behavior, and legacy DynamoDB-lock migration on AWS.
 - CloudFormation, CDK, StackSets, Service Catalog, Control Tower, Config, and Systems Manager trade-offs.
 - Karpenter, managed node groups, EC2 Auto Scaling Groups, and Spot operational details.
-- CloudWatch, X-Ray, AMP, AMG, Route 53, Global Accelerator, CloudFront, Kinesis, SQS, SNS, EventBridge, and Lambda adapters.
-- AWS-shaped incident workflows, evidence sources, commands, whiteboards, and adversarial follow-ups.
+- Cognito, IoT Core, IoT Device Management Jobs, Software Package Catalog, ARC, Global Accelerator, Global Tables, Aurora Global Database, AMP, Managed Grafana, Kinesis, SQS, SNS, EventBridge, and Lambda adapters.
+- AWS-shaped incident workflows, evidence sources, system designs, commands, whiteboards, and adversarial follow-ups.
 
 ## Migration status
 
@@ -95,6 +95,11 @@ The GitHub connector used for this work cannot create a new top-level repository
 | Evidence beyond dashboards | AWS Round 2 | `core/observability/` | Source added; canonical migration planned |
 | Runtime restart and OOM debugging | Tesla, Netflix, and AWS tracks | `core/kubernetes/runtime-debugging.md` and `core/linux/` | AWS source added; canonical migration planned |
 | Postmortems and corrective actions | All tracks | `core/incident-response/postmortems.md` | AWS source added; canonical migration planned |
+| Mobile identity, commands, notifications, and preference synchronization | Tesla and AWS tracks | `core/distributed-systems/`, `core/security/identity/`, and `core/reliability/` | AWS system-design source added; canonical extraction planned |
+| Secure fleet and OTA delivery | Tesla and AWS tracks | `core/security/supply-chain/`, `core/delivery-gitops/`, and `core/reliability/blast-radius.md` | AWS system-design source added; canonical extraction planned |
+| Multi-Region disaster recovery | All tracks | `core/reliability/disaster-recovery/` | AWS system-design source added; canonical extraction planned |
+| Observability platform and alert quality | All tracks | `core/observability/` and `core/reliability/slo/` | AWS system-design source added; canonical extraction planned |
+| High-volume streams, queues, replay, and backpressure | All tracks | `core/distributed-systems/` and `core/reliability/` | AWS system-design source added; canonical extraction planned |
 | SLOs, incidents, multi-region, and chaos | All tracks | `core/reliability/` | Planned |
 
 ## AWS interview implementation status
@@ -108,7 +113,7 @@ The GitHub connector used for this work cannot create a new top-level repository
 - `tracks/aws/round-1/05-terraform-cloudformation-native.md`
 - `tracks/aws/round-1/06-capacity-autoscaling-karpenter-spot.md`
 
-### Round 2 — complete in `aws-round-2-completion`
+### Round 2 — complete on `main`
 
 - `tracks/aws/round-2/07-route53-to-application-outage.md`
 - `tracks/aws/round-2/08-eks-api-latency-nodes-healthy.md`
@@ -119,13 +124,22 @@ The GitHub connector used for this work cannot create a new top-level repository
 - `tracks/aws/round-2/12-pods-restart-probes-healthy.md`
 - `tracks/aws/round-2/13-large-aws-outage-postmortem.md`
 
-### Round 3 — next
+### Round 3 — complete in `aws-round-3-system-design`
 
-- highly available mobile backend.
-- global secure software-update delivery.
-- multi-region automated disaster recovery.
-- actionable AWS/EKS observability platform.
-- event processing at millions of events per second.
+- `tracks/aws/round-3/14-highly-available-mobile-backend.md`
+- `tracks/aws/round-3/15-global-secure-software-updates.md`
+- `tracks/aws/round-3/16-multi-region-disaster-recovery.md`
+- `tracks/aws/round-3/17-actionable-observability-platform.md`
+- `tracks/aws/round-3/18-millions-events-per-second.md`
+
+### Next phase
+
+- FAANG board review across all 18 answers.
+- concise spoken-answer sheets and interviewer follow-up drills.
+- hands-on labs and runnable reference implementations.
+- mock interview scorecards.
+- personal story mapping to the candidate's production experience.
+- canonical-core extraction of reusable Round 2 and Round 3 foundations.
 
 ## No-duplication workflow
 
