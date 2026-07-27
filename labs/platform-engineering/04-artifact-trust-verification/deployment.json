@@ -1,0 +1,6 @@
+{
+  "environment": "production",
+  "service": "payments-api",
+  "artifact": "registry.example.com/payments/api@sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "owner": "team-payments"
+}
