@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: background-pid1
+  namespace: restart-lab
+  labels:
+    app: background-pid1
+    scenario: background-pid1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: background-pid1
+  template:
+    metadata:
+      labels:
+        app: background-pid1
+        scenario: background-pid1
+    spec:
+      containers:
+        - name: app
+          image: python:3.12-slim
+          env:
+            - name: PYTHONDONTWRITEBYTECODE
+              value: "1"
+            - name: PYTHONUNBUFFERED
+              value: "1"
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -eu
+              python -m http.server 8080 --directory /tmp &
+              child=$!
+              echo "started child HTTP server pid=${child}; wrapper PID 1 exits in 20 seconds"
+              sleep 20
+              echo "wrapper exiting with code 0 while child was healthy"
+              exit 0
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 2
+            periodSeconds: 2
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              cpu: 200m
+              memory: 64Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+            runAsNonRoot: true
+            runAsUser: 65534
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
