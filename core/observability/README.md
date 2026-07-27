@@ -4,18 +4,21 @@ This module owns reusable observability principles for Staff/Principal SRE and P
 
 ## Canonical chapters
 
-1. [Evidence beyond dashboards](evidence-beyond-dashboards.md)
+1. [Evidence beyond dashboards](evidence-beyond-dashboards.md) — hypothesis-driven evidence, paired healthy/affected samples, change correlation, telemetry gaps, and recovery proof.
+2. [OpenTelemetry pipelines, Collector architecture, and governance](opentelemetry-pipelines-and-governance.md) — instrumentation contracts, agents and gateways, receivers/processors/exporters, bounded failure, sampling, tenancy, redaction, pipeline SLOs, and synthetic telemetry.
+3. [High-volume telemetry, alert quality, tracing, and profiling](high-volume-telemetry-alerting-profiling.md) — RED/USE, histograms, cardinality, distributed tracing, continuous profiling, structured logs, paging policy, ingestion, storage tiers, query governance, and platform SLOs.
 
-Planned additions:
+## Executable lab
 
-- OpenTelemetry architecture and Collector pipelines.
-- Metrics, cardinality, histograms, and exemplars.
-- Distributed tracing and context propagation.
-- Structured logging and retention.
-- Continuous profiling and eBPF evidence.
-- Alert quality and symptom-based paging.
-- High-volume telemetry platform design.
-- Observability cost, governance, and tenant isolation.
+- [`../../labs/observability/01-telemetry-pipeline/`](../../labs/observability/01-telemetry-pipeline/) — critical-signal preservation, tenant quotas, metric-label governance, bounded queues, visible loss, freshness, and deterministic trace sampling.
+
+## Remaining expansion areas
+
+- Real OpenTelemetry Collector deployment and failure exercises on disposable Kubernetes clusters.
+- Backend-specific performance, retention, and migration adapters.
+- eBPF profiling and packet-evidence labs.
+- Alert-rule test suites tied to synthetic SLO scenarios.
+- Cross-region telemetry continuity and archive replay exercises.
 
 ## Core principle
 
@@ -28,4 +31,4 @@ user SLIs prove recovery
 
 ## Ownership rule
 
-Reusable telemetry models, evidence hierarchy, correlation, instrumentation, sampling, cardinality, retention, diagnostic workflow, alerting, and observability-platform design belong here. Cloud tracks should add only provider-specific products, queries, quotas, and service integrations.
+Reusable telemetry models, evidence hierarchy, correlation, instrumentation, sampling, cardinality, retention, diagnostic workflow, alerting, profiling, and observability-platform design belong here. Cloud tracks should add only provider-specific products, queries, quotas, and service integrations.
