@@ -1,0 +1,7 @@
+.terraform/
+.terraform.lock.hcl
+.evidence/
+runtime/
+*.tfstate
+*.tfstate.*
+*.tfplan

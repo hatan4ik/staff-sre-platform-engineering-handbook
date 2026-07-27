@@ -1,0 +1,132 @@
+name: AWS interview labs CI
+
+on:
+  pull_request:
+    paths:
+      - "tracks/aws/labs/**"
+      - ".github/workflows/aws-labs-ci.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "tracks/aws/labs/**"
+      - ".github/workflows/aws-labs-ci.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aws-labs-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  event-stream-lab:
+    name: Python event-stream lab
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tracks/aws/labs/03-event-stream-backpressure
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tracks/aws/labs/03-event-stream-backpressure/test_pipeline.py
+
+      - name: Compile Python
+        run: python -m compileall -q pipeline.py test_pipeline.py
+
+      - name: Run tests
+        run: python -m unittest -v
+
+      - name: Run bounded smoke scenario
+        run: |
+          python pipeline.py \
+            --rate 100 \
+            --duration 0.25 \
+            --shards 4 \
+            --workers 4 \
+            --state /tmp/aws-event-lab-ci.sqlite3 \
+            > /tmp/aws-event-lab-output.json
+          tail -n 40 /tmp/aws-event-lab-output.json
+
+  terraform-recovery-lab:
+    name: Terraform recovery lab
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tracks/aws/labs/01-terraform-partial-apply-recovery
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.8"
+
+      - name: Format check
+        run: terraform fmt -check -recursive
+
+      - name: Initialize without a remote backend
+        run: terraform init -backend=false -input=false
+
+      - name: Validate configuration
+        run: terraform validate
+
+      - name: Healthy local apply and convergence check
+        run: |
+          terraform apply -auto-approve \
+            -var='generation=1' \
+            -var='fail_after_create=false'
+          set +e
+          terraform plan -detailed-exitcode \
+            -var='generation=1' \
+            -var='fail_after_create=false'
+          rc=$?
+          set -e
+          if [[ $rc -ne 0 ]]; then
+            echo "Expected an empty plan, got exit code $rc" >&2
+            exit "$rc"
+          fi
+
+  kubernetes-manifests-and-shell:
+    name: Kubernetes manifests and shell scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install validation tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+          python -m pip install --disable-pip-version-check --no-cache-dir pyyaml
+
+      - name: Parse Kubernetes YAML
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import yaml
+
+          root = Path("tracks/aws/labs/02-kubernetes-restart-forensics/manifests")
+          files = sorted(root.glob("*.yaml"))
+          if not files:
+              raise SystemExit("no Kubernetes manifests found")
+
+          for path in files:
+              documents = list(yaml.safe_load_all(path.read_text()))
+              if not documents or any(document is None for document in documents):
+                  raise SystemExit(f"empty YAML document in {path}")
+              for document in documents:
+                  for required in ("apiVersion", "kind", "metadata"):
+                      if required not in document:
+                          raise SystemExit(f"{path}: missing {required}")
+              print(f"validated {path}")
+          PY
+
+      - name: Shell syntax and ShellCheck
+        run: |
+          find tracks/aws/labs -type f -name '*.sh' -print0 \
+            | xargs -0 -r -n1 bash -n
+          find tracks/aws/labs -type f -name '*.sh' -print0 \
+            | xargs -0 -r shellcheck
