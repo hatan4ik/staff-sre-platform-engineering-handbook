@@ -125,7 +125,7 @@ Start with [`labs/aws/README.md`](labs/aws/README.md).
 2. [`02-terraform-partial-apply`](labs/aws/02-terraform-partial-apply/README.md) — a safe local partial apply followed by configuration/state/reality reconciliation.
 3. [`03-kubernetes-restart-evidence`](labs/aws/03-kubernetes-restart-evidence/README.md) — OOM and sidecar restarts while application health checks appear successful.
 
-The first AWS lab set is designed for a disposable Kubernetes environment and a local Terraform workspace. It does not require an AWS account. Automated validation for these manifests and exercises is an active follow-up.
+The first AWS lab set is designed for a disposable Kubernetes environment and a local Terraform workspace. It does not require an AWS account. Its workflow parses and compiles the manifests and embedded programs, validates Terraform, executes the injected partial failure, and requires recovery to converge to a no-change plan. The live Kubernetes experiments remain intentionally manual so the engineer observes the real runtime evidence.
 
 ## Canonical ownership rule
 
@@ -173,7 +173,7 @@ The track also includes a board review, spoken-answer drills, a mock-interview s
 - Build canonical Kubernetes runtime, node-failure, fencing, repair, and image-qualification chapters and labs.
 - Build SLO, error-budget, incident-command, postmortem, disaster-recovery, and chaos modules.
 - Expand Envoy request-path, mTLS, DNS-capture, and multi-cluster service-mesh chapters and labs.
-- Automate validation for Terraform recovery, GitOps, workload identity, autoscaling, and AWS/EKS incident labs.
+- Extend automated validation into disposable-cluster execution, GitOps, workload identity, and autoscaling control-loop labs.
 - Replace duplicated Netflix, Tesla, and AWS theory with concise interview adapters after parity review.
 
 ## Core principle
