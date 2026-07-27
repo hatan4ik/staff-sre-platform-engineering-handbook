@@ -8,15 +8,17 @@ This module contains the canonical, company-neutral service-mesh material shared
 2. [Envoy request-path, timeout, reset, and 504 debugging](envoy-request-path-debugging.md) — error ownership, latency decomposition, response flags, effective proxy configuration, endpoint and connection state, retries, circuit breaking, outlier detection, protocol failures, mitigation, and SLOs.
 3. [mTLS, SDS, DNS capture, and multi-cluster reliability](mtls-sds-dns-multicluster.md) — workload identity, certificate delivery and rotation, trust domains, authorization, DNS capture, service export/import, east-west gateways, locality, failover, and control-plane outage behavior.
 
-## Executable and future labs
+## Executable lab
 
-Current related labs live under Kubernetes, reliability, and distributed-systems modules. The next direct mesh exercises should cover:
+- [`../../labs/service-mesh/01-xds-mtls-dns-failover/`](../../labs/service-mesh/01-xds-mtls-dns-failover/) — xDS ACK/NACK and last-known-good behavior, certificate-root overlap and retirement, bounded stale DNS, gateway/identity/data/capacity failover gates, writer ownership, and retry budgets.
 
-- xDS ACK/NACK and last-known-good convergence;
-- route timeout and retry amplification;
-- certificate and trust-bundle rotation;
-- DNS capture and stale-cache behavior;
-- east-west gateway loss and bounded failover.
+## Remaining integration exercises
+
+- real Envoy xDS rejection and convergence;
+- real SDS certificate and trust-bundle rotation;
+- DNS capture with cache expiry and resolver outage;
+- east-west gateway loss with bounded remote failover;
+- route timeout, connection-pool, and retry-amplification experiments.
 
 ## Ownership rule
 
