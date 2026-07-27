@@ -1,4 +1,4 @@
-name: Reliability and Observability Labs
+name: Reliability Observability and Mesh Labs
 
 on:
   pull_request:
@@ -10,6 +10,7 @@ on:
       - "core/kubernetes/node-images/**"
       - "labs/reliability/**"
       - "labs/observability/**"
+      - "labs/service-mesh/**"
       - ".github/workflows/reliability-observability-ci.yml"
   push:
     branches: [main]
@@ -21,6 +22,7 @@ on:
       - "core/kubernetes/node-images/**"
       - "labs/reliability/**"
       - "labs/observability/**"
+      - "labs/service-mesh/**"
       - ".github/workflows/reliability-observability-ci.yml"
 
 permissions:
@@ -46,7 +48,9 @@ jobs:
             labs/reliability/03-overload-blast-radius/overload_lab.py \
             labs/reliability/03-overload-blast-radius/test_overload_lab.py \
             labs/observability/01-telemetry-pipeline/telemetry_lab.py \
-            labs/observability/01-telemetry-pipeline/test_telemetry_lab.py
+            labs/observability/01-telemetry-pipeline/test_telemetry_lab.py \
+            labs/service-mesh/01-xds-mtls-dns-failover/mesh_contract_lab.py \
+            labs/service-mesh/01-xds-mtls-dns-failover/test_mesh_contract_lab.py
 
       - name: Test overload and blast-radius lab
         working-directory: labs/reliability/03-overload-blast-radius
@@ -76,11 +80,26 @@ jobs:
           assert all(report["invariants"].values()), report
           PY
 
+      - name: Test service mesh reliability contract
+        working-directory: labs/service-mesh/01-xds-mtls-dns-failover
+        run: |
+          python -m unittest -v test_mesh_contract_lab.py
+          python mesh_contract_lab.py --json > mesh-report.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path("mesh-report.json").read_text())
+          assert report["passed"], report
+          assert all(report["invariants"].values()), report
+          PY
+
       - name: Upload deterministic reports
         uses: actions/upload-artifact@v4
         with:
-          name: reliability-observability-reports
+          name: reliability-observability-mesh-reports
           path: |
             labs/reliability/03-overload-blast-radius/overload-report.json
             labs/observability/01-telemetry-pipeline/telemetry-report.json
+            labs/service-mesh/01-xds-mtls-dns-failover/mesh-report.json
           if-no-files-found: error
