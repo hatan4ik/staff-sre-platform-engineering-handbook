@@ -4,12 +4,14 @@ on:
   pull_request:
     paths:
       - "tracks/aws/labs/**"
+      - "tracks/aws/mock-sessions/**"
       - ".github/workflows/aws-labs-ci.yml"
   push:
     branches:
       - main
     paths:
       - "tracks/aws/labs/**"
+      - "tracks/aws/mock-sessions/**"
       - ".github/workflows/aws-labs-ci.yml"
 
 permissions:
@@ -20,6 +22,28 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  mock-interview-runner:
+    name: AWS mock interview runner
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tracks/aws/mock-sessions
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile runner and tests
+        run: python -m compileall -q mock_runner.py test_mock_runner.py
+
+      - name: Validate baseline session
+        run: python mock_runner.py --validate-only
+
+      - name: Run tests
+        run: python -m unittest -v
+
   event-stream-lab:
     name: Python event-stream lab
     runs-on: ubuntu-latest
