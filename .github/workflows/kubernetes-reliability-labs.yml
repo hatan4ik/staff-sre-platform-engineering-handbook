@@ -1,0 +1,67 @@
+name: Kubernetes Reliability Labs
+
+on:
+  push:
+    paths:
+      - "labs/kubernetes/**"
+      - "core/kubernetes/**"
+      - ".github/workflows/kubernetes-reliability-labs.yml"
+  pull_request:
+    paths:
+      - "labs/kubernetes/**"
+      - "core/kubernetes/**"
+      - ".github/workflows/kubernetes-reliability-labs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Show Python version
+        run: python3 --version
+
+      - name: Compile Kubernetes lab programs
+        run: python3 -m compileall -q labs/kubernetes
+
+      - name: Run node repair state-machine tests
+        run: python3 labs/kubernetes/01-node-repair-state-machine/test_node_repair.py -v
+
+      - name: Validate deterministic repair scenarios
+        run: |
+          python3 labs/kubernetes/01-node-repair-state-machine/node_repair.py --demo > node-repair-demo.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path("node-repair-demo.json").read_text(encoding="utf-8"))
+
+          local = result["local_failure"]
+          decisions = {item["node"]: item for item in local["decisions"]}
+          if local["circuit_breaker_open"]:
+              raise AssertionError("local failure should not open the fleet circuit breaker")
+          if decisions["node-a2"]["action"] != "restart-once-and-verify":
+              raise AssertionError("single transient must receive one bounded restart")
+          if decisions["node-b1"]["action"] != "replace-with-known-good":
+              raise AssertionError("repeated local failure must move toward replacement")
+
+          systemic = result["systemic_failure"]
+          if not systemic["circuit_breaker_open"]:
+              raise AssertionError("bad-image pattern must open the circuit breaker")
+          if systemic["decisions"]:
+              raise AssertionError("no automatic repairs should run after systemic stop")
+
+          writer = result["writer_fencing"]
+          writer_decisions = {item["node"]: item for item in writer["decisions"]}
+          if writer_decisions["node-b1"]["action"] != "cordon-and-fence":
+              raise AssertionError("storage writer must be fenced before replacement")
+
+          print("node repair state-machine invariants validated")
+          PY
