@@ -54,6 +54,11 @@ This map prevents duplicate chapter development across company- and platform-spe
 | AWS Round 2 partial-apply chapter | `core/infrastructure-as-code/terraform-state-integrity.md` |
 | AWS Round 2 restart chapter | `core/kubernetes/runtime-debugging.md` and `core/linux/` |
 | AWS Round 2 postmortem chapter | `core/incident-response/postmortems.md` and `core/leadership/` |
+| AWS Round 3 mobile-backend chapter | `core/security/identity/`, `core/distributed-systems/`, `core/reliability/`, and `core/cloud/` |
+| AWS Round 3 secure-update chapter | `core/delivery-gitops/`, `core/security/supply-chain/`, `core/reliability/blast-radius.md`, and `core/observability/high-volume-telemetry.md` |
+| AWS Round 3 disaster-recovery chapter | `core/reliability/disaster-recovery/`, `core/distributed-systems/replication/`, and `core/networking/` |
+| AWS Round 3 observability-platform chapter | `core/observability/`, `core/reliability/slo/`, and `core/incident-response/` |
+| AWS Round 3 event-platform chapter | `core/distributed-systems/messaging/`, `core/reliability/backpressure/`, and `core/cloud/streaming/` |
 
 ## AWS Round 1 question map
 
@@ -78,6 +83,16 @@ This map prevents duplicate chapter development across company- and platform-spe
 | Terraform partial apply | `tracks/aws/round-2/11-terraform-partial-apply-recovery.md` | state integrity, import, refresh-only, one-writer recovery |
 | Pods restart with healthy probes | `tracks/aws/round-2/12-pods-restart-probes-healthy.md` | pod lifecycle, cgroups, OOM, kubelet, disruption controllers |
 | Large outage postmortem | `tracks/aws/round-2/13-large-aws-outage-postmortem.md` | SLOs, incident command, causal analysis, corrective actions |
+
+## AWS Round 3 question map
+
+| Question | AWS adapter | Canonical prerequisites |
+|---|---|---|
+| Mobile backend | `tracks/aws/round-3/14-highly-available-mobile-backend.md` | authentication, authorization, idempotency, command state, notification delivery, multi-Region cells |
+| Secure software updates | `tracks/aws/round-3/15-global-secure-software-updates.md` | artifact provenance, PKI, staged rollout, device-local rollback, high-volume telemetry |
+| Multi-Region DR | `tracks/aws/round-3/16-multi-region-disaster-recovery.md` | RTO/RPO, replication, fencing, routing, failover/failback, data reconciliation |
+| Actionable observability | `tracks/aws/round-3/17-actionable-observability-platform.md` | OpenTelemetry, RED/USE, Prometheus, tracing, SLO burn alerts, alert routing |
+| Millions of events/second | `tracks/aws/round-3/18-millions-events-per-second.md` | partitioning, streams, queues, idempotency, backpressure, replay, multi-Region ingestion |
 
 ## Example question adapters
 
@@ -148,6 +163,23 @@ AWS adapter adds:
 - WAF labels and CloudFront edge behavior.
 - ALB targets, Availability Zones, VPC paths, EKS pod versions, and data shards.
 - CloudTrail, Config, AWS Health, and CloudWatch evidence sources.
+
+### AWS secure fleet update
+
+Required core reading:
+
+- `core/security/supply-chain/`
+- `core/delivery-gitops/progressive-delivery.md`
+- `core/reliability/blast-radius.md`
+- `core/distributed-systems/idempotency.md`
+- `core/observability/high-volume-telemetry.md`
+
+AWS adapter adds:
+
+- AWS IoT Device Management Jobs and Software Package Catalog.
+- S3 and CloudFront artifact distribution.
+- device certificates, signed manifests, A/B partitions, and anti-rollback.
+- fleet cohort targeting, rollout rate, timeout, and abort behavior.
 
 ## Development rule
 
