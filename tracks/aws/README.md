@@ -89,7 +89,7 @@ Each chapter contains:
 
 | Round | Scope | Status |
 |---|---|---|
-| Round 1 | EKS, GitOps, Terraform, security, provisioning, autoscaling | Complete in this branch |
+| Round 1 | EKS, GitOps, Terraform, security, provisioning, autoscaling | Complete on `main` |
 | Round 2 | Incidents, troubleshooting, recovery, postmortems | Planned next |
 | Round 3 | System design, global delivery, DR, observability, event platforms | Planned after Round 2 |
 
