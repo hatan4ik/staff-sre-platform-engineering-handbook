@@ -150,6 +150,8 @@ AWS adapter adds EKS boundaries, VPC CNI, AWS Load Balancer Controller, Karpente
 | `labs/reliability/02-disaster-recovery-state-machine/` | fencing, failover, failback, reconciliation |
 | `labs/reliability/03-overload-blast-radius/` | retries, admission, tenant fairness, failover capacity, replay |
 | `labs/observability/01-telemetry-pipeline/` | quotas, cardinality, priority, loss, freshness, sampling |
+| `labs/observability/02-otel-collector-integration/` | real OTLP/HTTP receipt, memory limiting, batching, resource attributes, and exporter evidence |
+| `labs/service-mesh/01-xds-mtls-dns-failover/` | ACK/NACK, last-known-good, trust rotation, bounded stale DNS, failover gates, writer fencing, retry budgets |
 | `labs/kubernetes/01-node-repair-state-machine/` | node fencing, repair limits, systemic-failure circuit breaker |
 | `labs/kubernetes/02-kind-conformance/` | real FailedScheduling, Service DNS, EndpointSlice readiness, liveness restart, graceful drain, replacement, PDB |
 | `labs/platform-engineering/` | golden paths, policy, tenancy, artifact trust, fleets, secrets |
