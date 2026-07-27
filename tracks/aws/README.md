@@ -14,7 +14,7 @@ Reusable engineering foundations remain canonical in this repository's `core/` m
 - AWS-native identity, networking, security, observability, and recovery procedures
 - concise interview answers, whiteboard flows, adversarial follow-ups, and practical commands
 
-The track does **not** duplicate generic Kubernetes, Linux, Terraform, distributed-systems, security, autoscaling, incident-response, observability, or SRE textbooks.
+The track does **not** duplicate generic Kubernetes, Linux, Terraform, distributed-systems, security, autoscaling, or SRE textbooks.
 
 ## Canonical prerequisites
 
@@ -22,9 +22,6 @@ Use these shared chapters before the AWS-specific adapters:
 
 - [`core/security/identity/workload-identity-federation.md`](../../core/security/identity/workload-identity-federation.md) — Kubernetes projected tokens, EKS Pod Identity versus IRSA, cross-cloud federation, SPIFFE/SPIRE, node-role protection, rotation, and incident evidence.
 - [`core/kubernetes/autoscaling/control-loops-capacity-realization.md`](../../core/kubernetes/autoscaling/control-loops-capacity-realization.md) — HPA, VPA, KEDA, scheduler and node-supply loops, Cluster Autoscaler versus Karpenter, disruption, topology, and capacity-realization SLIs.
-- [`core/incident-response/request-path-debugging.md`](../../core/incident-response/request-path-debugging.md) — client-to-dependency path isolation, status-code ownership, paired evidence, hypothesis discipline, reversible mitigation, and external recovery proof.
-- [`core/incident-response/cohort-analysis.md`](../../core/incident-response/cohort-analysis.md) — partial failures, denominators, confounding, release and infrastructure cohorts, narrow mitigation, and cohort-specific recovery.
-- [`core/observability/evidence-beyond-dashboards.md`](../../core/observability/evidence-beyond-dashboards.md) — alert validation, structured logs, traces, profiles, changes, network and synthetic evidence, high-cardinality governance, and AI-hypothesis verification.
 - [`core/infrastructure-as-code/terraform-state-integrity.md`](../../core/infrastructure-as-code/terraform-state-integrity.md) — state integrity, current S3 lock files, legacy DynamoDB locking, partial-apply reconciliation, and one-writer recovery.
 - [`core/infrastructure-as-code/tool-selection-and-governance.md`](../../core/infrastructure-as-code/tool-selection-and-governance.md) — Terraform, CloudFormation, CDK, policy, ownership, and migration principles.
 - [`core/delivery-gitops/gitops-progressive-delivery.md`](../../core/delivery-gitops/gitops-progressive-delivery.md) — reconciliation, promotion, progressive delivery, rollback, pruning, and resource ownership.
@@ -104,24 +101,31 @@ Each completed chapter contains:
 
 ## Current implementation status
 
-| Round | Scope | Status |
+| Layer | Scope | Status |
 |---|---|---|
 | Round 1 | EKS, GitOps, Terraform, security, provisioning, autoscaling | Complete on `main` |
 | Round 2 | Incidents, troubleshooting, recovery, postmortems | Complete on `main` |
 | Round 3 | System design, global delivery, DR, observability, event platforms | Complete on `main` |
-| Practice | Board review, spoken drills, scorecard, story mapping | Complete initial set |
-| Labs | Cohort rollout, Terraform recovery, restart evidence, workload identity, autoscaling | Complete initial set |
+| Calibration | FAANG board review, spoken drills, scorecard | Complete initial set |
+| Personal evidence | Truthful production story bank and claim boundaries | Complete initial set |
+| Practice | Interview-day cheatsheet and 30-day execution plan | Complete initial set |
+| Labs | Canonical AWS labs plus track-specific Terraform, Kubernetes, and stream exercises | Complete initial set |
 
-All 18 source questions now have Staff/Principal-level answer chapters. Reusable request-path, cohort-analysis, evidence, identity, autoscaling, GitOps, and Terraform foundations now link to canonical chapters. The next expansion is postmortems, reliability, control-plane/runtime chapters, additional labs, and candidate-specific story completion.
+All 18 source questions have Staff/Principal-level answer chapters. The current practice system now covers deep study, concise delivery, adversarial scoring, executable labs, truthful personal evidence, and a daily execution program.
 
 ## Practice and calibration assets
+
+Start with the [practice index](PRACTICE_INDEX.md).
 
 - [FAANG engineering board review](FAANG_BOARD_REVIEW.md)
 - [Mock interview scorecard](MOCK_INTERVIEW_SCORECARD.md)
 - [Spoken answer drills](SPOKEN_ANSWER_DRILLS.md)
-- [Personal story matrix](PERSONAL_STORY_MATRIX.md)
+- [Truthful personal production story bank](PERSONAL_STORY_BANK.md)
+- [Interview-day cheatsheet](INTERVIEW_DAY_CHEATSHEET.md)
+- [30-day execution plan](30_DAY_EXECUTION_PLAN.md)
 - [Official source index](OFFICIAL_SOURCES.md)
-- [Executable AWS and EKS interview labs](../../labs/aws/README.md)
+- [Canonical AWS and EKS incident labs](../../labs/aws/README.md)
+- [Additional track-specific practice labs](labs/README.md)
 
 Recommended loop:
 
@@ -134,6 +138,14 @@ read one chapter
   -> score the result
   -> tighten unsupported claims
 ```
+
+## Truth discipline
+
+- Keep production experience, assignment/lab evidence, and hypothetical architecture visibly separate.
+- Do not invent scale, availability, cost, outage, or delivery metrics.
+- Verify current AWS quotas and service behavior from primary sources.
+- Prefer a precise uncertainty statement over a false exact number.
+- Principal readiness requires evidence of organizational influence and measurable outcomes, not technical breadth alone.
 
 ## Current-version notes
 
