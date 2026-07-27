@@ -124,7 +124,7 @@ The GitHub connector used for this work cannot create a new top-level repository
 - `tracks/aws/round-2/12-pods-restart-probes-healthy.md`
 - `tracks/aws/round-2/13-large-aws-outage-postmortem.md`
 
-### Round 3 — complete in `aws-round-3-system-design`
+### Round 3 — complete on `main`
 
 - `tracks/aws/round-3/14-highly-available-mobile-backend.md`
 - `tracks/aws/round-3/15-global-secure-software-updates.md`
