@@ -38,6 +38,20 @@ The first labs are intentionally safe and inexpensive:
 
 The manifests use public container images. Pin images to approved digests before using any pattern in a controlled production environment.
 
+## Automated verification
+
+The [AWS and EKS Incident Labs workflow](../../.github/workflows/aws-incident-labs.yml) performs the non-cluster checks on each relevant push or pull request:
+
+- compiles standalone Python programs;
+- parses every Kubernetes YAML document;
+- compiles Python programs embedded in ConfigMaps;
+- runs `terraform fmt`, `init`, and `validate`;
+- proves that the Terraform experiment fails after an earlier resource succeeds;
+- performs the documented recovery;
+- requires the recovered workspace to produce a no-change plan.
+
+The workflow does not claim to replace a real Kubernetes experiment. Run the manifests on a disposable cluster to observe Service routing, readiness, OOM termination, restart counts, previous logs, and events.
+
 ## Working method
 
 For every lab:
