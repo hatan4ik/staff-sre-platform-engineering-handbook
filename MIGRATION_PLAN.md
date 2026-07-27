@@ -86,10 +86,10 @@ The GitHub connector used for this work cannot create a new top-level repository
 | eBPF/Cilium/Hubble/Falco/Tetragon | Netflix chapter 2 | `core/ebpf-security/cilium-hubble-falco-tetragon.md` | Migrated and normalized |
 | Fine-grained Envoy/Istio discovery | Netflix chapter 1 | `core/service-mesh/fine-grained-service-discovery.md` | Migrated and normalized |
 | Terraform state and recovery | Netflix and AWS tracks | `core/infrastructure-as-code/terraform-state-integrity.md` | Migrated and normalized |
-| GitOps and progressive delivery | AWS Round 1 | `core/delivery-gitops/` | AWS source added; canonical migration planned |
+| GitOps and progressive delivery | AWS Round 1 | `core/delivery-gitops/gitops-progressive-delivery.md` | Migrated and normalized |
 | IAM and workload identity | Netflix, Tesla, and AWS tracks | `core/security/identity/` | AWS source added; canonical migration planned |
 | EKS and Kubernetes autoscaling | Netflix and AWS tracks | `core/kubernetes/autoscaling/` | AWS source added; canonical migration planned |
-| IaC tool selection and governance | AWS Round 1 | `core/infrastructure-as-code/tool-selection-and-governance.md` | Source added; canonical migration planned |
+| IaC tool selection and governance | AWS Round 1 | `core/infrastructure-as-code/tool-selection-and-governance.md` | Migrated and normalized |
 | SLOs, incidents, multi-region, and chaos | All tracks | `core/reliability/` | Planned |
 
 ## AWS interview implementation status
