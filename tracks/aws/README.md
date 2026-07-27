@@ -89,9 +89,9 @@ Each completed chapter contains:
 
 | Round | Scope | Status |
 |---|---|---|
-| Round 1 | EKS, GitOps, Terraform, security, provisioning, autoscaling | Complete |
-| Round 2 | Incidents, troubleshooting, recovery, postmortems | Complete |
-| Round 3 | System design, global delivery, DR, observability, event platforms | Complete in this change |
+| Round 1 | EKS, GitOps, Terraform, security, provisioning, autoscaling | Complete on `main` |
+| Round 2 | Incidents, troubleshooting, recovery, postmortems | Complete on `main` |
+| Round 3 | System design, global delivery, DR, observability, event platforms | Complete on `main` |
 
 All 18 source questions now have Staff/Principal-level answer chapters. The next phase is review, mock interviews, hands-on labs, canonical-core extraction, and personal story mapping.
 
