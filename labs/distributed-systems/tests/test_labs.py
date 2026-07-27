@@ -39,6 +39,10 @@ cache_race = load_module(
     "cache_race_demo",
     "labs/distributed-systems/04-cache-races/cache_race_demo.py",
 )
+shard_rebalance = load_module(
+    "shard_rebalance_demo",
+    "labs/distributed-systems/05-shard-rebalancing/shard_rebalance_demo.py",
+)
 
 
 class RetryAmplificationTests(unittest.TestCase):
@@ -195,6 +199,54 @@ class CacheRaceTests(unittest.TestCase):
         self.assertEqual(unsafe.origin_loads, 1000)
         self.assertEqual(safe.origin_loads, 1)
         self.assertEqual(safe.cache_hits_after_fill, 999)
+
+
+class ShardRebalancingTests(unittest.TestCase):
+    def test_hash_partition_is_stable(self) -> None:
+        first = shard_rebalance.hash_partition("tenant-a:object-1", 64)
+        second = shard_rebalance.hash_partition("tenant-a:object-1", 64)
+        self.assertEqual(first, second)
+        self.assertGreaterEqual(first, 0)
+        self.assertLess(first, 64)
+
+    def test_range_partition_uses_sorted_boundaries(self) -> None:
+        bounds = (100, 1_000, 10_000)
+        self.assertEqual(shard_rebalance.range_partition(5, bounds), 0)
+        self.assertEqual(shard_rebalance.range_partition(500, bounds), 1)
+        self.assertEqual(shard_rebalance.range_partition(5_000, bounds), 2)
+        self.assertEqual(shard_rebalance.range_partition(50_000, bounds), 3)
+
+    def test_unsafe_move_loses_catch_up_and_accepts_stale_router(self) -> None:
+        result = shard_rebalance.simulate_rebalance(safe=False)
+        self.assertTrue(result.stale_write_accepted)
+        self.assertEqual(result.authoritative_value, "value-v1")
+        self.assertEqual(result.source_value, "value-v3-from-stale-router")
+        self.assertEqual(result.target_value, "value-v1")
+        self.assertEqual(result.migration_phase, "cutover")
+
+    def test_safe_move_replays_delta_and_rejects_stale_router(self) -> None:
+        result = shard_rebalance.simulate_rebalance(safe=True)
+        self.assertFalse(result.stale_write_accepted)
+        self.assertEqual(result.authoritative_value, "value-v2")
+        self.assertIsNone(result.source_value)
+        self.assertEqual(result.target_value, "value-v2")
+        self.assertEqual(result.new_epoch, result.old_epoch + 1)
+        self.assertEqual(result.migration_phase, "cleanup")
+
+    def test_hot_key_and_dominant_tenant_are_detected(self) -> None:
+        report = shard_rebalance.sample_distribution()
+        distribution = report["distribution"]
+        self.assertIn(5, distribution["hot_shards"])
+        self.assertIn("tenant-hot", report["dominant_tenants"])
+
+    def test_safe_cutover_requires_catch_up(self) -> None:
+        cluster = shard_rebalance.Cluster(("a", "b"), virtual_shards=4)
+        shard = 2
+        cluster.set_owner(shard, "a", epoch=3)
+        migration = cluster.begin_migration(shard, "b")
+        cluster.copy_snapshot(migration)
+        with self.assertRaises(ValueError):
+            cluster.cutover(migration, require_catch_up=True)
 
 
 if __name__ == "__main__":
