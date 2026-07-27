@@ -8,13 +8,15 @@ This module owns reusable observability principles for Staff/Principal SRE and P
 2. [OpenTelemetry pipelines, Collector architecture, and governance](opentelemetry-pipelines-and-governance.md) — instrumentation contracts, agents and gateways, receivers/processors/exporters, bounded failure, sampling, tenancy, redaction, pipeline SLOs, and synthetic telemetry.
 3. [High-volume telemetry, alert quality, tracing, and profiling](high-volume-telemetry-alerting-profiling.md) — RED/USE, histograms, cardinality, distributed tracing, continuous profiling, structured logs, paging policy, ingestion, storage tiers, query governance, and platform SLOs.
 
-## Executable lab
+## Executable labs
 
 - [`../../labs/observability/01-telemetry-pipeline/`](../../labs/observability/01-telemetry-pipeline/) — critical-signal preservation, tenant quotas, metric-label governance, bounded queues, visible loss, freshness, and deterministic trace sampling.
+- [`../../labs/observability/02-otel-collector-integration/`](../../labs/observability/02-otel-collector-integration/) — a real OpenTelemetry Collector data path using OTLP/HTTP, memory limiting, batching, resource attributes, and debug-exporter evidence.
 
 ## Remaining expansion areas
 
-- Real OpenTelemetry Collector deployment and failure exercises on disposable Kubernetes clusters.
+- Collector exporter-outage, bounded-queue, backpressure, and replay tests.
+- Tail-sampling trace-affinity and incomplete-trace tests.
 - Backend-specific performance, retention, and migration adapters.
 - eBPF profiling and packet-evidence labs.
 - Alert-rule test suites tied to synthetic SLO scenarios.
