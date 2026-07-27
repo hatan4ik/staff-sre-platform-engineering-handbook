@@ -1,0 +1,198 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: aws-incident-labs
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cohort-api
+  namespace: aws-incident-labs
+data:
+  app.py: |
+    import json
+    import os
+    from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+    VERSION = os.environ.get("VERSION", "unknown")
+    FAIL_COHORT = os.environ.get("FAIL_COHORT", "")
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            if self.path == "/health":
+                self.respond(200, {"status": "ok", "version": VERSION})
+                return
+
+            cohort = self.headers.get("X-Cohort", "general")
+            if self.path == "/api/order" and cohort == FAIL_COHORT:
+                self.respond(
+                    503,
+                    {
+                        "status": "error",
+                        "reason": "injected cohort defect",
+                        "cohort": cohort,
+                        "version": VERSION,
+                    },
+                )
+                return
+
+            self.respond(
+                200,
+                {
+                    "status": "ok",
+                    "cohort": cohort,
+                    "version": VERSION,
+                },
+            )
+
+        def respond(self, status, payload):
+            body = json.dumps(payload).encode("utf-8")
+            self.send_response(status)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("X-App-Version", VERSION)
+            self.end_headers()
+            self.wfile.write(body)
+
+        def log_message(self, fmt, *args):
+            print(
+                json.dumps(
+                    {
+                        "remote": self.client_address[0],
+                        "request": fmt % args,
+                        "version": VERSION,
+                    }
+                ),
+                flush=True,
+            )
+
+    ThreadingHTTPServer(("0.0.0.0", 8080), Handler).serve_forever()
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cohort-api-v1
+  namespace: aws-incident-labs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cohort-api
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: cohort-api
+        version: v1
+    spec:
+      containers:
+        - name: api
+          image: python:3.12-alpine
+          imagePullPolicy: IfNotPresent
+          command: ["python", "/app/app.py"]
+          env:
+            - name: VERSION
+              value: v1
+            - name: FAIL_COHORT
+              value: never
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 2
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 20m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          volumeMounts:
+            - name: app
+              mountPath: /app
+              readOnly: true
+      volumes:
+        - name: app
+          configMap:
+            name: cohort-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cohort-api-v2
+  namespace: aws-incident-labs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cohort-api
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: cohort-api
+        version: v2
+    spec:
+      containers:
+        - name: api
+          image: python:3.12-alpine
+          imagePullPolicy: IfNotPresent
+          command: ["python", "/app/app.py"]
+          env:
+            - name: VERSION
+              value: v2
+            - name: FAIL_COHORT
+              value: beta
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 2
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 20m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          volumeMounts:
+            - name: app
+              mountPath: /app
+              readOnly: true
+      volumes:
+        - name: app
+          configMap:
+            name: cohort-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cohort-api
+  namespace: aws-incident-labs
+spec:
+  selector:
+    app: cohort-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
