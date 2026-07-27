@@ -23,6 +23,10 @@ Use these shared chapters before the AWS-specific adapters:
 ### Kubernetes and platform runtime
 
 - [`core/kubernetes/control-plane/api-server-etcd-list-watch-admission.md`](../../core/kubernetes/control-plane/api-server-etcd-list-watch-admission.md) — API-server, etcd, admission, APF, LIST/WATCH, controller queues, SLOs, and incident response.
+- [`core/kubernetes/scheduling/scheduler-placement-diagnostics.md`](../../core/kubernetes/scheduling/scheduler-placement-diagnostics.md) — scheduler queues, requests, taints, affinity, topology spread, volume/device constraints, preemption, and autoscaler handoff.
+- [`core/kubernetes/networking/service-dns-ingress-gateway-request-path.md`](../../core/kubernetes/networking/service-dns-ingress-gateway-request-path.md) — Services, EndpointSlices, CNI, DNS, NetworkPolicy, Ingress, Gateway API, TLS, dual stack, MTU, conntrack, and path debugging.
+- [`core/kubernetes/storage/csi-stateful-recovery.md`](../../core/kubernetes/storage/csi-stateful-recovery.md) — PVC/PV/StorageClass, CSI provisioning, attach/detach, topology, snapshots, writer fencing, restore, and stateful recovery.
+- [`core/kubernetes/workload-lifecycle/probes-startup-shutdown-drain.md`](../../core/kubernetes/workload-lifecycle/probes-startup-shutdown-drain.md) — startup/liveness/readiness semantics, EndpointSlice propagation, graceful drain, long-lived connections, PDBs, and rollout safety.
 - [`core/kubernetes/runtime-debugging.md`](../../core/kubernetes/runtime-debugging.md) — container restart, pod replacement, OOM, eviction, probes, PID 1, kubelet, runtime, and controller evidence.
 - [`core/kubernetes/node-lifecycle/failure-fencing-repair.md`](../../core/kubernetes/node-lifecycle/failure-fencing-repair.md) — node health, fencing, drain, repair, and replacement.
 - [`core/kubernetes/node-images/qualification-promotion-rollback.md`](../../core/kubernetes/node-images/qualification-promotion-rollback.md) — immutable image qualification, canaries, rollout rings, and rollback.
@@ -153,6 +157,7 @@ Start with the [practice index](PRACTICE_INDEX.md).
 - [30-day execution plan](30_DAY_EXECUTION_PLAN.md)
 - [Official source index](OFFICIAL_SOURCES.md)
 - [Canonical AWS and EKS incident labs](../../labs/aws/README.md)
+- [Canonical Kubernetes labs, including disposable Kind conformance](../../labs/kubernetes/README.md)
 - [Canonical reliability labs](../../labs/reliability/README.md)
 - [Canonical observability lab](../../labs/observability/README.md)
 - [Additional track-specific practice labs](labs/README.md)
