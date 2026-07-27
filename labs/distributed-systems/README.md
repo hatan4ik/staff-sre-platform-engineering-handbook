@@ -31,6 +31,11 @@ The labs intentionally use small, inspectable programs rather than hiding behavi
    - Reject stale routers using monotonically increasing ownership epochs.
    - Detect hot virtual shards and dominant-tenant traffic skew.
 
+6. [Queue redelivery, visibility timeouts, ordering, and DLQs](06-queue-redelivery/README.md)
+   - Reproduce duplicate side effects after crash-before-ack.
+   - Collapse redelivery with an idempotent consumer inbox.
+   - Observe poison-message DLQ routing and FIFO head-of-line blocking.
+
 ## Prerequisites
 
 - Python 3.11 or newer
@@ -67,10 +72,10 @@ For every lab:
 After completing a lab, practice explaining it in this order:
 
 1. **Invariant** — what must never happen.
-2. **Failure** — timeout, duplicate, pause, partition, race, stale route, or overload.
+2. **Failure** — timeout, duplicate, pause, partition, race, stale route, poison message, or overload.
 3. **Unsafe implementation** — why the obvious design fails.
-4. **Control** — idempotency, fencing, versioning, ownership epochs, bounded retries, transactional state, or reconciliation.
-5. **Proof** — metrics, database constraints, audit records, versions, map epochs, or rejected operations.
-6. **Trade-off** — latency, availability, complexity, storage, or operational cost.
+4. **Control** — idempotency, fencing, versioning, ownership epochs, bounded retries, transactional state, DLQ policy, or reconciliation.
+5. **Proof** — metrics, database constraints, audit records, versions, map epochs, duplicate counters, or rejected operations.
+6. **Trade-off** — latency, availability, complexity, storage, ordering, or operational cost.
 
 The goal is not only to run the code. The goal is to be able to defend the design at Staff or Principal level.
