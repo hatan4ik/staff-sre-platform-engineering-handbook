@@ -1,0 +1,106 @@
+[
+  {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": {
+      "namespace": "dev-orders",
+      "name": "orders-api",
+      "labels": {
+        "environment": "development"
+      }
+    },
+    "spec": {
+      "containers": [
+        {
+          "name": "app",
+          "image": "registry.example.com/orders/api:latest",
+          "privileged": false
+        }
+      ]
+    }
+  },
+  {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": {
+      "namespace": "staging-payments",
+      "name": "payments-api",
+      "labels": {
+        "environment": "staging",
+        "platform.example.com/owner": "team-payments"
+      }
+    },
+    "spec": {
+      "containers": [
+        {
+          "name": "app",
+          "image": "registry.example.com/payments/api:v2.1.0",
+          "privileged": false
+        }
+      ]
+    }
+  },
+  {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": {
+      "namespace": "prod-checkout",
+      "name": "checkout-api",
+      "labels": {
+        "environment": "production",
+        "platform.example.com/owner": "team-checkout"
+      }
+    },
+    "spec": {
+      "containers": [
+        {
+          "name": "app",
+          "image": "registry.example.com/checkout/api@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "privileged": false
+        }
+      ]
+    }
+  },
+  {
+    "apiVersion": "apps/v1",
+    "kind": "DaemonSet",
+    "metadata": {
+      "namespace": "system",
+      "name": "legacy-node-agent",
+      "labels": {
+        "environment": "production",
+        "platform.example.com/owner": "team-platform-runtime"
+      }
+    },
+    "spec": {
+      "containers": [
+        {
+          "name": "agent",
+          "image": "registry.example.com/platform/legacy-agent@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "privileged": true
+        }
+      ]
+    }
+  },
+  {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": {
+      "namespace": "prod-billing",
+      "name": "billing-api",
+      "labels": {
+        "environment": "production",
+        "platform.example.com/owner": "team-billing"
+      }
+    },
+    "spec": {
+      "containers": [
+        {
+          "name": "app",
+          "image": "registry.example.com/billing/api:v4.0.0",
+          "privileged": false
+        }
+      ]
+    }
+  }
+]
