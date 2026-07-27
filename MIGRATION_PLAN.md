@@ -37,7 +37,7 @@ The GitHub connector used for this work cannot create a new top-level repository
 - Envoy, Istio, service-mesh control/data planes, and mTLS.
 - Terraform state, locking, drift, recovery, modules, and policy.
 - GitOps, CI/CD, artifact integrity, and progressive delivery.
-- Identity, secrets, supply-chain security, and admission control.
+- Identity, federation, secrets, supply-chain security, and admission control.
 - Observability, OpenTelemetry, Prometheus, tracing, profiling, and alerting.
 - SLOs, error budgets, incident command, postmortems, capacity, DR, and chaos.
 - Distributed systems, queues, consistency, idempotency, backpressure, and multi-region design.
@@ -87,8 +87,8 @@ The GitHub connector used for this work cannot create a new top-level repository
 | Fine-grained Envoy/Istio discovery | Netflix chapter 1 | `core/service-mesh/fine-grained-service-discovery.md` | Migrated and normalized |
 | Terraform state and recovery | Netflix and AWS tracks | `core/infrastructure-as-code/terraform-state-integrity.md` | Migrated and normalized; AWS recovery adapter added |
 | GitOps and progressive delivery | AWS Round 1 and 2 | `core/delivery-gitops/gitops-progressive-delivery.md` | Migrated and normalized; AWS incident adapters added |
-| IAM and workload identity | Netflix, Tesla, and AWS tracks | `core/security/identity/` | AWS source added; canonical migration planned |
-| EKS and Kubernetes autoscaling | Netflix and AWS tracks | `core/kubernetes/autoscaling/` | AWS source added; canonical migration planned |
+| Workload identity, federation, and SPIFFE | Netflix, Tesla, and AWS tracks | `core/security/identity/workload-identity-federation.md` | Migrated and normalized; cloud-specific adapters retained |
+| Kubernetes autoscaling and capacity realization | Netflix and AWS tracks | `core/kubernetes/autoscaling/control-loops-capacity-realization.md` | Migrated and normalized; AWS capacity adapter retained |
 | IaC tool selection and governance | AWS Round 1 | `core/infrastructure-as-code/tool-selection-and-governance.md` | Migrated and normalized |
 | Request-path and cohort debugging | AWS Round 2 | `core/incident-response/` and `core/networking/` | Source added; canonical migration planned |
 | Control-plane and application latency analysis | AWS Round 2 | `core/kubernetes/control-plane/`, `core/observability/`, and `core/reliability/` | Source added; canonical migration planned |
@@ -134,12 +134,13 @@ The GitHub connector used for this work cannot create a new top-level repository
 
 ### Next phase
 
-- FAANG board review across all 18 answers.
-- concise spoken-answer sheets and interviewer follow-up drills.
-- hands-on labs and runnable reference implementations.
-- mock interview scorecards.
-- personal story mapping to the candidate's production experience.
-- canonical-core extraction of reusable Round 2 and Round 3 foundations.
+- FAANG board review across all 18 AWS answers.
+- Concise spoken-answer sheets and interviewer follow-up drills.
+- Hands-on identity, autoscaling, Terraform, GitOps, and incident labs.
+- Mock interview scorecards.
+- Personal story mapping to the candidate's production experience.
+- Canonical extraction of request-path, observability, postmortem, DR, supply-chain, and reliability foundations.
+- Conversion of deep track chapters into thin adapters after parity review.
 
 ## No-duplication workflow
 
