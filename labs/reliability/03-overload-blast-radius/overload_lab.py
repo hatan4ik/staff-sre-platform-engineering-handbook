@@ -51,8 +51,9 @@ class AdmissionReport:
 class AdmissionController:
     """Priority-aware, bounded admission with tenant fairness.
 
-    Critical requests are evaluated first. Optional requests may only consume
-    capacity that remains after preserving the configured critical reserve.
+    Critical requests are evaluated first. Optional requests may use capacity
+    already consumed by critical work, but cannot consume the still-unused
+    portion of the configured critical reserve.
     """
 
     def __init__(
@@ -78,6 +79,7 @@ class AdmissionController:
             key=lambda pair: (0 if pair[1].priority == "critical" else 1, pair[0]),
         )
         consumed = 0
+        critical_consumed = 0
         tenant_consumed: dict[str, int] = {}
         decisions: list[AdmissionDecision] = []
 
@@ -97,7 +99,10 @@ class AdmissionController:
                 continue
 
             if request.priority == "optional":
-                optional_ceiling = self.capacity_units - self.critical_reserve_units
+                unused_critical_reserve = max(
+                    0, self.critical_reserve_units - critical_consumed
+                )
+                optional_ceiling = self.capacity_units - unused_critical_reserve
                 if consumed + request.work_units > optional_ceiling:
                     decisions.append(
                         AdmissionDecision(request.request_id, False, "critical_reserve")
@@ -105,6 +110,8 @@ class AdmissionController:
                     continue
 
             consumed += request.work_units
+            if request.priority == "critical":
+                critical_consumed += request.work_units
             tenant_consumed[request.tenant] = tenant_used + request.work_units
             decisions.append(AdmissionDecision(request.request_id, True, "admitted"))
 
