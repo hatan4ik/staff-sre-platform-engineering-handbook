@@ -1,0 +1,37 @@
+{
+  "subject": {
+    "artifact": "registry.example.com/payments/api@sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+  },
+  "signature": {
+    "verified": true,
+    "certificateIssuer": "https://token.actions.githubusercontent.com",
+    "certificateIdentity": "https://github.com/example/payments/.github/workflows/release.yaml@refs/tags/v2.4.1",
+    "transparencyVerified": true
+  },
+  "provenance": {
+    "predicateType": "https://slsa.dev/provenance/v1",
+    "sourceRepository": "https://github.com/example/payments",
+    "sourceRevision": "6fc4b7dcf6f8b76d127d53a61f7f0e384146a6f5",
+    "sourceRef": "refs/tags/v2.4.1",
+    "builderId": "https://github.com/actions/runner-images/github-hosted",
+    "workflow": ".github/workflows/release.yaml",
+    "buildType": "https://github.com/example/platform/buildtypes/container/v1"
+  },
+  "sbom": {
+    "format": "spdx-json",
+    "digest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+  },
+  "vulnerabilityScan": {
+    "scanner": "platform-scanner-v3",
+    "scannedAt": "2026-07-27T08:00:00Z",
+    "critical": 0,
+    "high": 1
+  },
+  "releaseAuthorization": {
+    "environment": "production",
+    "service": "payments-api",
+    "owner": "team-payments",
+    "approved": true
+  }
+}
