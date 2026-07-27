@@ -1,0 +1,110 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sidecar-restart
+  namespace: restart-lab
+  labels:
+    app: sidecar-restart
+    scenario: sidecar-restart
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sidecar-restart
+  template:
+    metadata:
+      labels:
+        app: sidecar-restart
+        scenario: sidecar-restart
+    spec:
+      containers:
+        - name: main
+          image: nginx:1.27-alpine
+          ports:
+            - name: http
+              containerPort: 8080
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -eu
+              cat > /tmp/nginx.conf <<'EOF'
+              events {}
+              http {
+                server {
+                  listen 8080;
+                  location / {
+                    return 200 'main container healthy\n';
+                  }
+                }
+              }
+              EOF
+              exec nginx -c /tmp/nginx.conf -g 'daemon off;'
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 2
+            periodSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              cpu: 200m
+              memory: 64Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+            runAsNonRoot: true
+            runAsUser: 101
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: cache
+              mountPath: /var/cache/nginx
+            - name: run
+              mountPath: /var/run
+        - name: unstable-sidecar
+          image: busybox:1.36
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -eu
+              echo "$(date -u +%FT%TZ) sidecar started"
+              sleep 15
+              echo "$(date -u +%FT%TZ) sidecar exits while main remains healthy"
+              exit 1
+          resources:
+            requests:
+              cpu: 5m
+              memory: 8Mi
+            limits:
+              cpu: 100m
+              memory: 32Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+            runAsNonRoot: true
+            runAsUser: 65534
+            readOnlyRootFilesystem: true
+      volumes:
+        - name: tmp
+          emptyDir: {}
+        - name: cache
+          emptyDir: {}
+        - name: run
+          emptyDir: {}
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
