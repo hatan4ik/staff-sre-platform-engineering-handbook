@@ -26,6 +26,11 @@ The labs intentionally use small, inspectable programs rather than hiding behavi
    - Reject stale fills with a version fence.
    - Compare independent misses with single-flight request coalescing.
 
+5. [Shard maps, online rebalancing, and ownership epochs](05-shard-rebalancing/README.md)
+   - Compare copy-only movement with copy, catch-up, cutover, and cleanup.
+   - Reject stale routers using monotonically increasing ownership epochs.
+   - Detect hot virtual shards and dominant-tenant traffic skew.
+
 ## Prerequisites
 
 - Python 3.11 or newer
@@ -62,10 +67,10 @@ For every lab:
 After completing a lab, practice explaining it in this order:
 
 1. **Invariant** — what must never happen.
-2. **Failure** — timeout, duplicate, pause, partition, race, or overload.
+2. **Failure** — timeout, duplicate, pause, partition, race, stale route, or overload.
 3. **Unsafe implementation** — why the obvious design fails.
-4. **Control** — idempotency, fencing, versioning, bounded retries, transactional state, or reconciliation.
-5. **Proof** — metrics, database constraints, audit records, versions, or rejected operations.
+4. **Control** — idempotency, fencing, versioning, ownership epochs, bounded retries, transactional state, or reconciliation.
+5. **Proof** — metrics, database constraints, audit records, versions, map epochs, or rejected operations.
 6. **Trade-off** — latency, availability, complexity, storage, or operational cost.
 
 The goal is not only to run the code. The goal is to be able to defend the design at Staff or Principal level.
