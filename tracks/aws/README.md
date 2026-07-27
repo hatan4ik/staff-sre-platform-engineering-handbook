@@ -92,8 +92,31 @@ Each completed chapter contains:
 | Round 1 | EKS, GitOps, Terraform, security, provisioning, autoscaling | Complete on `main` |
 | Round 2 | Incidents, troubleshooting, recovery, postmortems | Complete on `main` |
 | Round 3 | System design, global delivery, DR, observability, event platforms | Complete on `main` |
+| Practice | Board review, spoken drills, scorecard, story mapping | Complete initial set |
+| Labs | Cohort rollout failure, partial Terraform apply, Kubernetes restart evidence | Complete initial set |
 
-All 18 source questions now have Staff/Principal-level answer chapters. The next phase is review, mock interviews, hands-on labs, canonical-core extraction, and personal story mapping.
+All 18 source questions now have Staff/Principal-level answer chapters. The first review, mock-interview, personal-story, and executable-lab assets are also available. The next expansion is additional AWS failure labs, automated validation, and candidate-specific story completion.
+
+## Practice and calibration assets
+
+- [FAANG engineering board review](FAANG_BOARD_REVIEW.md)
+- [Mock interview scorecard](MOCK_INTERVIEW_SCORECARD.md)
+- [Spoken answer drills](SPOKEN_ANSWER_DRILLS.md)
+- [Personal story matrix](PERSONAL_STORY_MATRIX.md)
+- [Official source index](OFFICIAL_SOURCES.md)
+- [Executable AWS and EKS incident labs](../../labs/aws/README.md)
+
+Recommended loop:
+
+```text
+read one chapter
+  -> deliver the 90-second answer
+  -> run the related lab where available
+  -> attach one truthful production story
+  -> accept adversarial follow-ups
+  -> score the result
+  -> tighten unsupported claims
+```
 
 ## Current-version notes
 
