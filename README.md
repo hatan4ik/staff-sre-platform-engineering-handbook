@@ -90,18 +90,25 @@ Start with [`core/kubernetes/autoscaling/README.md`](core/kubernetes/autoscaling
 
 - [`control-loops-capacity-realization.md`](core/kubernetes/autoscaling/control-loops-capacity-realization.md) — HPA, VPA, KEDA, scheduler and node-supply loops; resource-request semantics; Cluster Autoscaler and Karpenter; Spot and durable baseline capacity; topology, disruption, end-to-end capacity-realization timelines, incident workflows, and validation.
 
-### Incident response and selective-failure analysis
+### Incident response and causal analysis
 
 Start with [`core/incident-response/README.md`](core/incident-response/README.md).
 
 - [`request-path-debugging.md`](core/incident-response/request-path-debugging.md) — client-to-dependency path isolation, status-code ownership, paired evidence, hypothesis discipline, reversible mitigation, evidence preservation, and external recovery proof.
 - [`cohort-analysis.md`](core/incident-response/cohort-analysis.md) — partial failures, rates and denominators, confounding, release and infrastructure cohorts, selective mitigation, privacy, cardinality, and cohort-specific recovery.
+- [`postmortems.md`](core/incident-response/postmortems.md) — impact quantification, fact-versus-inference timelines, causal graphs, response analysis, recovery debt, corrective-action governance, verification, and closure.
 
 ### Observability and diagnostic evidence
 
 Start with [`core/observability/README.md`](core/observability/README.md).
 
 - [`evidence-beyond-dashboards.md`](core/observability/evidence-beyond-dashboards.md) — alert validation, evidence hierarchy, paired traces, structured logs, metrics, profiles, changes, network and synthetic evidence, hypothesis ledgers, telemetry-pipeline health, and cardinality governance.
+
+### Reliability engineering, SLOs, and error budgets
+
+Start with [`core/reliability/README.md`](core/reliability/README.md).
+
+- [`slo/error-budgets.md`](core/reliability/slo/error-budgets.md) — user-centered SLIs, SLOs, SLAs, error-budget and burn-rate mathematics, denominator engineering, unknown handling, protected cohorts, multi-window alerting, ownership, release policy, capacity integration, and SLO-as-code governance.
 
 ### Service mesh, Envoy, Istio, and xDS
 
@@ -142,6 +149,14 @@ Start with [`labs/aws/README.md`](labs/aws/README.md).
 
 The current lab set requires no AWS account. Kubernetes experiments run on a disposable cluster; Terraform uses a local workspace; identity and autoscaling labs use deterministic Python simulations. CI compiles programs, runs unit and smoke tests, parses manifests, validates Terraform, executes the injected partial failure, and requires recovery to converge.
 
+### Reliability engineering labs
+
+Start with [`labs/reliability/README.md`](labs/reliability/README.md).
+
+1. [`01-error-budget`](labs/reliability/01-error-budget/README.md) — SLO and error-budget mathematics, multi-window burn policy, unknown telemetry, aggregate masking, protected cohorts, and release decisions.
+
+A dedicated workflow compiles the lab, runs unit tests, executes the deterministic scenario, and verifies the aggregate-health, protected-cohort, fast-burn, and mitigation-decision invariants.
+
 ## Canonical ownership rule
 
 A topic belongs in `core/` when it can answer questions for more than one company or role.
@@ -176,10 +191,10 @@ All 18 AWS source questions now have Staff/Principal-level chapters across infra
 ## Active delivery pipeline
 
 - Build canonical Kubernetes runtime, node-failure, fencing, repair, and image-qualification chapters and labs.
-- Build SLO, error-budget, incident-command, postmortem, disaster-recovery, and chaos modules.
+- Build disaster-recovery, blast-radius, overload, graceful-degradation, and chaos modules.
 - Expand OpenTelemetry, tracing, profiling, alert-quality, and high-volume observability-platform chapters.
 - Expand Envoy request-path, mTLS, DNS-capture, and multi-cluster service-mesh chapters and labs.
-- Extend automated validation into disposable-cluster execution, GitOps, identity, autoscaling, and incident-response labs.
+- Extend automated validation into disposable-cluster execution, GitOps, identity, autoscaling, incident-response, and recovery labs.
 - Replace duplicated Netflix, Tesla, and AWS theory with concise interview adapters after parity review.
 
 ## Core principle
