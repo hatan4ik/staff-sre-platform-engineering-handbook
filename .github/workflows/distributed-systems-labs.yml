@@ -71,3 +71,10 @@ jobs:
           all
           --json
           > /tmp/shard-rebalance-result.json
+
+      - name: Smoke-test queue redelivery demo
+        run: >-
+          python3 labs/distributed-systems/06-queue-redelivery/queue_delivery_demo.py
+          all
+          --json
+          > /tmp/queue-redelivery-result.json
