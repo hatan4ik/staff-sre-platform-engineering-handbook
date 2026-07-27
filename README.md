@@ -65,6 +65,12 @@ The ten-chapter module covers:
 - resilience, overload control, and cascading-failure containment
 - distributed observability, incident labs, and Staff/Principal design drills
 
+### Service mesh, Envoy, Istio, and xDS
+
+Start with [`core/service-mesh/README.md`](core/service-mesh/README.md).
+
+- [`fine-grained-service-discovery.md`](core/service-mesh/fine-grained-service-discovery.md) — registry, control-plane and data-plane separation, xDS, configuration fan-out, dependency scoping, sidecar and Ambient trade-offs, multi-cluster failure domains, convergence, and last-known-good behavior.
+
 ### eBPF and runtime security
 
 - [`core/ebpf-security/cilium-hubble-falco-tetragon.md`](core/ebpf-security/cilium-hubble-falco-tetragon.md) — Linux hook selection, Cilium dataplane and policy, Hubble evidence, Falco detection, Tetragon enforcement, failure modes, and safe migration.
@@ -126,7 +132,7 @@ Round 1 contains six Staff/Principal-level chapters:
 
 - Expand executable distributed-systems labs with network partitions, overload, and failure-recovery experiments.
 - Build Kubernetes node-failure, fencing, repair, and image-qualification labs.
-- Consolidate Kubernetes, Envoy, Istio, xDS, workload identity, and secrets chapters.
+- Expand Envoy request-path, mTLS, DNS-capture, and multi-cluster service-mesh chapters and labs.
 - Deepen Terraform state integrity, GitOps, EKS security, and autoscaling control-loop labs.
 - Connect Tesla, Netflix, and AWS interview adapters back to canonical chapters and runnable exercises.
 
