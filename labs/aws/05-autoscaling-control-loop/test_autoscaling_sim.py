@@ -96,7 +96,7 @@ class CapacityRealizationTests(unittest.TestCase):
             "metric_delay_seconds": 15.0,
             "hpa_reconcile_seconds": 15.0,
             "workload_controller_seconds": 2.0,
-            "node_decision_seconds": 5.0,
+            "node_decision_seconds": 0.0,
             "node_launch_seconds": 90.0,
             "pod_startup_seconds": 20.0,
             "target_health_seconds": 15.0,
@@ -109,7 +109,7 @@ class CapacityRealizationTests(unittest.TestCase):
         self.assertTrue(result.recovered)
         self.assertEqual(result.nodes_requested, 1)
         self.assertEqual(result.bottleneck, "node-provisioning-and-pod-startup")
-        self.assertEqual(result.recovery_seconds, 162.0)
+        self.assertEqual(result.recovery_seconds, 157.0)
 
     def test_warm_capacity_recovers_faster(self) -> None:
         cold = simulate_capacity_realization(self.base())
