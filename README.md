@@ -62,9 +62,13 @@ Start with [`core/kubernetes/README.md`](core/kubernetes/README.md).
 Canonical material now includes:
 
 - API-server, etcd, admission, LIST/WATCH, API Priority and Fairness, and control-plane latency;
+- scheduler queues, placement constraints, topology spread, preemption, and autoscaler handoff;
+- Services, EndpointSlices, CNI, DNS, NetworkPolicy, Ingress, Gateway API, TLS, dual stack, MTU, and conntrack;
+- PVC/PV/StorageClass, CSI provisioning, attach/detach, snapshots, writer fencing, and stateful recovery;
+- startup, liveness, readiness, EndpointSlice propagation, graceful shutdown, connection drain, and PDB behavior;
 - autoscaling and capacity realization;
 - node health, fencing, drain, repair, and replacement;
-- container restart, OOM, eviction, probe, PID 1, kubelet, and runtime debugging;
+- container restart, OOM, eviction, PID 1, kubelet, and runtime debugging;
 - immutable node-image qualification, canary promotion, rollout rings, and rollback.
 
 ### Distributed systems
@@ -146,6 +150,12 @@ Start with [`labs/distributed-systems/README.md`](labs/distributed-systems/READM
 
 Current scenarios cover retry amplification, transactional outbox, fencing tokens, cache races, shard rebalancing, and queue redelivery.
 
+### Kubernetes
+
+Start with [`labs/kubernetes/README.md`](labs/kubernetes/README.md).
+
+Current scenarios cover node-repair state machines plus a disposable three-node Kind conformance lab that proves `FailedScheduling`, Service DNS, EndpointSlice readiness propagation, liveness restart, graceful SIGTERM drain, replacement, and PDB behavior.
+
 ### AWS and EKS interview labs
 
 Start with [`labs/aws/README.md`](labs/aws/README.md).
@@ -164,7 +174,7 @@ Start with [`labs/observability/README.md`](labs/observability/README.md).
 
 The telemetry-pipeline lab covers critical-signal preservation, tenant quotas, cardinality policy, bounded queues, visible loss, freshness, and deterministic sampling.
 
-GitHub Actions compiles and runs the relevant deterministic lab suites and uploads machine-readable evidence reports.
+GitHub Actions compiles and runs deterministic lab suites, executes the disposable Kind conformance workflow, and uploads machine-readable evidence or failure logs.
 
 ## Canonical ownership rule
 
@@ -197,12 +207,11 @@ All 18 AWS source questions have Staff/Principal-level chapters. The track also 
 
 ## Remaining delivery pipeline
 
-The principal remaining engineering work is narrower than the original backlog:
+The principal remaining engineering work is now concentrated in integration and consolidation:
 
-- build disposable-cluster conformance for control-plane, node-image, probe, DNS, mesh, OpenTelemetry, and recovery failures;
-- add dedicated scheduler, Kubernetes networking/Gateway, and CSI/stateful-recovery chapters;
-- create direct service-mesh xDS, certificate-rotation, DNS-capture, and east-west-gateway labs;
-- add real OpenTelemetry Collector and alert-rule integration tests;
+- add direct service-mesh xDS, certificate-rotation, DNS-capture, and east-west-gateway labs;
+- add real OpenTelemetry Collector, trace-context, profile, and alert-rule integration tests;
+- extend disposable-cluster conformance to API overload, node-image promotion, NetworkPolicy/MTU, CSI recovery, and multi-cluster failures;
 - complete parity review and thin duplicated Netflix, Tesla, and AWS theory into concise adapters;
 - split `tracks/aws/` into a separate top-level adapter repository when repository-creation capability is available;
 - complete candidate-specific production metrics and evidence without inventing results.
