@@ -11,6 +11,7 @@ core/
 ├── kubernetes/
 ├── cloud/
 ├── platform-engineering/
+├── security/
 ├── service-mesh/
 ├── ebpf-security/
 ├── observability/
@@ -26,6 +27,7 @@ core/
 - [Linux](linux/README.md)
 - [Distributed systems](distributed-systems/README.md)
 - [Platform engineering](platform-engineering/README.md)
+- [Security](security/README.md)
 
 Additional domains are expanded incrementally. Company tracks should link to canonical foundations rather than duplicate them.
 
