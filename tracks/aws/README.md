@@ -53,8 +53,8 @@ Use two repeatable structures throughout the interview.
 
 ### Round 2 — Incident response, troubleshooting, and reliability
 
-7. Route 53-to-application outage troubleshooting
-8. EKS API latency doubles while nodes remain healthy
+7. [Route 53-to-application outage troubleshooting](round-2/07-route53-to-application-outage.md)
+8. [EKS API latency doubles while nodes remain healthy](round-2/08-eks-api-latency-nodes-healthy.md)
 9. Deployment succeeds but only a subset of users fail
 10. CloudWatch detects errors but dashboards do not reveal root cause
 11. Terraform apply fails midway and leaves partial infrastructure
@@ -69,19 +69,17 @@ Use two repeatable structures throughout the interview.
 17. Actionable observability with CloudWatch, OpenTelemetry, X-Ray, Prometheus, and Grafana
 18. Millions of real-time events per second with Kinesis, SQS, SNS, EventBridge, Lambda, and EKS
 
-## Round 1 completion standard
+## Chapter completion standard
 
-Each chapter contains:
+Each completed chapter contains:
 
 - a 90-second interview answer
-- explicit assumptions and scale math
-- architecture and control-flow diagrams
-- service selection with alternatives
-- production implementation details
+- explicit assumptions and scope
+- architecture, request-path, or control-flow diagrams
+- production investigation or implementation details
 - security and failure-mode analysis
-- deployment and rollback strategy
+- mitigation, rollback, and recovery validation
 - observability and SLOs
-- cost and quota considerations
 - adversarial follow-up questions
 - common weak answers to avoid
 
@@ -90,7 +88,7 @@ Each chapter contains:
 | Round | Scope | Status |
 |---|---|---|
 | Round 1 | EKS, GitOps, Terraform, security, provisioning, autoscaling | Complete on `main` |
-| Round 2 | Incidents, troubleshooting, recovery, postmortems | Planned next |
+| Round 2 | Incidents, troubleshooting, recovery, postmortems | In progress — questions 7–8 complete |
 | Round 3 | System design, global delivery, DR, observability, event platforms | Planned after Round 2 |
 
 ## Current-version notes
