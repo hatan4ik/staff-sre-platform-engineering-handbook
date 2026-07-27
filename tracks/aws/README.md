@@ -65,11 +65,11 @@ Use two repeatable structures throughout the interview.
 
 ### Round 3 — AWS system design, scalability, and leadership
 
-14. Highly available mobile backend for identity, notifications, remote access, and preferences
-15. Global secure software-update delivery to millions of devices
-16. Multi-region disaster recovery with minimal downtime and automated failover
-17. Actionable observability with CloudWatch, OpenTelemetry, X-Ray, Prometheus, and Grafana
-18. Millions of real-time events per second with Kinesis, SQS, SNS, EventBridge, Lambda, and EKS
+14. [Highly available mobile backend for authentication, notifications, remote access, and preferences](round-3/14-highly-available-mobile-backend.md)
+15. [Global secure software-update delivery to millions of devices](round-3/15-global-secure-software-updates.md)
+16. [Multi-Region disaster recovery with minimal downtime and automated failover](round-3/16-multi-region-disaster-recovery.md)
+17. [Actionable observability with CloudWatch, OpenTelemetry, X-Ray, Prometheus, and Grafana](round-3/17-actionable-observability-platform.md)
+18. [Millions of real-time events per second with Kinesis, SQS, SNS, EventBridge, Lambda, and EKS](round-3/18-millions-events-per-second.md)
 
 ## Chapter completion standard
 
@@ -89,9 +89,11 @@ Each completed chapter contains:
 
 | Round | Scope | Status |
 |---|---|---|
-| Round 1 | EKS, GitOps, Terraform, security, provisioning, autoscaling | Complete on `main` |
-| Round 2 | Incidents, troubleshooting, recovery, postmortems | Complete in this change |
-| Round 3 | System design, global delivery, DR, observability, event platforms | Next |
+| Round 1 | EKS, GitOps, Terraform, security, provisioning, autoscaling | Complete |
+| Round 2 | Incidents, troubleshooting, recovery, postmortems | Complete |
+| Round 3 | System design, global delivery, DR, observability, event platforms | Complete in this change |
+
+All 18 source questions now have Staff/Principal-level answer chapters. The next phase is review, mock interviews, hands-on labs, canonical-core extraction, and personal story mapping.
 
 ## Current-version notes
 
@@ -102,6 +104,9 @@ Each completed chapter contains:
 - For new EKS Container Insights deployments, use the current OpenTelemetry-based path; existing classic deployments may require a separate migration plan.
 - CloudWatch investigations can accelerate correlation across telemetry and changes, but generated hypotheses require evidence-based validation.
 - CloudTrail Lake is closed to new customers as of May 31, 2026; existing customers can continue, while new incident-analysis designs should use currently supported CloudWatch and durable CloudTrail architectures.
+- Cognito supports multi-Region replication for eligible user pools, but applications still own endpoint routing, write-authority limitations, federation configuration, and failover testing.
+- The legacy X-Ray SDKs and daemon entered maintenance mode on February 25, 2026; new instrumentation should use OpenTelemetry and export to AWS trace backends.
+- Kinesis Data Streams currently supports on-demand and provisioned operating models, including newer on-demand capabilities; capacity claims still require realistic byte rate, partition-key, consumer, and burst tests.
 
 ## Source discipline
 
@@ -109,6 +114,7 @@ Technical behavior should be verified against primary sources:
 
 - AWS EKS Best Practices Guides
 - AWS service documentation and quotas
+- AWS Well-Architected and Builders' Library guidance
 - Kubernetes documentation
 - HashiCorp Terraform documentation
 - Argo CD and Flux documentation
