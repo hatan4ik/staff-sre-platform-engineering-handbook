@@ -14,7 +14,21 @@ Reusable engineering foundations remain canonical in this repository's `core/` m
 - AWS-native identity, networking, security, observability, and recovery procedures
 - concise interview answers, whiteboard flows, adversarial follow-ups, and practical commands
 
-The track does **not** duplicate generic Kubernetes, Linux, Terraform, distributed-systems, or SRE textbooks.
+The track does **not** duplicate generic Kubernetes, Linux, Terraform, distributed-systems, security, autoscaling, or SRE textbooks.
+
+## Canonical prerequisites
+
+Use these shared chapters before the AWS-specific adapters:
+
+- [`core/security/identity/workload-identity-federation.md`](../../core/security/identity/workload-identity-federation.md) — Kubernetes projected tokens, EKS Pod Identity versus IRSA, cross-cloud federation, SPIFFE/SPIRE, node-role protection, rotation, and incident evidence.
+- [`core/kubernetes/autoscaling/control-loops-capacity-realization.md`](../../core/kubernetes/autoscaling/control-loops-capacity-realization.md) — HPA, VPA, KEDA, scheduler and node-supply loops, Cluster Autoscaler versus Karpenter, disruption, topology, and capacity-realization SLIs.
+- [`core/infrastructure-as-code/terraform-state-integrity.md`](../../core/infrastructure-as-code/terraform-state-integrity.md) — state integrity, current S3 lock files, legacy DynamoDB locking, partial-apply reconciliation, and one-writer recovery.
+- [`core/infrastructure-as-code/tool-selection-and-governance.md`](../../core/infrastructure-as-code/tool-selection-and-governance.md) — Terraform, CloudFormation, CDK, policy, ownership, and migration principles.
+- [`core/delivery-gitops/gitops-progressive-delivery.md`](../../core/delivery-gitops/gitops-progressive-delivery.md) — reconciliation, promotion, progressive delivery, rollback, pruning, and resource ownership.
+- [`core/service-mesh/fine-grained-service-discovery.md`](../../core/service-mesh/fine-grained-service-discovery.md) — service discovery, xDS, dependency scoping, control-plane failure, and convergence.
+- [`core/linux/README.md`](../../core/linux/README.md) and [`core/distributed-systems/README.md`](../../core/distributed-systems/README.md).
+
+AWS chapters retain AWS-specific implementation details, service limits, failure behavior, commands, and interview framing after canonical parity is confirmed.
 
 ## Staff-level answer method
 
