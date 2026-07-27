@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the platform-engineering lab happy paths and expected-denial scenario."""
+"""Run platform-engineering lab happy paths and expected-denial scenarios."""
 
 from __future__ import annotations
 
@@ -70,6 +70,37 @@ def main() -> int:
             ),
             0,
             "TRUSTED:",
+        ),
+        Scenario(
+            "fleet rollout planner",
+            (
+                python,
+                str(root / "05-fleet-rollout-planner" / "plan_rollout.py"),
+                str(root / "05-fleet-rollout-planner" / "clusters.json"),
+                str(root / "05-fleet-rollout-planner" / "release-policy.json"),
+                "--now",
+                "2026-07-27T12:00:00Z",
+            ),
+            0,
+            "PLANNED:",
+        ),
+        Scenario(
+            "secret delivery contract",
+            (
+                python,
+                str(
+                    root
+                    / "06-secret-delivery-contract"
+                    / "validate_secret_contract.py"
+                ),
+                str(
+                    root
+                    / "06-secret-delivery-contract"
+                    / "secret-contract.json"
+                ),
+            ),
+            0,
+            "VALID:",
         ),
     )
 

@@ -1,0 +1,92 @@
+[
+  {
+    "clusterId": "int-us-east-1-001",
+    "clusterClass": "shared-standard",
+    "lifecycleState": "Active",
+    "region": "us-east-1",
+    "failureDomain": "us-east-1a",
+    "rolloutRing": "ring-0-integration",
+    "kubernetesVersion": "1.35.3",
+    "baselineVersion": "31.2.0",
+    "lastConformancePass": "2026-07-27T09:00:00Z",
+    "maintenance": {
+      "startHourUtc": 0,
+      "durationHours": 24
+    }
+  },
+  {
+    "clusterId": "stg-us-west-2-004",
+    "clusterClass": "shared-standard",
+    "lifecycleState": "Active",
+    "region": "us-west-2",
+    "failureDomain": "us-west-2b",
+    "rolloutRing": "ring-1-staging",
+    "kubernetesVersion": "1.35.3",
+    "baselineVersion": "31.2.0",
+    "lastConformancePass": "2026-07-27T08:30:00Z",
+    "maintenance": {
+      "startHourUtc": 0,
+      "durationHours": 24
+    }
+  },
+  {
+    "clusterId": "prod-us-east-1-017",
+    "clusterClass": "shared-standard",
+    "lifecycleState": "Active",
+    "region": "us-east-1",
+    "failureDomain": "us-east-1b",
+    "rolloutRing": "ring-2-production-canary",
+    "kubernetesVersion": "1.35.3",
+    "baselineVersion": "31.2.0",
+    "lastConformancePass": "2026-07-27T07:00:00Z",
+    "maintenance": {
+      "startHourUtc": 0,
+      "durationHours": 24
+    }
+  },
+  {
+    "clusterId": "prod-us-west-2-021",
+    "clusterClass": "shared-standard",
+    "lifecycleState": "Active",
+    "region": "us-west-2",
+    "failureDomain": "us-west-2a",
+    "rolloutRing": "ring-3-production",
+    "kubernetesVersion": "1.35.3",
+    "baselineVersion": "31.2.0",
+    "lastConformancePass": "2026-07-27T06:00:00Z",
+    "maintenance": {
+      "startHourUtc": 0,
+      "durationHours": 24
+    }
+  },
+  {
+    "clusterId": "prod-eu-west-1-008",
+    "clusterClass": "shared-standard",
+    "lifecycleState": "Active",
+    "region": "eu-west-1",
+    "failureDomain": "eu-west-1c",
+    "rolloutRing": "ring-3-production",
+    "kubernetesVersion": "1.35.2",
+    "baselineVersion": "31.1.4",
+    "lastConformancePass": "2026-07-27T05:00:00Z",
+    "maintenance": {
+      "startHourUtc": 22,
+      "durationHours": 4
+    }
+  },
+  {
+    "clusterId": "regulated-us-east-2-003",
+    "clusterClass": "regulated-dedicated",
+    "lifecycleState": "Active",
+    "region": "us-east-2",
+    "failureDomain": "us-east-2a",
+    "rolloutRing": "ring-4-special",
+    "kubernetesVersion": "1.34.7",
+    "baselineVersion": "30.9.1",
+    "lastConformancePass": "2026-07-10T04:00:00Z",
+    "maintenance": {
+      "startHourUtc": 3,
+      "durationHours": 2
+    }
+  }
+]

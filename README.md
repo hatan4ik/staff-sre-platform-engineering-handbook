@@ -6,7 +6,7 @@ A canonical, company-neutral engineering handbook for Staff/Principal SRE, Platf
 
 ## Why this repository exists
 
-The Netflix-scale, Tesla SRE, and AWS DevOps interview tracks share most engineering foundations: Linux, Kubernetes, networking, observability, incident response, Terraform, security, autoscaling, service mesh, multi-region design, distributed systems, SLOs, and leadership.
+The Netflix-scale, Tesla SRE, and AWS DevOps interview tracks share most engineering foundations: Linux, Kubernetes, networking, observability, incident response, Terraform, security, autoscaling, service mesh, multi-region design, distributed systems, SLOs, platform engineering, and leadership.
 
 Those foundations are written **once here**. Company or platform tracks contain domain-specific scenarios, answer adapters, mock interviews, and operating context.
 
@@ -14,11 +14,8 @@ Those foundations are written **once here**. Company or platform tracks contain 
 Canonical shared handbook
         |
         +-- Netflix interview adapters
-        |
         +-- Tesla interview adapters
-        |
         +-- AWS / Amazon EKS interview adapters
-        |
         +-- future company or role tracks
 ```
 
@@ -29,7 +26,7 @@ core/                       Canonical technical chapters
 tracks/netflix/             Netflix/media-delivery question adapters
 tracks/tesla/               Tesla/connected-vehicle question adapters
 tracks/aws/                 AWS and Amazon EKS question adapters
-labs/                       Executable failure experiments
+labs/                       Executable failure and decision experiments
 playbooks/                  Incident and architecture answer frameworks
 diagrams/                   Shared diagrams and whiteboard models
 curriculum-map.md            Question-to-core-chapter mapping
@@ -37,6 +34,29 @@ MIGRATION_PLAN.md            Consolidation status and source ownership
 ```
 
 ## Canonical modules
+
+### Platform engineering
+
+Start with [`core/platform-engineering/README.md`](core/platform-engineering/README.md).
+
+The module covers:
+
+1. platform as a product, golden paths, paved roads, and escape hatches;
+2. Internal Developer Platform interfaces, orchestration, provisioning, delivery, runtime, and evidence planes;
+3. software catalogs, developer portals, Backstage, templates, TechDocs, plugins, and metadata governance;
+4. self-service infrastructure with outcome APIs, Terraform, Crossplane, and GitOps;
+5. platform SLOs, adoption, developer experience, economics, support tiers, and operating model;
+6. policy as code, native Kubernetes admission, Gatekeeper, Kyverno, exceptions, and staged enforcement;
+7. Kubernetes multi-tenancy, namespace versus cluster boundaries, identity, network, storage, quota, and conformance;
+8. multi-cluster fleet lifecycle, Cluster API, GitOps topology, rollout rings, compatibility, replacement, and decommissioning.
+
+### Security: identity, secrets, and artifact trust
+
+Start with [`core/security/README.md`](core/security/README.md).
+
+- [`identity/workload-identity-federation.md`](core/security/identity/workload-identity-federation.md) — projected ServiceAccount tokens, audience restriction, EKS Pod Identity and IRSA, Microsoft Entra Workload ID, GKE Workload Identity Federation, cross-cloud exchange, SPIFFE/SPIRE, node-role protection, rotation, and negative testing.
+- [`secrets/secret-delivery-rotation-kubernetes.md`](core/security/secrets/secret-delivery-rotation-kubernetes.md) — secret authority, dynamic credentials, direct retrieval, agents, CSI mounts, External Secrets Operator, Vault, Kubernetes Secret risk, rotation, reload, revocation, regional recovery, CI/CD, and Terraform state.
+- [`software-supply-chain/artifact-trust-slsa-sigstore.md`](core/security/software-supply-chain/artifact-trust-slsa-sigstore.md) — digests, signatures, provenance, attestations, SBOMs, SLSA, Sigstore/Cosign, trusted builders, deployment verification, runtime inventory, and compromise response.
 
 ### Linux internals and production debugging
 
@@ -56,47 +76,41 @@ Start with [`core/distributed-systems/README.md`](core/distributed-systems/READM
 
 The ten-chapter module covers:
 
-- partial failure, time, ordering, deadlines, retries, idempotency, and backpressure
-- consistency models, CAP, PACELC, invariants, and transaction boundaries
-- replication, quorum, failover, consensus, leases, and fencing
-- partitioning, sharding, rebalancing, hot keys, and skew
-- messaging, streams, delivery semantics, outbox/inbox patterns, and sagas
-- caching, invalidation, CDNs, and edge consistency
-- resilience, overload control, and cascading-failure containment
-- distributed observability, incident labs, and Staff/Principal design drills
+- partial failure, time, ordering, deadlines, retries, idempotency, and backpressure;
+- consistency models, CAP, PACELC, invariants, and transaction boundaries;
+- replication, quorum, failover, consensus, leases, and fencing;
+- partitioning, sharding, rebalancing, hot keys, and skew;
+- messaging, streams, delivery semantics, outbox/inbox patterns, and sagas;
+- caching, invalidation, CDNs, and edge consistency;
+- resilience, overload control, and cascading-failure containment;
+- distributed observability, incident labs, and Staff/Principal design drills.
 
 ### Infrastructure as code and Terraform governance
 
 Start with [`core/infrastructure-as-code/README.md`](core/infrastructure-as-code/README.md).
 
-- [`terraform-state-integrity.md`](core/infrastructure-as-code/terraform-state-integrity.md) — state bindings, locking, force-unlock safety, partial-apply recovery, current S3 lock files, legacy DynamoDB migration, state boundaries, CI concurrency, drift, and break-glass governance.
-- [`tool-selection-and-governance.md`](core/infrastructure-as-code/tool-selection-and-governance.md) — declarative, cloud-native, programming-language, GitOps, configuration-management, and control-plane tool choices; one-owner rules; policy; promotion; rollback; and migration.
+- [`terraform-state-integrity.md`](core/infrastructure-as-code/terraform-state-integrity.md) — state bindings, locking, partial-apply recovery, state boundaries, CI concurrency, drift, and break-glass governance.
+- [`tool-selection-and-governance.md`](core/infrastructure-as-code/tool-selection-and-governance.md) — declarative, cloud-native, programming-language, GitOps, configuration-management, and control-plane choices; ownership; policy; promotion; rollback; and migration.
 
 ### GitOps and progressive delivery
 
 Start with [`core/delivery-gitops/README.md`](core/delivery-gitops/README.md).
 
-- [`gitops-progressive-delivery.md`](core/delivery-gitops/gitops-progressive-delivery.md) — build, promotion, and reconciliation boundaries; resource ownership; CRDs; pruning; secrets; multi-cluster rollout; canary analysis; rollback; and Argo CD/Flux mappings.
-
-### Workload identity, federation, and authorization
-
-Start with [`core/security/identity/README.md`](core/security/identity/README.md).
-
-- [`workload-identity-federation.md`](core/security/identity/workload-identity-federation.md) — projected ServiceAccount tokens, audience restriction, EKS Pod Identity and IRSA, Microsoft Entra Workload ID, GKE Workload Identity Federation, cross-cloud token exchange, SPIFFE/SPIRE, node-role protection, credential-provider chains, rotation, failure behavior, and negative testing.
+- [`gitops-progressive-delivery.md`](core/delivery-gitops/gitops-progressive-delivery.md) — build, promotion, and reconciliation boundaries; ownership; CRDs; pruning; secrets; multi-cluster rollout; canary analysis; rollback; and Argo CD/Flux mappings.
 
 ### Kubernetes autoscaling and capacity realization
 
 Start with [`core/kubernetes/autoscaling/README.md`](core/kubernetes/autoscaling/README.md).
 
-- [`control-loops-capacity-realization.md`](core/kubernetes/autoscaling/control-loops-capacity-realization.md) — HPA, VPA, KEDA, scheduler and node-supply loops; resource-request semantics; Cluster Autoscaler and Karpenter; Spot and durable baseline capacity; topology, disruption, end-to-end capacity-realization timelines, incident workflows, and validation.
+- [`control-loops-capacity-realization.md`](core/kubernetes/autoscaling/control-loops-capacity-realization.md) — HPA, VPA, KEDA, scheduler and node-supply loops; requests; Cluster Autoscaler and Karpenter; Spot; topology; disruption; recovery timelines; and validation.
 
 ### Incident response and causal analysis
 
 Start with [`core/incident-response/README.md`](core/incident-response/README.md).
 
-- [`request-path-debugging.md`](core/incident-response/request-path-debugging.md) — client-to-dependency path isolation, status-code ownership, paired evidence, hypothesis discipline, reversible mitigation, evidence preservation, and external recovery proof.
-- [`cohort-analysis.md`](core/incident-response/cohort-analysis.md) — partial failures, rates and denominators, confounding, release and infrastructure cohorts, selective mitigation, privacy, cardinality, and cohort-specific recovery.
-- [`postmortems.md`](core/incident-response/postmortems.md) — impact quantification, fact-versus-inference timelines, causal graphs, response analysis, recovery debt, corrective-action governance, verification, and closure.
+- [`request-path-debugging.md`](core/incident-response/request-path-debugging.md) — client-to-dependency isolation, status-code ownership, paired evidence, hypothesis discipline, reversible mitigation, and external recovery proof.
+- [`cohort-analysis.md`](core/incident-response/cohort-analysis.md) — partial failures, rates and denominators, confounding, release and infrastructure cohorts, selective mitigation, privacy, and cardinality.
+- [`postmortems.md`](core/incident-response/postmortems.md) — impact, fact-versus-inference timelines, causal graphs, response analysis, recovery debt, corrective-action governance, verification, and closure.
 
 ### Observability and diagnostic evidence
 
@@ -108,7 +122,7 @@ Start with [`core/observability/README.md`](core/observability/README.md).
 
 Start with [`core/reliability/README.md`](core/reliability/README.md).
 
-- [`slo/error-budgets.md`](core/reliability/slo/error-budgets.md) — user-centered SLIs, SLOs, SLAs, error-budget and burn-rate mathematics, denominator engineering, unknown handling, protected cohorts, multi-window alerting, ownership, release policy, capacity integration, and SLO-as-code governance.
+- [`slo/error-budgets.md`](core/reliability/slo/error-budgets.md) — user-centered SLIs, SLOs, SLAs, error-budget and burn-rate mathematics, denominator engineering, unknown handling, protected cohorts, multi-window alerting, ownership, release policy, capacity integration, and SLO-as-code.
 
 ### Service mesh, Envoy, Istio, and xDS
 
@@ -122,40 +136,51 @@ Start with [`core/service-mesh/README.md`](core/service-mesh/README.md).
 
 ## Executable labs
 
+### Platform engineering labs
+
+Start with [`labs/platform-engineering/README.md`](labs/platform-engineering/README.md).
+
+1. golden-path contract;
+2. staged policy rollout;
+3. tenant-isolation contract;
+4. artifact-trust verification;
+5. multi-cluster fleet rollout planning;
+6. secret-delivery and rotation contract.
+
+Run all current platform scenarios with:
+
+```bash
+python3 labs/platform-engineering/run_all.py
+```
+
 ### Distributed-systems labs
 
 Start with [`labs/distributed-systems/README.md`](labs/distributed-systems/README.md).
 
-These runnable labs use Python's standard library and include automated tests:
-
-1. [`01-retry-amplification`](labs/distributed-systems/01-retry-amplification/README.md) — layered retries, retry ownership, backoff, jitter, and retry-wave evidence.
-2. [`02-transactional-outbox`](labs/distributed-systems/02-transactional-outbox/README.md) — atomic business state plus outbox insertion, relay crash, duplicate delivery, and idempotent consumption.
-3. [`03-fencing-tokens`](labs/distributed-systems/03-fencing-tokens/README.md) — lease expiry, paused former owners, stale writes, and resource-enforced fencing.
-4. [`04-cache-races`](labs/distributed-systems/04-cache-races/README.md) — stale-fill resurrection, version fences, cache stampedes, and single-flight control.
-5. [`05-shard-rebalancing`](labs/distributed-systems/05-shard-rebalancing/README.md) — virtual shards, copy/catch-up/cutover/cleanup, ownership epochs, stale-router rejection, hot-shard detection, and tenant skew.
-6. [`06-queue-redelivery`](labs/distributed-systems/06-queue-redelivery/README.md) — crash-before-ack duplicates, consumer inbox idempotency, visibility timeouts, DLQs, and ordered-group blocking.
-
-GitHub Actions compiles these lab programs, runs invariant tests, and executes smoke scenarios on every relevant push or pull request.
+1. retry amplification;
+2. transactional outbox;
+3. fencing tokens;
+4. cache races;
+5. shard rebalancing;
+6. queue redelivery.
 
 ### AWS and EKS interview labs
 
 Start with [`labs/aws/README.md`](labs/aws/README.md).
 
-1. [`01-cohort-deployment-failure`](labs/aws/01-cohort-deployment-failure/README.md) — a successful rollout where only the new version and one request cohort fail.
-2. [`02-terraform-partial-apply`](labs/aws/02-terraform-partial-apply/README.md) — a safe local partial apply followed by configuration/state/reality reconciliation.
-3. [`03-kubernetes-restart-evidence`](labs/aws/03-kubernetes-restart-evidence/README.md) — OOM and sidecar restarts while application health checks appear successful.
-4. [`04-workload-identity-claims`](labs/aws/04-workload-identity-claims/README.md) — issuer, audience, subject, environment, lifetime, static-key shadowing, and node-role fallback.
-5. [`05-autoscaling-control-loop`](labs/aws/05-autoscaling-control-loop/README.md) — HPA request semantics, warm versus cold capacity, dependency limits, and user-SLI recovery timelines.
-
-The current lab set requires no AWS account. Kubernetes experiments run on a disposable cluster; Terraform uses a local workspace; identity and autoscaling labs use deterministic Python simulations. CI compiles programs, runs unit and smoke tests, parses manifests, validates Terraform, executes the injected partial failure, and requires recovery to converge.
+1. cohort deployment failure;
+2. Terraform partial apply;
+3. Kubernetes restart evidence;
+4. workload-identity claims;
+5. autoscaling control loops.
 
 ### Reliability engineering labs
 
 Start with [`labs/reliability/README.md`](labs/reliability/README.md).
 
-1. [`01-error-budget`](labs/reliability/01-error-budget/README.md) — SLO and error-budget mathematics, multi-window burn policy, unknown telemetry, aggregate masking, protected cohorts, and release decisions.
+1. error-budget mathematics, burn policy, unknown telemetry, protected cohorts, and release decisions.
 
-A dedicated workflow compiles the lab, runs unit tests, executes the deterministic scenario, and verifies the aggregate-health, protected-cohort, fast-burn, and mitigation-decision invariants.
+GitHub Actions compiles and runs the relevant deterministic lab suites on changes to their paths.
 
 ## Canonical ownership rule
 
@@ -163,25 +188,23 @@ A topic belongs in `core/` when it can answer questions for more than one compan
 
 A track chapter should contain only:
 
-1. Original company- or platform-style question.
-2. Domain context and assumptions.
-3. A concise interview answer.
-4. Links to required core chapters.
-5. Domain-specific failure modes and trade-offs.
-6. Adversarial follow-ups.
-7. Personal-story mapping.
+1. the original company- or platform-style question;
+2. domain context and assumptions;
+3. a concise interview answer;
+4. links to required core chapters;
+5. domain-specific failure modes and trade-offs;
+6. adversarial follow-ups;
+7. personal-story mapping.
 
-A track must not become a second conflicting Linux, Kubernetes, Terraform, service-mesh, observability, incident-response, reliability, security, autoscaling, or distributed-systems source of truth. Transitional deep chapters are migrated into `core/` as canonical coverage is completed.
+A track must not become a second conflicting Linux, Kubernetes, Terraform, platform-engineering, service-mesh, observability, incident-response, reliability, security, autoscaling, or distributed-systems source of truth.
 
 ## Existing interview tracks
 
 - [Netflix-scale DevOps interview track](https://github.com/hatan4ik/netflix-devops-interview)
 - [Tesla SRE interview track](https://github.com/hatan4ik/tesla-sre-interview)
-- [`tracks/aws/README.md`](tracks/aws/README.md) — AWS DevOps, Amazon EKS, GitOps, Terraform, incident-response, and system-design interview track.
+- [`tracks/aws/README.md`](tracks/aws/README.md) — AWS DevOps, Amazon EKS, GitOps, Terraform, incident-response, and system-design track.
 
-## AWS track
-
-All 18 AWS source questions now have Staff/Principal-level chapters across infrastructure, incidents, and system design. The track also includes a board review, spoken-answer drills, a mock-interview scorecard, a personal-story matrix, an official-source index, and executable labs.
+All 18 AWS source questions have Staff/Principal-level chapters across infrastructure, incidents, and system design. The track also includes board review, spoken-answer drills, a mock-interview scorecard, a personal-story matrix, an official-source index, and executable labs.
 
 ## Coordination
 
@@ -194,7 +217,7 @@ All 18 AWS source questions now have Staff/Principal-level chapters across infra
 - Build disaster-recovery, blast-radius, overload, graceful-degradation, and chaos modules.
 - Expand OpenTelemetry, tracing, profiling, alert-quality, and high-volume observability-platform chapters.
 - Expand Envoy request-path, mTLS, DNS-capture, and multi-cluster service-mesh chapters and labs.
-- Extend automated validation into disposable-cluster execution, GitOps, identity, autoscaling, incident-response, and recovery labs.
+- Extend platform labs from declarative simulations into disposable-cluster conformance and recovery exercises.
 - Replace duplicated Netflix, Tesla, and AWS theory with concise interview adapters after parity review.
 
 ## Core principle
