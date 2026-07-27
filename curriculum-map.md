@@ -21,7 +21,7 @@ This map prevents duplicate chapter development across company- and platform-spe
 | Workload identity, federation, SPIFFE, cloud IAM | `core/security/identity/` | Yes | Yes | Yes |
 | Network isolation and secrets | `core/security/` | Yes | Yes | Yes |
 | SLOs and error budgets | `core/reliability/slo/` | Yes | Yes | Yes |
-| Incident command and RCA | `core/incident-response/` | Yes | Yes | Yes |
+| Request paths, cohorts, incident command, postmortems | `core/incident-response/` | Yes | Yes | Yes |
 | Multi-region and disaster recovery | `core/reliability/disaster-recovery/` | Yes | Yes | Yes |
 | Messaging, streams, idempotency, and backpressure | `core/distributed-systems/` | Yes | Yes | Yes |
 | Chaos engineering | `core/reliability/chaos/` | Yes | Yes | Yes |
@@ -40,25 +40,27 @@ This map prevents duplicate chapter development across company- and platform-spe
 | Netflix DNS scenario | `core/networking/kubernetes-dns-failure.md` |
 | Netflix Terraform scenario | `core/infrastructure-as-code/terraform-state-integrity.md` |
 | Netflix HPA scenario | `core/kubernetes/autoscaling/control-loops-capacity-realization.md` |
-| Tesla Kubernetes/fleet chapter foundations | Shared Kubernetes, multi-region, GitOps, identity, and reliability chapters |
+| Netflix SLO and error-budget scenario | `core/reliability/slo/error-budgets.md` |
+| Netflix 504 and partial-failure reasoning | `core/incident-response/request-path-debugging.md`, `core/incident-response/cohort-analysis.md`, and `core/observability/evidence-beyond-dashboards.md` |
+| Tesla Kubernetes/fleet chapter foundations | Shared Kubernetes, multi-region, GitOps, identity, reliability, and incident-response chapters |
 | AWS Round 1 multi-AZ EKS chapter | `core/kubernetes/`, `core/networking/`, `core/reliability/`, and `core/cloud/` |
 | AWS Round 1 GitOps chapter | `core/delivery-gitops/gitops-progressive-delivery.md` and `core/infrastructure-as-code/` |
 | AWS Round 1 Terraform-state chapter | `core/infrastructure-as-code/terraform-state-integrity.md` |
 | AWS Round 1 EKS-security chapter | `core/security/identity/workload-identity-federation.md`, `core/security/network/`, and `core/security/secrets/` |
 | AWS Round 1 provisioning-tool chapter | `core/infrastructure-as-code/tool-selection-and-governance.md` |
 | AWS Round 1 autoscaling chapter | `core/kubernetes/autoscaling/control-loops-capacity-realization.md` and `core/reliability/capacity/` |
-| AWS Round 2 request-path outage chapter | `core/networking/` and `core/incident-response/request-path-debugging.md` |
+| AWS Round 2 request-path outage chapter | `core/incident-response/request-path-debugging.md` and `core/networking/` |
 | AWS Round 2 control-plane latency chapter | `core/kubernetes/control-plane/` and `core/observability/` |
 | AWS Round 2 application-latency chapter | `core/observability/` and `core/reliability/latency-analysis.md` |
 | AWS Round 2 cohort-failure chapter | `core/incident-response/cohort-analysis.md` and `core/delivery-gitops/gitops-progressive-delivery.md` |
 | AWS Round 2 evidence chapter | `core/observability/evidence-beyond-dashboards.md` |
 | AWS Round 2 partial-apply chapter | `core/infrastructure-as-code/terraform-state-integrity.md` |
 | AWS Round 2 restart chapter | `core/kubernetes/runtime-debugging.md` and `core/linux/` |
-| AWS Round 2 postmortem chapter | `core/incident-response/postmortems.md` and `core/leadership/` |
+| AWS Round 2 postmortem chapter | `core/incident-response/postmortems.md` and `core/reliability/slo/error-budgets.md` |
 | AWS Round 3 mobile-backend chapter | `core/security/identity/workload-identity-federation.md`, `core/distributed-systems/`, `core/reliability/`, and `core/cloud/` |
 | AWS Round 3 secure-update chapter | `core/delivery-gitops/`, `core/security/supply-chain/`, `core/reliability/blast-radius.md`, and `core/observability/high-volume-telemetry.md` |
 | AWS Round 3 disaster-recovery chapter | `core/reliability/disaster-recovery/`, `core/distributed-systems/replication/`, and `core/networking/` |
-| AWS Round 3 observability-platform chapter | `core/observability/`, `core/reliability/slo/`, and `core/incident-response/` |
+| AWS Round 3 observability-platform chapter | `core/observability/`, `core/reliability/slo/error-budgets.md`, and `core/incident-response/` |
 | AWS Round 3 event-platform chapter | `core/distributed-systems/messaging/`, `core/reliability/backpressure/`, and `core/cloud/streaming/` |
 
 ## AWS Round 1 question map
@@ -76,14 +78,14 @@ This map prevents duplicate chapter development across company- and platform-spe
 
 | Question | AWS adapter | Canonical prerequisites |
 |---|---|---|
-| Route 53 to application outage | `tracks/aws/round-2/07-route53-to-application-outage.md` | DNS, TLS, edge, load balancing, VPC, Kubernetes request paths |
+| Route 53 to application outage | `tracks/aws/round-2/07-route53-to-application-outage.md` | `core/incident-response/request-path-debugging.md`, DNS, TLS, edge, load balancing, VPC, Kubernetes request paths |
 | Kubernetes API latency | `tracks/aws/round-2/08-eks-api-latency-nodes-healthy.md` | API-server behavior, LIST/WATCH, admission, controller load, control-plane SLOs |
-| Application API latency | `tracks/aws/round-2/08b-application-api-latency-nodes-healthy.md` | RED/USE, histograms, tracing, profiling, dependency saturation |
-| Subset of users fail | `tracks/aws/round-2/09-subset-users-fail-after-deployment.md` | cohort analysis, progressive delivery, routing, data partitions |
-| Dashboards do not show cause | `tracks/aws/round-2/10-beyond-cloudwatch-dashboards.md` | logs, traces, changes, configuration, network evidence |
+| Application API latency | `tracks/aws/round-2/08b-application-api-latency-nodes-healthy.md` | `core/observability/evidence-beyond-dashboards.md`, RED/USE, histograms, tracing, profiling, dependency saturation |
+| Subset of users fail | `tracks/aws/round-2/09-subset-users-fail-after-deployment.md` | `core/incident-response/cohort-analysis.md`, progressive delivery, routing, data partitions |
+| Dashboards do not show cause | `tracks/aws/round-2/10-beyond-cloudwatch-dashboards.md` | `core/observability/evidence-beyond-dashboards.md` |
 | Terraform partial apply | `tracks/aws/round-2/11-terraform-partial-apply-recovery.md` | `core/infrastructure-as-code/terraform-state-integrity.md` |
 | Pods restart with healthy probes | `tracks/aws/round-2/12-pods-restart-probes-healthy.md` | pod lifecycle, cgroups, OOM, kubelet, disruption controllers |
-| Large outage postmortem | `tracks/aws/round-2/13-large-aws-outage-postmortem.md` | SLOs, incident command, causal analysis, corrective actions |
+| Large outage postmortem | `tracks/aws/round-2/13-large-aws-outage-postmortem.md` | `core/incident-response/postmortems.md`, `core/reliability/slo/error-budgets.md` |
 
 ## AWS Round 3 question map
 
@@ -92,7 +94,7 @@ This map prevents duplicate chapter development across company- and platform-spe
 | Mobile backend | `tracks/aws/round-3/14-highly-available-mobile-backend.md` | authentication, authorization, idempotency, command state, notification delivery, multi-Region cells |
 | Secure software updates | `tracks/aws/round-3/15-global-secure-software-updates.md` | artifact provenance, PKI, staged rollout, device-local rollback, high-volume telemetry |
 | Multi-Region DR | `tracks/aws/round-3/16-multi-region-disaster-recovery.md` | RTO/RPO, replication, fencing, routing, failover/failback, data reconciliation |
-| Actionable observability | `tracks/aws/round-3/17-actionable-observability-platform.md` | OpenTelemetry, RED/USE, Prometheus, tracing, SLO burn alerts, alert routing |
+| Actionable observability | `tracks/aws/round-3/17-actionable-observability-platform.md` | OpenTelemetry, `core/observability/evidence-beyond-dashboards.md`, `core/reliability/slo/error-budgets.md` |
 | Millions of events/second | `tracks/aws/round-3/18-millions-events-per-second.md` | partitioning, streams, queues, idempotency, backpressure, replay, multi-Region ingestion |
 
 ## Example question adapters
@@ -101,10 +103,12 @@ This map prevents duplicate chapter development across company- and platform-spe
 
 Required core reading:
 
-- `core/networking/http-timeouts.md`
-- `core/service-mesh/envoy-debugging.md`
-- `core/observability/distributed-tracing.md`
-- `core/reliability/graceful-degradation.md`
+- `core/incident-response/request-path-debugging.md`
+- `core/incident-response/cohort-analysis.md`
+- `core/observability/evidence-beyond-dashboards.md`
+- `core/service-mesh/fine-grained-service-discovery.md`
+- future `core/networking/http-timeouts.md`
+- future `core/reliability/graceful-degradation.md`
 
 Netflix adapter adds:
 
@@ -120,10 +124,11 @@ Required core reading:
 
 - `core/delivery-gitops/gitops-progressive-delivery.md`
 - `core/security/identity/workload-identity-federation.md`
-- `core/reliability/blast-radius.md`
-- `core/cloud/pki-certificate-rotation.md`
-- `core/observability/high-volume-telemetry.md`
-- `core/incident-response/rollback-decisions.md`
+- `core/reliability/slo/error-budgets.md`
+- future `core/reliability/blast-radius.md`
+- future `core/cloud/pki-certificate-rotation.md`
+- future `core/observability/high-volume-telemetry.md`
+- future `core/incident-response/rollback-decisions.md`
 
 Tesla adapter adds:
 
@@ -140,8 +145,8 @@ Required core reading:
 - `core/kubernetes/`
 - `core/kubernetes/autoscaling/control-loops-capacity-realization.md`
 - `core/security/identity/workload-identity-federation.md`
+- `core/reliability/slo/error-budgets.md`
 - `core/networking/`
-- `core/reliability/`
 - `core/distributed-systems/`
 
 AWS adapter adds:
@@ -156,8 +161,9 @@ AWS adapter adds:
 
 Required core reading:
 
+- `core/incident-response/request-path-debugging.md`
 - `core/incident-response/cohort-analysis.md`
-- `core/networking/`
+- `core/observability/evidence-beyond-dashboards.md`
 - `core/delivery-gitops/gitops-progressive-delivery.md`
 - `core/distributed-systems/partitioning.md`
 
@@ -175,9 +181,10 @@ Required core reading:
 - `core/security/identity/workload-identity-federation.md`
 - `core/security/supply-chain/`
 - `core/delivery-gitops/gitops-progressive-delivery.md`
-- `core/reliability/blast-radius.md`
+- `core/reliability/slo/error-budgets.md`
+- future `core/reliability/blast-radius.md`
 - `core/distributed-systems/idempotency.md`
-- `core/observability/high-volume-telemetry.md`
+- future `core/observability/high-volume-telemetry.md`
 
 AWS adapter adds:
 
