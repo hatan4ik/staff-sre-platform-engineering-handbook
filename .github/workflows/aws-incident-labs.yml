@@ -1,4 +1,4 @@
-name: AWS and EKS Incident Labs
+name: AWS and EKS Interview Labs
 
 on:
   push:
@@ -35,6 +35,53 @@ jobs:
 
       - name: Compile standalone Python programs
         run: python3 -m compileall -q labs/aws
+
+      - name: Test workload identity invariants
+        run: python3 labs/aws/04-workload-identity-claims/test_identity_lab.py -v
+
+      - name: Test autoscaling control-loop invariants
+        run: python3 labs/aws/05-autoscaling-control-loop/test_autoscaling_sim.py -v
+
+      - name: Run deterministic Python smoke scenarios
+        run: |
+          python3 labs/aws/04-workload-identity-claims/identity_lab.py --demo > identity-demo.json
+          python3 labs/aws/05-autoscaling-control-loop/autoscaling_sim.py --demo > autoscaling-demo.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          identity = json.loads(Path("identity-demo.json").read_text(encoding="utf-8"))
+          scaling = json.loads(Path("autoscaling-demo.json").read_text(encoding="utf-8"))
+
+          trust = {item["scenario"]: item["result"] for item in identity["trust_policy_results"]}
+          if trust.get("valid") != "ALLOW":
+              raise AssertionError("valid workload identity must be allowed")
+          for scenario in (
+              "wrong-audience",
+              "wrong-service-account",
+              "wrong-environment",
+              "expired",
+          ):
+              if trust.get(scenario) != "DENY":
+                  raise AssertionError(f"{scenario} must be denied")
+
+          providers = {
+              item["scenario"]: item["source"]
+              for item in identity["provider_chain_results"]
+          }
+          if providers.get("static-key-shadows-federation") != "static-environment-key":
+              raise AssertionError("static-key shadowing scenario was not exposed")
+          if providers.get("node-role-fallback") != "node-role-fallback":
+              raise AssertionError("node-role fallback scenario was not exposed")
+
+          scenarios = {item["scenario"]: item for item in scaling["scenarios"]}
+          if scenarios["oversized-request-suppresses-scale-up"]["hpa_result"]["desired_replicas"] >= 10:
+              raise AssertionError("oversized request should suppress scale-up in the demo")
+          if scenarios["downstream-remains-saturated"]["capacity_result"]["bottleneck"] != "downstream-dependency-capacity":
+              raise AssertionError("dependency bottleneck was not identified")
+
+          print("identity and autoscaling smoke scenarios validated")
+          PY
 
       - name: Install YAML parser
         run: python3 -m pip install --disable-pip-version-check PyYAML
