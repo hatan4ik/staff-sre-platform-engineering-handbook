@@ -70,7 +70,7 @@ The GitHub connector used for this work cannot create a new top-level repository
 - CloudFormation, CDK, StackSets, Service Catalog, Control Tower, Config, and Systems Manager trade-offs.
 - Karpenter, managed node groups, EC2 Auto Scaling Groups, and Spot operational details.
 - CloudWatch, X-Ray, AMP, AMG, Route 53, Global Accelerator, CloudFront, Kinesis, SQS, SNS, EventBridge, and Lambda adapters.
-- AWS-shaped mock interviews, commands, whiteboards, and adversarial follow-ups.
+- AWS-shaped incident workflows, evidence sources, commands, whiteboards, and adversarial follow-ups.
 
 ## Migration status
 
@@ -85,11 +85,16 @@ The GitHub connector used for this work cannot create a new top-level repository
 | Integrated Linux incident scenarios | Shared interview requirements | `core/linux/07-linux-incident-labs.md` | Added as canonical practice layer |
 | eBPF/Cilium/Hubble/Falco/Tetragon | Netflix chapter 2 | `core/ebpf-security/cilium-hubble-falco-tetragon.md` | Migrated and normalized |
 | Fine-grained Envoy/Istio discovery | Netflix chapter 1 | `core/service-mesh/fine-grained-service-discovery.md` | Migrated and normalized |
-| Terraform state and recovery | Netflix and AWS tracks | `core/infrastructure-as-code/terraform-state-integrity.md` | Migrated and normalized |
-| GitOps and progressive delivery | AWS Round 1 | `core/delivery-gitops/gitops-progressive-delivery.md` | Migrated and normalized |
+| Terraform state and recovery | Netflix and AWS tracks | `core/infrastructure-as-code/terraform-state-integrity.md` | Migrated and normalized; AWS recovery adapter added |
+| GitOps and progressive delivery | AWS Round 1 and 2 | `core/delivery-gitops/gitops-progressive-delivery.md` | Migrated and normalized; AWS incident adapters added |
 | IAM and workload identity | Netflix, Tesla, and AWS tracks | `core/security/identity/` | AWS source added; canonical migration planned |
 | EKS and Kubernetes autoscaling | Netflix and AWS tracks | `core/kubernetes/autoscaling/` | AWS source added; canonical migration planned |
 | IaC tool selection and governance | AWS Round 1 | `core/infrastructure-as-code/tool-selection-and-governance.md` | Migrated and normalized |
+| Request-path and cohort debugging | AWS Round 2 | `core/incident-response/` and `core/networking/` | Source added; canonical migration planned |
+| Control-plane and application latency analysis | AWS Round 2 | `core/kubernetes/control-plane/`, `core/observability/`, and `core/reliability/` | Source added; canonical migration planned |
+| Evidence beyond dashboards | AWS Round 2 | `core/observability/` | Source added; canonical migration planned |
+| Runtime restart and OOM debugging | Tesla, Netflix, and AWS tracks | `core/kubernetes/runtime-debugging.md` and `core/linux/` | AWS source added; canonical migration planned |
+| Postmortems and corrective actions | All tracks | `core/incident-response/postmortems.md` | AWS source added; canonical migration planned |
 | SLOs, incidents, multi-region, and chaos | All tracks | `core/reliability/` | Planned |
 
 ## AWS interview implementation status
@@ -103,17 +108,18 @@ The GitHub connector used for this work cannot create a new top-level repository
 - `tracks/aws/round-1/05-terraform-cloudformation-native.md`
 - `tracks/aws/round-1/06-capacity-autoscaling-karpenter-spot.md`
 
-### Round 2 — next
+### Round 2 — complete in `aws-round-2-completion`
 
-- Route 53-to-application outage isolation.
-- EKS latency investigation with CloudWatch, X-Ray, Prometheus, and Grafana.
-- cohort-specific deployment failures.
-- AWS evidence sources beyond dashboards.
-- Terraform partial-apply recovery.
-- pod restarts despite healthy probes.
-- large-outage postmortem and corrective-action governance.
+- `tracks/aws/round-2/07-route53-to-application-outage.md`
+- `tracks/aws/round-2/08-eks-api-latency-nodes-healthy.md`
+- `tracks/aws/round-2/08b-application-api-latency-nodes-healthy.md`
+- `tracks/aws/round-2/09-subset-users-fail-after-deployment.md`
+- `tracks/aws/round-2/10-beyond-cloudwatch-dashboards.md`
+- `tracks/aws/round-2/11-terraform-partial-apply-recovery.md`
+- `tracks/aws/round-2/12-pods-restart-probes-healthy.md`
+- `tracks/aws/round-2/13-large-aws-outage-postmortem.md`
 
-### Round 3 — after Round 2
+### Round 3 — next
 
 - highly available mobile backend.
 - global secure software-update delivery.
