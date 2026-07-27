@@ -1,6 +1,6 @@
 # AWS Interview Practice Index
 
-The AWS track now has seven connected layers.
+The AWS track now has nine connected layers.
 
 ## 1. Deep technical chapters
 
@@ -30,11 +30,29 @@ answer in 90 seconds
  -> state the validation evidence
 ```
 
-## 4. Truthful personal production evidence
+## 4. Executable baseline mock
+
+- [`mock-sessions/README.md`](mock-sessions/README.md) — operating guide for timed mock sessions.
+- [`mock-sessions/session-01-baseline.json`](mock-sessions/session-01-baseline.json) — cold Day 1 assessment across Q1, Q3, Q7, Q13, Q16, and Q18.
+- [`mock-sessions/mock_runner.py`](mock-sessions/mock_runner.py) — dependency-free interactive runner that times answers, delivers adversarial follow-ups, collects the 100-point scorecard, and writes a Markdown report.
+
+Run:
+
+```bash
+cd tracks/aws/mock-sessions
+make validate
+make test
+make baseline
+```
+
+Use an external recorder for audio or video. The runner does not access a microphone or camera.
+
+## 5. Truthful personal production evidence
 
 - [`PERSONAL_STORY_BANK.md`](PERSONAL_STORY_BANK.md) — maps Nathanel's documented SES/O3b, Alexander Street Press, Pipl, large MySQL migration, AKS assignment, repository migration, observability, incident, and leadership experience to the 18 AWS questions.
+- [`EVIDENCE_COMPLETION_WORKSHEET.md`](EVIDENCE_COMPLETION_WORKSHEET.md) — structured evidence intake for the five remaining gaps: platform adoption, one exact severe incident, NOC/observability outcomes, final 45 TB migration results, and five-person-team leadership.
 
-The story bank separates:
+These files separate:
 
 - verified production facts;
 - supported experience needing a precise metric;
@@ -42,27 +60,54 @@ The story bank separates:
 - hypothetical architecture;
 - claims that must not be made without documentation.
 
-## 5. Interview-day compression
+## 6. Interview-day compression
 
 - [`INTERVIEW_DAY_CHEATSHEET.md`](INTERVIEW_DAY_CHEATSHEET.md) — the SCOPE and STABILIZE frameworks, 18 invariants, personal evidence anchors, six whiteboards, adversarial one-line responses, and final self-check.
 
 This is the final review document, not the starting curriculum.
 
-## 6. Hands-on labs
+## 7. Hands-on labs
 
 - [`labs/01-terraform-partial-apply-recovery/`](labs/01-terraform-partial-apply-recovery/) — local Terraform state and partial-apply recovery.
 - [`labs/02-kubernetes-restart-forensics/`](labs/02-kubernetes-restart-forensics/) — exit-code, OOM, PID 1, sidecar, and pod-replacement evidence.
 - [`labs/03-event-stream-backpressure/`](labs/03-event-stream-backpressure/) — tested Python simulator for partitioning, hot keys, bounded queues, retry, DLQ, and idempotency.
+- [`../../labs/aws/README.md`](../../labs/aws/README.md) — canonical AWS/EKS cohort, Terraform, runtime, and disaster-recovery exercises.
 
-The labs are validated by [`.github/workflows/aws-labs-ci.yml`](../../.github/workflows/aws-labs-ci.yml).
+The track-specific labs and mock runner are validated by [`.github/workflows/aws-labs-ci.yml`](../../.github/workflows/aws-labs-ci.yml).
 
-## 7. Execution program
+## 8. Execution program
 
 - [`30_DAY_EXECUTION_PLAN.md`](30_DAY_EXECUTION_PLAN.md) — daily plan from baseline recording through Round 1/2/3 mocks, lab execution, story completion, executive communication, and two full interview loops.
 
 The outcome target is two consecutive mock scores of at least 82/100 with no unsafe state, security, or incident-response behavior.
 
+## 9. Result artifacts
+
+Each baseline run generates a local Markdown report containing:
+
+- answer and follow-up timing;
+- one immediate correction per question;
+- all nine score dimensions;
+- total calibration;
+- strongest evidence;
+- highest-risk gap;
+- next drill;
+- unsupported-claim truth check.
+
+Generated reports remain local and are ignored by Git. Commit only deliberately sanitized results.
+
 ---
+
+## Immediate next sequence
+
+```text
+1. Run the cold Day 1 baseline.
+2. Review the two weakest answers only.
+3. Complete one exact severe-incident worksheet.
+4. Complete the 45 TB migration outcome and validation fields.
+5. Rerun the two weakest answers in practice mode.
+6. Continue Day 2 of the 30-day plan.
+```
 
 ## Recommended weekly cycle after day 30
 
