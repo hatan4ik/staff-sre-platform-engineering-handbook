@@ -1,0 +1,50 @@
+{
+  "apiVersion": "apps/v1",
+  "kind": "Deployment",
+  "metadata": {
+    "namespace": "payments-prod",
+    "name": "payments-api",
+    "labels": {
+      "platform.example.com/owner": "team-payments"
+    }
+  },
+  "spec": {
+    "serviceAccountName": "payments-api",
+    "hostNetwork": false,
+    "hostPID": false,
+    "hostIPC": false,
+    "containers": [
+      {
+        "name": "app",
+        "image": "registry.example.com/payments/api@sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "securityContext": {
+          "privileged": false,
+          "runAsNonRoot": true,
+          "allowPrivilegeEscalation": false,
+          "readOnlyRootFilesystem": true
+        },
+        "resources": {
+          "requests": {
+            "cpu": "500m",
+            "memoryMiB": 512
+          },
+          "limits": {
+            "cpu": "2",
+            "memoryMiB": 2048
+          }
+        },
+        "requestedEgress": [
+          "platform-dns",
+          "payments-database",
+          "telemetry-gateway"
+        ]
+      }
+    ],
+    "volumes": [
+      {
+        "name": "tmp",
+        "type": "emptyDir"
+      }
+    ]
+  }
+}

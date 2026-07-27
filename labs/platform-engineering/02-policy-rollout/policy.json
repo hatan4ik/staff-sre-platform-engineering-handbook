@@ -1,0 +1,19 @@
+{
+  "requiredOwnerLabel": "platform.example.com/owner",
+  "requireDigestIn": ["staging", "production"],
+  "denyPrivilegedIn": ["staging", "production"],
+  "modesByEnvironment": {
+    "development": "audit",
+    "staging": "warn",
+    "production": "enforce"
+  },
+  "exceptions": [
+    {
+      "id": "EXC-2026-0042",
+      "resource": "system/legacy-node-agent",
+      "rule": "deny-privileged",
+      "owner": "team-platform-runtime",
+      "expiresAt": "2026-08-15T00:00:00Z"
+    }
+  ]
+}

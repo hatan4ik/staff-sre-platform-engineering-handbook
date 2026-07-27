@@ -1,0 +1,33 @@
+name: Platform Engineering Labs
+
+on:
+  push:
+    paths:
+      - "labs/platform-engineering/**"
+      - ".github/workflows/platform-engineering-labs.yml"
+  pull_request:
+    paths:
+      - "labs/platform-engineering/**"
+      - ".github/workflows/platform-engineering-labs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Show Python version
+        run: python3 --version
+
+      - name: Compile platform engineering labs
+        run: python3 -m compileall -q labs/platform-engineering
+
+      - name: Run platform engineering scenarios
+        run: python3 labs/platform-engineering/run_all.py
