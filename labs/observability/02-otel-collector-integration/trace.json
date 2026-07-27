@@ -1,0 +1,51 @@
+{
+  "resourceSpans": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": {"stringValue": "sre.synthetic"}
+          },
+          {
+            "key": "deployment.environment.name",
+            "value": {"stringValue": "integration"}
+          },
+          {
+            "key": "service.version",
+            "value": {"stringValue": "1.0.0"}
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "handbook.collector.integration",
+            "version": "1.0.0"
+          },
+          "spans": [
+            {
+              "traceId": "5b8efff798038103d269b633813fc60c",
+              "spanId": "eee19b7ec3c1b174",
+              "name": "collector-contract",
+              "kind": 2,
+              "startTimeUnixNano": "1785196800000000000",
+              "endTimeUnixNano": "1785196800050000000",
+              "attributes": [
+                {
+                  "key": "test.invariant",
+                  "value": {"stringValue": "otlp-http-to-debug-exporter"}
+                },
+                {
+                  "key": "test.synthetic",
+                  "value": {"boolValue": true}
+                }
+              ],
+              "status": {"code": 1}
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

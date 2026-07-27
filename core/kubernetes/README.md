@@ -4,26 +4,28 @@ This module owns reusable Kubernetes foundations shared by AWS, Netflix, Tesla, 
 
 ## Canonical modules and chapters
 
+- [`control-plane/api-server-etcd-list-watch-admission.md`](control-plane/api-server-etcd-list-watch-admission.md) — API-server request paths, authentication, authorization, admission, API Priority and Fairness, etcd, LIST/WATCH behavior, controller queues, scaling, SLOs, and incident response.
+- [`scheduling/scheduler-placement-diagnostics.md`](scheduling/scheduler-placement-diagnostics.md) — scheduler queues and plugins, requests, taints, affinity, topology spread, volume and device constraints, preemption, autoscaler handoff, evidence, and placement SLOs.
+- [`networking/service-dns-ingress-gateway-request-path.md`](networking/service-dns-ingress-gateway-request-path.md) — Services, EndpointSlices, kube-proxy/eBPF dataplanes, CNI, DNS, NetworkPolicy, Ingress, Gateway API, TLS, dual stack, MTU, conntrack, and request-path debugging.
+- [`storage/csi-stateful-recovery.md`](storage/csi-stateful-recovery.md) — PVC/PV/StorageClass, CSI provisioning, attach/detach, mount, topology, snapshots, backups, writer fencing, restore, and stateful recovery.
+- [`workload-lifecycle/probes-startup-shutdown-drain.md`](workload-lifecycle/probes-startup-shutdown-drain.md) — startup/liveness/readiness semantics, business-aware admission, overload interactions, EndpointSlice propagation, long-lived connections, graceful shutdown, PDBs, and rollout safety.
 - [`autoscaling/`](autoscaling/) — HPA, VPA, KEDA, scheduling, node supply, disruption, and end-to-end capacity realization.
 - [`node-lifecycle/`](node-lifecycle/) — node health, systemd and runtime failures, fencing, cordon, drain, replacement, and repair automation.
+- [`node-images/qualification-promotion-rollback.md`](node-images/qualification-promotion-rollback.md) — immutable image contracts, provenance, boot and conformance testing, workload compatibility, canary pools, rollout rings, rollback, and fleet governance.
 - [`runtime-debugging.md`](runtime-debugging.md) — container restart, pod replacement, OOM, eviction, probes, PID 1, kubelet, runtime, configuration, and controller evidence.
 
-Planned additions:
+## Remaining expansion areas
 
-- Kubernetes API server, etcd, LIST/WATCH, admission, and controller scaling.
-- Scheduler internals and placement diagnostics.
-- Service, EndpointSlice, kube-proxy, CNI, DNS, ingress, and Gateway request paths.
-- Persistent volumes, CSI, attach/detach, topology, and stateful recovery.
-- Probe design, graceful shutdown, and overload admission.
-- Node-image construction, qualification, promotion, and rollback.
-- Multi-cluster and fleet control planes.
+- Multi-cluster workload and control-plane fleet operations beyond node and platform lifecycle modules.
+- Disposable-cluster conformance suites covering control-plane, scheduling, networking, storage, node-image, probe, and drain failure modes.
 
-Related foundations:
+## Related foundations
 
 - [`../linux/`](../linux/) — cgroups, namespaces, networking, memory, storage, and kernel evidence.
 - [`../incident-response/`](../incident-response/) — request-path, cohort, and postmortem methods.
 - [`../observability/`](../observability/) — evidence systems and diagnostic telemetry.
 - [`../reliability/`](../reliability/) — SLOs, capacity, DR, overload, and chaos.
+- [`../service-mesh/`](../service-mesh/) — proxy request paths, service identity, DNS capture, gateways, and multi-cluster behavior.
 
 ## Core principle
 
@@ -31,7 +33,7 @@ Related foundations:
 Kubernetes desired state
       |
       v
-controllers and scheduler
+API server, storage, controllers, and scheduler
       |
       v
 node, runtime, network, and storage mechanisms
@@ -43,8 +45,8 @@ pod readiness and traffic admission
 user-visible reliability
 ```
 
-A healthy control-plane object does not prove the underlying process, node, network, storage, or business transaction is healthy.
+A healthy control-plane object does not prove the underlying process, node, network, storage, or business transaction is healthy. Conversely, healthy application traffic does not prove the control plane can deploy, scale, repair, or fail over safely.
 
 ## Ownership rule
 
-Reusable Kubernetes API, controller, scheduling, node, runtime, network, storage, probe, and workload-lifecycle material belongs here. Cloud tracks should add only managed-service boundaries, provider-specific controllers, commands, quotas, and failure behavior.
+Reusable Kubernetes API, controller, scheduling, node, image, runtime, network, storage, probe, and workload-lifecycle material belongs here. Cloud tracks should add only managed-service boundaries, provider-specific controllers, commands, quotas, and failure behavior.

@@ -1,0 +1,105 @@
+name: Reliability Observability and Mesh Labs
+
+on:
+  pull_request:
+    paths:
+      - "core/reliability/**"
+      - "core/observability/**"
+      - "core/service-mesh/**"
+      - "core/kubernetes/control-plane/**"
+      - "core/kubernetes/node-images/**"
+      - "labs/reliability/**"
+      - "labs/observability/**"
+      - "labs/service-mesh/**"
+      - ".github/workflows/reliability-observability-ci.yml"
+  push:
+    branches: [main]
+    paths:
+      - "core/reliability/**"
+      - "core/observability/**"
+      - "core/service-mesh/**"
+      - "core/kubernetes/control-plane/**"
+      - "core/kubernetes/node-images/**"
+      - "labs/reliability/**"
+      - "labs/observability/**"
+      - "labs/service-mesh/**"
+      - ".github/workflows/reliability-observability-ci.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  deterministic-labs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile lab programs
+        run: |
+          python -m py_compile \
+            labs/reliability/03-overload-blast-radius/overload_lab.py \
+            labs/reliability/03-overload-blast-radius/test_overload_lab.py \
+            labs/observability/01-telemetry-pipeline/telemetry_lab.py \
+            labs/observability/01-telemetry-pipeline/test_telemetry_lab.py \
+            labs/service-mesh/01-xds-mtls-dns-failover/mesh_contract_lab.py \
+            labs/service-mesh/01-xds-mtls-dns-failover/test_mesh_contract_lab.py
+
+      - name: Test overload and blast-radius lab
+        working-directory: labs/reliability/03-overload-blast-radius
+        run: |
+          python -m unittest -v test_overload_lab.py
+          python overload_lab.py --json > overload-report.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path("overload-report.json").read_text())
+          assert report["passed"], report
+          assert all(report["invariants"].values()), report
+          PY
+
+      - name: Test observability pipeline lab
+        working-directory: labs/observability/01-telemetry-pipeline
+        run: |
+          python -m unittest -v test_telemetry_lab.py
+          python telemetry_lab.py --json > telemetry-report.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path("telemetry-report.json").read_text())
+          assert report["passed"], report
+          assert all(report["invariants"].values()), report
+          PY
+
+      - name: Test service mesh reliability contract
+        working-directory: labs/service-mesh/01-xds-mtls-dns-failover
+        run: |
+          python -m unittest -v test_mesh_contract_lab.py
+          python mesh_contract_lab.py --json > mesh-report.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path("mesh-report.json").read_text())
+          assert report["passed"], report
+          assert all(report["invariants"].values()), report
+          PY
+
+      - name: Upload deterministic reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: reliability-observability-mesh-reports
+          path: |
+            labs/reliability/03-overload-blast-radius/overload-report.json
+            labs/observability/01-telemetry-pipeline/telemetry-report.json
+            labs/service-mesh/01-xds-mtls-dns-failover/mesh-report.json
+          if-no-files-found: error

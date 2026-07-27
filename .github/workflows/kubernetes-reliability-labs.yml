@@ -32,7 +32,13 @@ jobs:
         run: python3 -m compileall -q labs/kubernetes
 
       - name: Run node repair state-machine tests
-        run: python3 labs/kubernetes/01-node-repair-state-machine/test_node_repair.py -v
+        run: |
+          set +e
+          python3 labs/kubernetes/01-node-repair-state-machine/test_node_repair.py -v > node-repair-test.log 2>&1
+          status=$?
+          cat node-repair-test.log
+          printf '%s\n' "$status" > node-repair-test.status
+          exit "$status"
 
       - name: Validate deterministic repair scenarios
         run: |
@@ -65,3 +71,14 @@ jobs:
 
           print("node repair state-machine invariants validated")
           PY
+
+      - name: Upload node repair evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kubernetes-node-repair-test-evidence
+          path: |
+            node-repair-test.log
+            node-repair-test.status
+            node-repair-demo.json
+          if-no-files-found: ignore

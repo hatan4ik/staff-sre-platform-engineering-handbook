@@ -7,191 +7,156 @@ This map prevents duplicate chapter development across company- and platform-spe
 | Topic | Canonical core path | Netflix use | Tesla use | AWS use |
 |---|---|---:|---:|---:|
 | Linux boot, systemd, processes, cgroups | `core/linux/` | Yes | Yes | Yes |
-| TCP, DNS, TLS, HTTP, packet debugging | `core/networking/` | Yes | Yes | Yes |
-| Kubernetes control plane and scheduling | `core/kubernetes/` | Yes | Yes | Yes |
+| TCP, DNS, TLS, HTTP, packet debugging | `core/networking/` and `core/linux/05-networking-containers-security.md` | Yes | Yes | Yes |
+| Kubernetes API server, etcd, admission, LIST/WATCH, APF | `core/kubernetes/control-plane/api-server-etcd-list-watch-admission.md` | Yes | Yes | Yes |
+| Kubernetes scheduling, constraints, topology, preemption | `core/kubernetes/scheduling/scheduler-placement-diagnostics.md` | Yes | Yes | Yes |
+| Kubernetes Services, EndpointSlices, CNI, DNS, Ingress, Gateway | `core/kubernetes/networking/service-dns-ingress-gateway-request-path.md` | Yes | Yes | Yes |
+| Kubernetes CSI, persistent volumes, snapshots, recovery | `core/kubernetes/storage/csi-stateful-recovery.md` | Yes | Yes | Yes |
+| Startup, liveness, readiness, graceful drain, PDBs | `core/kubernetes/workload-lifecycle/probes-startup-shutdown-drain.md` | Yes | Yes | Yes |
 | Node health, fencing, drain, repair | `core/kubernetes/node-lifecycle/` | Yes | Yes | Yes |
-| Custom AMI/node-image qualification | `core/kubernetes/node-images/` | Yes | Yes | Yes |
-| Service discovery, Envoy, Istio, xDS | `core/service-mesh/` | Yes | Yes | Yes |
+| Container restart, OOM, eviction, PID 1, kubelet/runtime | `core/kubernetes/runtime-debugging.md` and `core/linux/` | Yes | Yes | Yes |
+| Node-image qualification, promotion, rollback | `core/kubernetes/node-images/` | Yes | Yes | Yes |
+| Service discovery, Envoy, Istio, xDS | `core/service-mesh/fine-grained-service-discovery.md` | Yes | Yes | Yes |
+| Envoy request paths, timeouts, resets, 504s | `core/service-mesh/envoy-request-path-debugging.md` | Yes | Yes | Yes |
+| Mesh mTLS, SDS, DNS capture, gateways, multi-cluster | `core/service-mesh/mtls-sds-dns-multicluster.md` | Yes | Yes | Yes |
 | eBPF, Cilium, Hubble, Falco, Tetragon | `core/ebpf-security/` | Yes | Yes | Yes |
-| OpenTelemetry, metrics, logs, traces | `core/observability/` | Yes | Yes | Yes |
-| Probes, graceful degradation, backpressure | `core/reliability/` | Yes | Yes | Yes |
+| OpenTelemetry and Collector architecture | `core/observability/opentelemetry-pipelines-and-governance.md` | Yes | Yes | Yes |
+| Metrics, logs, tracing, profiling, alert quality | `core/observability/high-volume-telemetry-alerting-profiling.md` | Yes | Yes | Yes |
+| Evidence beyond dashboards | `core/observability/evidence-beyond-dashboards.md` | Yes | Yes | Yes |
+| SLOs and error budgets | `core/reliability/slo/` | Yes | Yes | Yes |
+| Overload, admission, degradation, blast radius | `core/reliability/graceful-degradation-overload-blast-radius.md` | Yes | Yes | Yes |
+| Multi-region failover and failback | `core/reliability/disaster-recovery/` | Yes | Yes | Yes |
+| Chaos engineering and game days | `core/reliability/chaos-engineering-game-days.md` | Yes | Yes | Yes |
 | HPA, VPA, KEDA, scheduler, Cluster Autoscaler, Karpenter | `core/kubernetes/autoscaling/` | Yes | Yes | Yes |
 | Terraform state, locking, drift | `core/infrastructure-as-code/` | Yes | Yes | Yes |
 | GitOps and progressive delivery | `core/delivery-gitops/` | Yes | Yes | Yes |
 | Workload identity, federation, SPIFFE, cloud IAM | `core/security/identity/` | Yes | Yes | Yes |
-| Network isolation and secrets | `core/security/` | Yes | Yes | Yes |
-| SLOs and error budgets | `core/reliability/slo/` | Yes | Yes | Yes |
+| Secret delivery and rotation | `core/security/secrets/` | Yes | Yes | Yes |
+| Artifact trust, SLSA, Sigstore, SBOMs | `core/security/software-supply-chain/` | Yes | Yes | Yes |
 | Request paths, cohorts, incident command, postmortems | `core/incident-response/` | Yes | Yes | Yes |
-| Multi-region and disaster recovery | `core/reliability/disaster-recovery/` | Yes | Yes | Yes |
 | Messaging, streams, idempotency, and backpressure | `core/distributed-systems/` | Yes | Yes | Yes |
-| Chaos engineering | `core/reliability/chaos/` | Yes | Yes | Yes |
-| Staff/Principal leadership and ROI | `core/leadership/` | Yes | Yes | Yes |
+| Platform product, IDP, policy, tenancy, fleets | `core/platform-engineering/` | Yes | Yes | Yes |
+| Staff/Principal leadership and ROI | future `core/leadership/` expansion | Yes | Yes | Yes |
 
-## Initial source-to-canonical mapping
+## Source-to-canonical mapping
 
-| Existing source | New canonical destination |
-|---|---|
-| `netflix-devops-interview/curriculum/01-fine-grained-service-discovery.md` | `core/service-mesh/fine-grained-service-discovery.md` |
-| `netflix-devops-interview/curriculum/02-ebpf-cilium-runtime-security.md` | `core/ebpf-security/cilium-hubble-falco-tetragon.md` |
-| Identity sections of `netflix-devops-interview/curriculum/03-multicloud-routing-identity-secrets.md` | `core/security/identity/workload-identity-federation.md` |
-| Routing and secret-serving sections of Netflix chapter 3 | future `core/cloud/` and `core/security/secrets/` chapters |
-| `netflix-devops-interview/curriculum/04-eks-systemd-node-failure-repair.md` | `core/kubernetes/node-lifecycle/failure-fencing-repair.md` |
-| Netflix probe scenario | `core/reliability/business-aware-probes.md` |
-| Netflix DNS scenario | `core/networking/kubernetes-dns-failure.md` |
-| Netflix Terraform scenario | `core/infrastructure-as-code/terraform-state-integrity.md` |
-| Netflix HPA scenario | `core/kubernetes/autoscaling/control-loops-capacity-realization.md` |
-| Netflix SLO and error-budget scenario | `core/reliability/slo/error-budgets.md` |
-| Netflix 504 and partial-failure reasoning | `core/incident-response/request-path-debugging.md`, `core/incident-response/cohort-analysis.md`, and `core/observability/evidence-beyond-dashboards.md` |
-| Tesla Kubernetes/fleet chapter foundations | Shared Kubernetes, multi-region, GitOps, identity, reliability, and incident-response chapters |
-| AWS Round 1 multi-AZ EKS chapter | `core/kubernetes/`, `core/networking/`, `core/reliability/`, and `core/cloud/` |
-| AWS Round 1 GitOps chapter | `core/delivery-gitops/gitops-progressive-delivery.md` and `core/infrastructure-as-code/` |
-| AWS Round 1 Terraform-state chapter | `core/infrastructure-as-code/terraform-state-integrity.md` |
-| AWS Round 1 EKS-security chapter | `core/security/identity/workload-identity-federation.md`, `core/security/network/`, and `core/security/secrets/` |
-| AWS Round 1 provisioning-tool chapter | `core/infrastructure-as-code/tool-selection-and-governance.md` |
-| AWS Round 1 autoscaling chapter | `core/kubernetes/autoscaling/control-loops-capacity-realization.md` and `core/reliability/capacity/` |
-| AWS Round 2 request-path outage chapter | `core/incident-response/request-path-debugging.md` and `core/networking/` |
-| AWS Round 2 control-plane latency chapter | `core/kubernetes/control-plane/` and `core/observability/` |
-| AWS Round 2 application-latency chapter | `core/observability/` and `core/reliability/latency-analysis.md` |
-| AWS Round 2 cohort-failure chapter | `core/incident-response/cohort-analysis.md` and `core/delivery-gitops/gitops-progressive-delivery.md` |
-| AWS Round 2 evidence chapter | `core/observability/evidence-beyond-dashboards.md` |
-| AWS Round 2 partial-apply chapter | `core/infrastructure-as-code/terraform-state-integrity.md` |
-| AWS Round 2 restart chapter | `core/kubernetes/runtime-debugging.md` and `core/linux/` |
-| AWS Round 2 postmortem chapter | `core/incident-response/postmortems.md` and `core/reliability/slo/error-budgets.md` |
-| AWS Round 3 mobile-backend chapter | `core/security/identity/workload-identity-federation.md`, `core/distributed-systems/`, `core/reliability/`, and `core/cloud/` |
-| AWS Round 3 secure-update chapter | `core/delivery-gitops/`, `core/security/supply-chain/`, `core/reliability/blast-radius.md`, and `core/observability/high-volume-telemetry.md` |
-| AWS Round 3 disaster-recovery chapter | `core/reliability/disaster-recovery/`, `core/distributed-systems/replication/`, and `core/networking/` |
-| AWS Round 3 observability-platform chapter | `core/observability/`, `core/reliability/slo/error-budgets.md`, and `core/incident-response/` |
-| AWS Round 3 event-platform chapter | `core/distributed-systems/messaging/`, `core/reliability/backpressure/`, and `core/cloud/streaming/` |
+| Existing source | Canonical destination | State |
+|---|---|---|
+| Netflix fine-grained discovery | `core/service-mesh/fine-grained-service-discovery.md` | Canonical |
+| Netflix eBPF/Cilium runtime security | `core/ebpf-security/cilium-hubble-falco-tetragon.md` | Canonical |
+| Netflix routing, identity, and secrets | service mesh, identity, and secrets modules | Canonical foundations present |
+| Netflix EKS/systemd node failure | `core/kubernetes/node-lifecycle/failure-fencing-repair.md` | Canonical |
+| Netflix/Tesla node-image concerns | `core/kubernetes/node-images/qualification-promotion-rollback.md` | Canonical |
+| Netflix probe and shutdown scenarios | `core/kubernetes/workload-lifecycle/probes-startup-shutdown-drain.md` | Canonical |
+| Netflix/Tesla DNS, Service, and mesh scenarios | Kubernetes networking and service-mesh modules | Canonical foundations present |
+| Netflix/Tesla/AWS 504 and partial failures | service-mesh request path, incident response, and observability modules | Canonical |
+| Stateful recovery and writer ownership scenarios | `core/kubernetes/storage/csi-stateful-recovery.md` and DR/fencing modules | Canonical |
+| AWS Round 1 GitOps | `core/delivery-gitops/gitops-progressive-delivery.md` | Canonical |
+| AWS Round 1 Terraform state | `core/infrastructure-as-code/terraform-state-integrity.md` | Canonical |
+| AWS Round 1 EKS security | identity, secrets, platform policy, and supply-chain modules | Canonical foundations present |
+| AWS Round 1 provisioning-tool selection | `core/infrastructure-as-code/tool-selection-and-governance.md` | Canonical |
+| AWS Round 1 autoscaling | `core/kubernetes/autoscaling/control-loops-capacity-realization.md` | Canonical |
+| AWS Round 2 API-server latency | `core/kubernetes/control-plane/api-server-etcd-list-watch-admission.md` | Canonical |
+| AWS Round 2 application latency and evidence | observability and request-path modules | Canonical |
+| AWS Round 2 cohort failure | cohort analysis and progressive delivery modules | Canonical |
+| AWS Round 2 Terraform partial apply | Terraform state integrity module | Canonical |
+| AWS Round 2 pod restarts and probe semantics | runtime, Linux, and workload-lifecycle modules | Canonical |
+| AWS Round 2 postmortem | incident postmortem and SLO modules | Canonical |
+| AWS Round 3 mobile backend | distributed systems, identity, and reliability modules | Canonical foundations present |
+| AWS Round 3 secure updates | supply-chain, GitOps, reliability, and observability modules | Canonical foundations present |
+| AWS Round 3 disaster recovery | `core/reliability/disaster-recovery/` | Canonical |
+| AWS Round 3 observability platform | OpenTelemetry and high-volume observability modules | Canonical |
+| AWS Round 3 event platform | distributed systems and overload modules | Canonical foundations present |
 
 ## AWS Round 1 question map
 
 | Question | AWS adapter | Canonical prerequisites |
 |---|---|---|
-| Multi-AZ EKS for millions of users | `tracks/aws/round-1/01-multi-az-eks-millions-users.md` | Kubernetes reliability, networking, data systems, overload, capacity |
-| GitOps with Terraform and Argo CD/Flux | `tracks/aws/round-1/02-gitops-terraform-argocd-flux.md` | `core/delivery-gitops/gitops-progressive-delivery.md`, Terraform ownership, secrets |
-| State across accounts and Regions | `tracks/aws/round-1/03-terraform-state-multi-account-region.md` | `core/infrastructure-as-code/terraform-state-integrity.md`, IAM federation |
-| Secure Amazon EKS | `tracks/aws/round-1/04-securing-amazon-eks.md` | `core/security/identity/workload-identity-federation.md`, network policy, pod security, secret delivery |
-| Terraform vs CloudFormation | `tracks/aws/round-1/05-terraform-cloudformation-native.md` | `core/infrastructure-as-code/tool-selection-and-governance.md`, drift, policy |
-| ASGs, Karpenter, CA, and Spot | `tracks/aws/round-1/06-capacity-autoscaling-karpenter-spot.md` | `core/kubernetes/autoscaling/control-loops-capacity-realization.md`, disruption, overload |
+| Multi-AZ EKS for millions of users | `tracks/aws/round-1/01-multi-az-eks-millions-users.md` | control plane, scheduling, networking, storage, node lifecycle, autoscaling, probes, overload, DR, SLOs |
+| GitOps with Terraform and Argo CD/Flux | `tracks/aws/round-1/02-gitops-terraform-argocd-flux.md` | GitOps, Terraform ownership, secrets, artifact trust |
+| State across accounts and Regions | `tracks/aws/round-1/03-terraform-state-multi-account-region.md` | Terraform state integrity, IAM federation, DR |
+| Secure Amazon EKS | `tracks/aws/round-1/04-securing-amazon-eks.md` | workload identity, secrets, policy, tenancy, supply chain, NetworkPolicy |
+| Terraform vs CloudFormation | `tracks/aws/round-1/05-terraform-cloudformation-native.md` | IaC tool selection, ownership, drift, policy |
+| ASGs, Karpenter, CA, and Spot | `tracks/aws/round-1/06-capacity-autoscaling-karpenter-spot.md` | scheduling, autoscaling, node images, disruption, overload, SLOs |
 
 ## AWS Round 2 question map
 
 | Question | AWS adapter | Canonical prerequisites |
 |---|---|---|
-| Route 53 to application outage | `tracks/aws/round-2/07-route53-to-application-outage.md` | `core/incident-response/request-path-debugging.md`, DNS, TLS, edge, load balancing, VPC, Kubernetes request paths |
-| Kubernetes API latency | `tracks/aws/round-2/08-eks-api-latency-nodes-healthy.md` | API-server behavior, LIST/WATCH, admission, controller load, control-plane SLOs |
-| Application API latency | `tracks/aws/round-2/08b-application-api-latency-nodes-healthy.md` | `core/observability/evidence-beyond-dashboards.md`, RED/USE, histograms, tracing, profiling, dependency saturation |
-| Subset of users fail | `tracks/aws/round-2/09-subset-users-fail-after-deployment.md` | `core/incident-response/cohort-analysis.md`, progressive delivery, routing, data partitions |
-| Dashboards do not show cause | `tracks/aws/round-2/10-beyond-cloudwatch-dashboards.md` | `core/observability/evidence-beyond-dashboards.md` |
-| Terraform partial apply | `tracks/aws/round-2/11-terraform-partial-apply-recovery.md` | `core/infrastructure-as-code/terraform-state-integrity.md` |
-| Pods restart with healthy probes | `tracks/aws/round-2/12-pods-restart-probes-healthy.md` | pod lifecycle, cgroups, OOM, kubelet, disruption controllers |
-| Large outage postmortem | `tracks/aws/round-2/13-large-aws-outage-postmortem.md` | `core/incident-response/postmortems.md`, `core/reliability/slo/error-budgets.md` |
+| Route 53 to application outage | `tracks/aws/round-2/07-route53-to-application-outage.md` | Kubernetes network path, DNS/TLS, Envoy path, request-path debugging, cohort analysis |
+| Kubernetes API latency | `tracks/aws/round-2/08-eks-api-latency-nodes-healthy.md` | control-plane API, etcd, admission, LIST/WATCH, APF, control-plane SLOs |
+| Application API latency | `tracks/aws/round-2/08b-application-api-latency-nodes-healthy.md` | evidence hierarchy, RED/USE, histograms, tracing, profiling, dependency saturation |
+| Subset of users fail | `tracks/aws/round-2/09-subset-users-fail-after-deployment.md` | cohort analysis, progressive delivery, routing, cells, partitions |
+| Dashboards do not show cause | `tracks/aws/round-2/10-beyond-cloudwatch-dashboards.md` | evidence beyond dashboards, OTel, tracing, profiling |
+| Terraform partial apply | `tracks/aws/round-2/11-terraform-partial-apply-recovery.md` | Terraform state integrity |
+| Pods restart with healthy probes | `tracks/aws/round-2/12-pods-restart-probes-healthy.md` | runtime debugging, cgroups/OOM, kubelet, startup/liveness/readiness, graceful drain |
+| Large outage postmortem | `tracks/aws/round-2/13-large-aws-outage-postmortem.md` | postmortems, SLO/error budgets, chaos re-test |
 
 ## AWS Round 3 question map
 
 | Question | AWS adapter | Canonical prerequisites |
 |---|---|---|
-| Mobile backend | `tracks/aws/round-3/14-highly-available-mobile-backend.md` | authentication, authorization, idempotency, command state, notification delivery, multi-Region cells |
-| Secure software updates | `tracks/aws/round-3/15-global-secure-software-updates.md` | artifact provenance, PKI, staged rollout, device-local rollback, high-volume telemetry |
-| Multi-Region DR | `tracks/aws/round-3/16-multi-region-disaster-recovery.md` | RTO/RPO, replication, fencing, routing, failover/failback, data reconciliation |
-| Actionable observability | `tracks/aws/round-3/17-actionable-observability-platform.md` | OpenTelemetry, `core/observability/evidence-beyond-dashboards.md`, `core/reliability/slo/error-budgets.md` |
-| Millions of events/second | `tracks/aws/round-3/18-millions-events-per-second.md` | partitioning, streams, queues, idempotency, backpressure, replay, multi-Region ingestion |
+| Mobile backend | `tracks/aws/round-3/14-highly-available-mobile-backend.md` | identity, idempotency, command state, notifications, cells, overload, DR |
+| Secure software updates | `tracks/aws/round-3/15-global-secure-software-updates.md` | artifact trust, identity, staged rollout, node/image qualification, blast radius, telemetry, rollback |
+| Multi-Region DR | `tracks/aws/round-3/16-multi-region-disaster-recovery.md` | RTO/RPO, replication, storage recovery, fencing, failover/failback, chaos validation |
+| Actionable observability | `tracks/aws/round-3/17-actionable-observability-platform.md` | OTel pipelines, high-volume telemetry, alert quality, SLOs |
+| Millions of events/second | `tracks/aws/round-3/18-millions-events-per-second.md` | partitioning, queues, idempotency, backpressure, replay, blast radius |
 
-## Example question adapters
+## Cross-track adapter examples
 
 ### Netflix playback 504
 
 Required core reading:
 
+- `core/kubernetes/networking/service-dns-ingress-gateway-request-path.md`
+- `core/service-mesh/envoy-request-path-debugging.md`
 - `core/incident-response/request-path-debugging.md`
 - `core/incident-response/cohort-analysis.md`
 - `core/observability/evidence-beyond-dashboards.md`
-- `core/service-mesh/fine-grained-service-discovery.md`
-- future `core/networking/http-timeouts.md`
-- future `core/reliability/graceful-degradation.md`
+- `core/reliability/graceful-degradation-overload-blast-radius.md`
 
-Netflix adapter adds:
-
-- Manifest generation.
-- DRM and entitlement.
-- CDN/origin behavior.
-- Segment and byte-range transfer.
-- Playback-start and rebuffer SLIs.
+Netflix adapter adds manifest generation, DRM and entitlement, CDN/origin behavior, segment transfer, playback-start, and rebuffer SLIs.
 
 ### Tesla OTA fleet rollout
 
 Required core reading:
 
+- `core/security/software-supply-chain/artifact-trust-slsa-sigstore.md`
 - `core/delivery-gitops/gitops-progressive-delivery.md`
-- `core/security/identity/workload-identity-federation.md`
-- `core/reliability/slo/error-budgets.md`
-- future `core/reliability/blast-radius.md`
-- future `core/cloud/pki-certificate-rotation.md`
-- future `core/observability/high-volume-telemetry.md`
-- future `core/incident-response/rollback-decisions.md`
+- `core/kubernetes/node-images/qualification-promotion-rollback.md`
+- `core/reliability/graceful-degradation-overload-blast-radius.md`
+- `core/reliability/chaos-engineering-game-days.md`
+- `core/observability/high-volume-telemetry-alerting-profiling.md`
 
-Tesla adapter adds:
-
-- Intermittent connectivity.
-- Hardware-generation compatibility.
-- Battery and bandwidth constraints.
-- Vehicle-local safety authority.
-- Delayed or unreachable rollback populations.
+Tesla adapter adds intermittent connectivity, hardware-generation compatibility, battery/bandwidth constraints, vehicle-local safety authority, and delayed rollback populations.
 
 ### AWS multi-AZ EKS at hyperscale
 
 Required core reading:
 
-- `core/kubernetes/`
-- `core/kubernetes/autoscaling/control-loops-capacity-realization.md`
-- `core/security/identity/workload-identity-federation.md`
-- `core/reliability/slo/error-budgets.md`
-- `core/networking/`
-- `core/distributed-systems/`
+- `core/kubernetes/README.md`
+- `core/security/README.md`
+- `core/reliability/README.md`
+- `core/observability/README.md`
+- `core/distributed-systems/README.md`
 
-AWS adapter adds:
+AWS adapter adds EKS boundaries, VPC CNI, AWS Load Balancer Controller, Karpenter, managed node groups, AWS identity, service quotas, and AWS regional failure domains.
 
-- EKS managed control-plane and customer data-plane boundaries.
-- AWS Load Balancer Controller, VPC CNI, subnet IP, and quota behavior.
-- Karpenter, managed node groups, EKS Pod Identity, and IRSA.
-- CloudFront, Route 53, Global Accelerator, ElastiCache, DynamoDB, Aurora, SQS, and Kinesis selection.
-- AWS account, Region, and Availability Zone failure domains.
+## Executable lab map
 
-### AWS partial-user outage
-
-Required core reading:
-
-- `core/incident-response/request-path-debugging.md`
-- `core/incident-response/cohort-analysis.md`
-- `core/observability/evidence-beyond-dashboards.md`
-- `core/delivery-gitops/gitops-progressive-delivery.md`
-- `core/distributed-systems/partitioning.md`
-
-AWS adapter adds:
-
-- Route 53 and resolver cohorts.
-- WAF labels and CloudFront edge behavior.
-- ALB targets, Availability Zones, VPC paths, EKS pod versions, and data shards.
-- CloudTrail, Config, AWS Health, and CloudWatch evidence sources.
-
-### AWS secure fleet update
-
-Required core reading:
-
-- `core/security/identity/workload-identity-federation.md`
-- `core/security/supply-chain/`
-- `core/delivery-gitops/gitops-progressive-delivery.md`
-- `core/reliability/slo/error-budgets.md`
-- future `core/reliability/blast-radius.md`
-- `core/distributed-systems/idempotency.md`
-- future `core/observability/high-volume-telemetry.md`
-
-AWS adapter adds:
-
-- AWS IoT Device Management Jobs and Software Package Catalog.
-- S3 and CloudFront artifact distribution.
-- Device certificates, signed manifests, A/B partitions, and anti-rollback.
-- Fleet cohort targeting, rollout rate, timeout, and abort behavior.
+| Lab | Canonical topics |
+|---|---|
+| `labs/reliability/01-error-budget/` | SLOs, burn rates, protected cohorts |
+| `labs/reliability/02-disaster-recovery-state-machine/` | fencing, failover, failback, reconciliation |
+| `labs/reliability/03-overload-blast-radius/` | retries, admission, tenant fairness, failover capacity, replay |
+| `labs/observability/01-telemetry-pipeline/` | quotas, cardinality, priority, loss, freshness, sampling |
+| `labs/observability/02-otel-collector-integration/` | real OTLP/HTTP receipt, memory limiting, batching, resource attributes, and exporter evidence |
+| `labs/service-mesh/01-xds-mtls-dns-failover/` | ACK/NACK, last-known-good, trust rotation, bounded stale DNS, failover gates, writer fencing, retry budgets |
+| `labs/kubernetes/01-node-repair-state-machine/` | node fencing, repair limits, systemic-failure circuit breaker |
+| `labs/kubernetes/02-kind-conformance/` | real FailedScheduling, Service DNS, EndpointSlice readiness, liveness restart, graceful drain, replacement, PDB |
+| `labs/platform-engineering/` | golden paths, policy, tenancy, artifact trust, fleets, secrets |
+| `labs/distributed-systems/` | retries, outbox, fencing, caching, rebalancing, delivery semantics |
+| `labs/aws/` | AWS/EKS-shaped incident and control-loop practice |
 
 ## Development rule
 
@@ -202,4 +167,4 @@ Before writing a new chapter:
 3. Create a track adapter only for company-, platform-, or domain-specific reasoning.
 4. Link rather than copy after canonical coverage reaches parity.
 5. Treat current deep track chapters as migration sources, not competing permanent textbooks.
-6. Deprecate duplicated text after the canonical chapter is verified.
+6. Deprecate duplicated text after parity review and preserve only scenario-specific adapters.

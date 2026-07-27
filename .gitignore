@@ -7,6 +7,14 @@ labs/distributed-systems/02-transactional-outbox/*.db
 labs/distributed-systems/02-transactional-outbox/*.db-shm
 labs/distributed-systems/02-transactional-outbox/*.db-wal
 
+# Generated lab reports and integration evidence
+labs/**/overload-report.json
+labs/**/telemetry-report.json
+labs/**/mesh-report.json
+labs/observability/02-otel-collector-integration/collector-output.txt
+labs/observability/02-otel-collector-integration/otlp-response.json
+kind-evidence/
+
 # Local reports
 *.log
 *.tmp
