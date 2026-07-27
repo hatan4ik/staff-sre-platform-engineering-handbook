@@ -94,15 +94,16 @@ The GitHub connector used for this work cannot create a new top-level repository
 | Client-to-dependency request-path isolation | AWS Round 2 and all tracks | `core/incident-response/request-path-debugging.md` | Migrated and normalized |
 | Selective failures and cohort analysis | AWS Round 2 and progressive-delivery scenarios | `core/incident-response/cohort-analysis.md` | Migrated and normalized |
 | Evidence beyond dashboards | AWS Round 2 and all tracks | `core/observability/evidence-beyond-dashboards.md` | Migrated and normalized |
+| Postmortems and corrective actions | All tracks | `core/incident-response/postmortems.md` | Migrated and normalized |
+| SLOs, error budgets, burn rates, and ownership | Netflix and all tracks | `core/reliability/slo/error-budgets.md` | Migrated and normalized |
 | Control-plane and application latency analysis | AWS Round 2 | `core/kubernetes/control-plane/`, `core/observability/`, and `core/reliability/` | Source added; canonical migration planned |
 | Runtime restart and OOM debugging | Tesla, Netflix, and AWS tracks | `core/kubernetes/runtime-debugging.md` and `core/linux/` | AWS source added; canonical migration planned |
-| Postmortems and corrective actions | All tracks | `core/incident-response/postmortems.md` | AWS source added; canonical migration planned |
 | Mobile identity, commands, notifications, and preference synchronization | Tesla and AWS tracks | `core/distributed-systems/`, `core/security/identity/`, and `core/reliability/` | AWS system-design source added; canonical extraction planned |
 | Secure fleet and OTA delivery | Tesla and AWS tracks | `core/security/supply-chain/`, `core/delivery-gitops/`, and `core/reliability/blast-radius.md` | AWS system-design source added; canonical extraction planned |
 | Multi-Region disaster recovery | All tracks | `core/reliability/disaster-recovery/` | AWS system-design source added; canonical extraction planned |
-| Observability platform and alert quality | All tracks | `core/observability/` and `core/reliability/slo/` | Evidence chapter added; broader platform extraction planned |
+| Observability platform and alert quality | All tracks | `core/observability/` and `core/reliability/slo/` | Evidence and SLO chapters added; broader platform extraction planned |
 | High-volume streams, queues, replay, and backpressure | All tracks | `core/distributed-systems/` and `core/reliability/` | AWS system-design source added; canonical extraction planned |
-| SLOs, incidents, multi-region, and chaos | All tracks | `core/reliability/` | Planned |
+| Overload, graceful degradation, blast radius, DR, and chaos | All tracks | `core/reliability/` | Planned |
 
 ## Executable-lab migration status
 
@@ -113,6 +114,7 @@ The GitHub connector used for this work cannot create a new top-level repository
 | Kubernetes restart evidence | Linux memory/observability and future runtime chapter | Added and statically validated |
 | Workload identity claims | `core/security/identity/workload-identity-federation.md` | Added with unit tests and deterministic smoke scenarios |
 | Autoscaling control loop | `core/kubernetes/autoscaling/control-loops-capacity-realization.md` | Added with unit tests and deterministic smoke scenarios |
+| SLO and error-budget policy | `core/reliability/slo/error-budgets.md` | Added with unit tests, protected-cohort checks, and burn-rate smoke validation |
 
 ## AWS interview implementation status
 
@@ -148,10 +150,10 @@ The GitHub connector used for this work cannot create a new top-level repository
 
 - FAANG board review across all 18 AWS answers.
 - Concise spoken-answer sheets and interviewer follow-up drills.
-- Additional incident, identity, autoscaling, GitOps, and recovery labs.
+- Additional incident, identity, autoscaling, GitOps, reliability, and recovery labs.
 - Disposable-cluster execution in CI where safe.
 - Mock interview scorecards and candidate-specific story completion.
-- Canonical extraction of control-plane latency, runtime, postmortem, DR, supply-chain, and reliability foundations.
+- Canonical extraction of control-plane latency, runtime, DR, supply-chain, overload, and chaos foundations.
 - Conversion of deep track chapters into thin adapters after parity review.
 
 ## No-duplication workflow
