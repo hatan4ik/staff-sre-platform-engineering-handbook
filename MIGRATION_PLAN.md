@@ -93,6 +93,10 @@ The GitHub connector used for this work cannot create a new top-level repository
 | Software supply-chain and artifact trust | Fleet, platform, and delivery scenarios | `core/security/software-supply-chain/artifact-trust-slsa-sigstore.md` | Migrated and normalized |
 | Kubernetes autoscaling and capacity realization | Netflix and AWS tracks | `core/kubernetes/autoscaling/control-loops-capacity-realization.md` | Migrated and normalized; AWS capacity adapter retained |
 | Kubernetes control-plane and API latency | AWS Round 2 | `core/kubernetes/control-plane/api-server-etcd-list-watch-admission.md` | Migrated and normalized |
+| Kubernetes scheduler and placement diagnostics | AWS, Netflix, and platform scenarios | `core/kubernetes/scheduling/scheduler-placement-diagnostics.md` | Added as canonical foundation |
+| Kubernetes Services, EndpointSlices, CNI, DNS, Ingress, and Gateway | All tracks | `core/kubernetes/networking/service-dns-ingress-gateway-request-path.md` | Added as canonical foundation |
+| Kubernetes CSI, persistent volumes, and stateful recovery | All tracks | `core/kubernetes/storage/csi-stateful-recovery.md` | Added as canonical foundation |
+| Kubernetes probes, startup, shutdown, and traffic drain | Netflix, AWS, and shared operations | `core/kubernetes/workload-lifecycle/probes-startup-shutdown-drain.md` | Migrated and normalized |
 | Kubernetes runtime restart and OOM debugging | Tesla, Netflix, and AWS tracks | `core/kubernetes/runtime-debugging.md` and `core/linux/` | Migrated and normalized; AWS incident adapter retained |
 | Kubernetes node failure, fencing, and repair | Netflix and shared operations | `core/kubernetes/node-lifecycle/failure-fencing-repair.md` | Migrated and normalized with executable repair lab |
 | Kubernetes node-image qualification | Shared platform operations | `core/kubernetes/node-images/qualification-promotion-rollback.md` | Added as canonical foundation |
@@ -122,6 +126,7 @@ The GitHub connector used for this work cannot create a new top-level repository
 | Autoscaling control loop | Kubernetes autoscaling | Added with unit tests and smoke scenarios |
 | SLO and error-budget policy | Reliability SLO module | Added with protected-cohort and burn-rate tests |
 | Kubernetes node repair | Node lifecycle and fencing | Added with state-machine simulator, tests, and CI |
+| Disposable Kubernetes conformance | Scheduling, Service DNS, EndpointSlice readiness, liveness, graceful drain, and PDBs | Added as three-node Kind workflow with failure evidence export |
 | Disaster-recovery state machine | Multi-region DR | Added with guarded transitions, tests, and CI |
 | Overload and blast radius | Graceful degradation and overload | Added with retry, admission, failover, and replay tests |
 | Telemetry pipeline governance | OpenTelemetry and high-volume observability | Added with quota, cardinality, loss, freshness, and sampling tests |
@@ -168,13 +173,12 @@ The GitHub connector used for this work cannot create a new top-level repository
 
 ## Remaining work
 
-1. Build disposable-cluster conformance for control-plane, node-image, probes, DNS, mesh, OpenTelemetry, and recovery failures.
-2. Add dedicated scheduler, Kubernetes network/Gateway, and CSI/stateful-recovery canonical chapters.
-3. Add direct xDS convergence, certificate rotation, DNS capture, and east-west gateway labs.
-4. Add real OpenTelemetry Collector, trace-context, profile, and alert-rule integration tests.
-5. Perform parity review and replace duplicated Netflix, Tesla, and AWS theory with thin adapters.
-6. Split the AWS track into a top-level repository when repository-creation capability is available.
-7. Complete candidate-specific metrics and exact production evidence without inventing outcomes.
+1. Add direct xDS convergence, certificate rotation, DNS capture, and east-west gateway labs.
+2. Add real OpenTelemetry Collector, trace-context, profile, and alert-rule integration tests.
+3. Extend disposable-cluster conformance to API overload, node-image promotion, NetworkPolicy/MTU, CSI recovery, and multi-cluster failures.
+4. Perform parity review and replace duplicated Netflix, Tesla, and AWS theory with thin adapters.
+5. Split the AWS track into a top-level repository when repository-creation capability is available.
+6. Complete candidate-specific metrics and exact production evidence without inventing outcomes.
 
 ## No-duplication workflow
 
