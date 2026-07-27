@@ -24,10 +24,14 @@ By completing this module, you should be able to:
 4. [Consensus, leases, fencing tokens, and split-brain prevention](04-consensus-leases-fencing.md)
 5. [Partitioning, sharding, rebalancing, hot keys, and skew](05-partitioning-sharding-rebalancing.md)
 6. [Messaging, streams, delivery semantics, and event-driven systems](06-messaging-streams-delivery-semantics.md)
-7. Caching, invalidation, CDNs, and consistency at the edge — next
-8. Resilience patterns, overload control, and cascading-failure containment — planned
-9. Distributed observability and incident labs — planned
-10. Staff/Principal system-design drills — planned
+7. [Caching, invalidation, CDNs, and consistency at the edge](07-caching-invalidation-cdns-edge.md)
+8. [Resilience patterns, overload control, and cascading-failure containment](08-resilience-overload-cascading-failures.md)
+9. [Distributed observability and production incident labs](09-observability-incident-labs.md)
+10. [Staff and Principal distributed-system design drills](10-staff-principal-system-design-drills.md)
+
+## Module status
+
+The canonical distributed-systems curriculum is complete through Chapter 10. Future work should deepen labs, add executable reference implementations, and connect company-specific interview tracks back to these canonical chapters instead of duplicating shared material.
 
 ## Core mental model
 
