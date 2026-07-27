@@ -1,0 +1,46 @@
+name: OpenTelemetry Collector Integration
+
+on:
+  pull_request:
+    paths:
+      - "core/observability/**"
+      - "labs/observability/02-otel-collector-integration/**"
+      - ".github/workflows/opentelemetry-collector-integration.yml"
+  push:
+    branches: [main]
+    paths:
+      - "core/observability/**"
+      - "labs/observability/02-otel-collector-integration/**"
+      - ".github/workflows/opentelemetry-collector-integration.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  collector-data-path:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Verify Docker
+        run: docker version
+
+      - name: Run Collector integration
+        working-directory: labs/observability/02-otel-collector-integration
+        env:
+          COLLECTOR_VERSION: "0.157.0"
+          KEEP_CONTAINER: "false"
+        run: bash run.sh
+
+      - name: Upload Collector evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: opentelemetry-collector-integration-evidence
+          path: |
+            labs/observability/02-otel-collector-integration/collector-output.txt
+            labs/observability/02-otel-collector-integration/otlp-response.json
+          if-no-files-found: ignore
