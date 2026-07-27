@@ -232,8 +232,11 @@ class NodeRepairTests(unittest.TestCase):
                 failure_signature="cni-corruption",
                 failure_count=3,
             ),
-            Node("c1", "c", "image-c"),
-            Node("c2", "c", "image-c"),
+            # Keep one healthy peer on each image so this fixture isolates the
+            # cross-zone signature detector instead of triggering a 100%
+            # singleton image-cohort failure first.
+            Node("c1", "c", "image-a"),
+            Node("c2", "c", "image-b"),
         ]
         result = evaluate_repair(
             nodes,
