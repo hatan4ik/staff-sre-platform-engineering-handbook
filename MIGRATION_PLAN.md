@@ -130,6 +130,8 @@ The GitHub connector used for this work cannot create a new top-level repository
 | Disaster-recovery state machine | Multi-region DR | Added with guarded transitions, tests, and CI |
 | Overload and blast radius | Graceful degradation and overload | Added with retry, admission, failover, and replay tests |
 | Telemetry pipeline governance | OpenTelemetry and high-volume observability | Added with quota, cardinality, loss, freshness, and sampling tests |
+| Real OpenTelemetry Collector data path | OpenTelemetry Collector architecture | Added with OTLP/HTTP, memory limiter, batching, attribute, exporter, Docker, and CI validation |
+| Service-mesh reliability contract | xDS, mTLS/SDS, DNS capture, gateways, and failover | Added with ACK/NACK, last-known-good, trust rotation, stale DNS, authority, capacity, retry tests, and CI |
 | Platform policy, tenant isolation, artifact trust, fleet rollout, and secrets | Platform and security modules | Added with deterministic scenarios and CI |
 
 ## AWS interview implementation status
@@ -169,12 +171,12 @@ The GitHub connector used for this work cannot create a new top-level repository
 - Interview-day cheatsheet and 30-day plan.
 - Personal story bank and evidence-completion worksheet.
 - Official-source index.
-- AWS, Kubernetes, Terraform, reliability, and distributed-systems labs.
+- AWS, Kubernetes, Terraform, reliability, observability, service-mesh, and distributed-systems labs.
 
 ## Remaining work
 
-1. Add direct xDS convergence, certificate rotation, DNS capture, and east-west gateway labs.
-2. Add real OpenTelemetry Collector, trace-context, profile, and alert-rule integration tests.
+1. Exercise real Envoy or Istio xDS rejection, SDS rotation, DNS capture, timeout, and east-west-gateway failure behavior.
+2. Extend OpenTelemetry integration to exporter outage/backpressure, tail-sampling affinity, profiles, and alert-rule evaluation.
 3. Extend disposable-cluster conformance to API overload, node-image promotion, NetworkPolicy/MTU, CSI recovery, and multi-cluster failures.
 4. Perform parity review and replace duplicated Netflix, Tesla, and AWS theory with thin adapters.
 5. Split the AWS track into a top-level repository when repository-creation capability is available.
