@@ -70,6 +70,13 @@ The ten-chapter module covers:
 Start with [`core/infrastructure-as-code/README.md`](core/infrastructure-as-code/README.md).
 
 - [`terraform-state-integrity.md`](core/infrastructure-as-code/terraform-state-integrity.md) — state bindings, locking, force-unlock safety, partial-apply recovery, current S3 lock files, legacy DynamoDB migration, state boundaries, CI concurrency, drift, and break-glass governance.
+- [`tool-selection-and-governance.md`](core/infrastructure-as-code/tool-selection-and-governance.md) — declarative, cloud-native, programming-language, GitOps, configuration-management, and control-plane tool choices; one-owner rules; policy; promotion; rollback; and migration.
+
+### GitOps and progressive delivery
+
+Start with [`core/delivery-gitops/README.md`](core/delivery-gitops/README.md).
+
+- [`gitops-progressive-delivery.md`](core/delivery-gitops/gitops-progressive-delivery.md) — build, promotion, and reconciliation boundaries; resource ownership; CRDs; pruning; secrets; multi-cluster rollout; canary analysis; rollback; and Argo CD/Flux mappings.
 
 ### Service mesh, Envoy, Istio, and xDS
 
@@ -139,8 +146,8 @@ Round 1 contains six Staff/Principal-level chapters:
 - Expand executable distributed-systems labs with network partitions, overload, and failure-recovery experiments.
 - Build Kubernetes node-failure, fencing, repair, and image-qualification labs.
 - Expand Envoy request-path, mTLS, DNS-capture, and multi-cluster service-mesh chapters and labs.
-- Add IaC tool-selection, module-governance, and Terraform recovery labs around the canonical state-integrity chapter.
-- Deepen GitOps, EKS security, workload identity, and autoscaling control-loop labs.
+- Add IaC, Terraform-recovery, GitOps, and progressive-delivery labs around the canonical chapters.
+- Deepen EKS security, workload identity, and autoscaling control-loop modules.
 - Connect Tesla, Netflix, and AWS interview adapters back to canonical chapters and runnable exercises.
 
 ## Core principle
