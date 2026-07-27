@@ -8,6 +8,7 @@ This module owns reusable Kubernetes foundations shared by AWS, Netflix, Tesla, 
 - [`scheduling/scheduler-placement-diagnostics.md`](scheduling/scheduler-placement-diagnostics.md) — scheduler queues and plugins, requests, taints, affinity, topology spread, volume and device constraints, preemption, autoscaler handoff, evidence, and placement SLOs.
 - [`networking/service-dns-ingress-gateway-request-path.md`](networking/service-dns-ingress-gateway-request-path.md) — Services, EndpointSlices, kube-proxy/eBPF dataplanes, CNI, DNS, NetworkPolicy, Ingress, Gateway API, TLS, dual stack, MTU, conntrack, and request-path debugging.
 - [`storage/csi-stateful-recovery.md`](storage/csi-stateful-recovery.md) — PVC/PV/StorageClass, CSI provisioning, attach/detach, mount, topology, snapshots, backups, writer fencing, restore, and stateful recovery.
+- [`workload-lifecycle/probes-startup-shutdown-drain.md`](workload-lifecycle/probes-startup-shutdown-drain.md) — startup/liveness/readiness semantics, business-aware admission, overload interactions, EndpointSlice propagation, long-lived connections, graceful shutdown, PDBs, and rollout safety.
 - [`autoscaling/`](autoscaling/) — HPA, VPA, KEDA, scheduling, node supply, disruption, and end-to-end capacity realization.
 - [`node-lifecycle/`](node-lifecycle/) — node health, systemd and runtime failures, fencing, cordon, drain, replacement, and repair automation.
 - [`node-images/qualification-promotion-rollback.md`](node-images/qualification-promotion-rollback.md) — immutable image contracts, provenance, boot and conformance testing, workload compatibility, canary pools, rollout rings, rollback, and fleet governance.
@@ -15,9 +16,8 @@ This module owns reusable Kubernetes foundations shared by AWS, Netflix, Tesla, 
 
 ## Remaining expansion areas
 
-- Business-aware probe design, startup safety, graceful shutdown, and traffic drain as a dedicated chapter.
 - Multi-cluster workload and control-plane fleet operations beyond node and platform lifecycle modules.
-- Disposable-cluster conformance suites covering control-plane, scheduling, networking, storage, node-image, and probe failure modes.
+- Disposable-cluster conformance suites covering control-plane, scheduling, networking, storage, node-image, probe, and drain failure modes.
 
 ## Related foundations
 
