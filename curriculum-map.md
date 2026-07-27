@@ -46,6 +46,14 @@ This map prevents duplicate chapter development across company- and platform-spe
 | AWS Round 1 EKS-security chapter | `core/security/identity/`, `core/security/network/`, and `core/security/secrets/` |
 | AWS Round 1 provisioning-tool chapter | `core/infrastructure-as-code/tool-selection-and-governance.md` |
 | AWS Round 1 autoscaling chapter | `core/kubernetes/autoscaling/` and `core/reliability/capacity/` |
+| AWS Round 2 request-path outage chapter | `core/networking/` and `core/incident-response/request-path-debugging.md` |
+| AWS Round 2 control-plane latency chapter | `core/kubernetes/control-plane/` and `core/observability/` |
+| AWS Round 2 application-latency chapter | `core/observability/` and `core/reliability/latency-analysis.md` |
+| AWS Round 2 cohort-failure chapter | `core/incident-response/cohort-analysis.md` and `core/delivery-gitops/progressive-delivery.md` |
+| AWS Round 2 evidence chapter | `core/observability/evidence-beyond-dashboards.md` |
+| AWS Round 2 partial-apply chapter | `core/infrastructure-as-code/terraform-state-integrity.md` |
+| AWS Round 2 restart chapter | `core/kubernetes/runtime-debugging.md` and `core/linux/` |
+| AWS Round 2 postmortem chapter | `core/incident-response/postmortems.md` and `core/leadership/` |
 
 ## AWS Round 1 question map
 
@@ -57,6 +65,19 @@ This map prevents duplicate chapter development across company- and platform-spe
 | Secure Amazon EKS | `tracks/aws/round-1/04-securing-amazon-eks.md` | IAM, workload identity, network policy, pod security, secret delivery |
 | Terraform vs CloudFormation | `tracks/aws/round-1/05-terraform-cloudformation-native.md` | IaC ownership, drift, policy, fleet governance |
 | ASGs, Karpenter, CA, and Spot | `tracks/aws/round-1/06-capacity-autoscaling-karpenter-spot.md` | scheduling, HPA, capacity, disruption, overload |
+
+## AWS Round 2 question map
+
+| Question | AWS adapter | Canonical prerequisites |
+|---|---|---|
+| Route 53 to application outage | `tracks/aws/round-2/07-route53-to-application-outage.md` | DNS, TLS, edge, load balancing, VPC, Kubernetes request paths |
+| Kubernetes API latency | `tracks/aws/round-2/08-eks-api-latency-nodes-healthy.md` | API-server behavior, LIST/WATCH, admission, controller load, control-plane SLOs |
+| Application API latency | `tracks/aws/round-2/08b-application-api-latency-nodes-healthy.md` | RED/USE, histograms, tracing, profiling, dependency saturation |
+| Subset of users fail | `tracks/aws/round-2/09-subset-users-fail-after-deployment.md` | cohort analysis, progressive delivery, routing, data partitions |
+| Dashboards do not show cause | `tracks/aws/round-2/10-beyond-cloudwatch-dashboards.md` | logs, traces, changes, configuration, network evidence |
+| Terraform partial apply | `tracks/aws/round-2/11-terraform-partial-apply-recovery.md` | state integrity, import, refresh-only, one-writer recovery |
+| Pods restart with healthy probes | `tracks/aws/round-2/12-pods-restart-probes-healthy.md` | pod lifecycle, cgroups, OOM, kubelet, disruption controllers |
+| Large outage postmortem | `tracks/aws/round-2/13-large-aws-outage-postmortem.md` | SLOs, incident command, causal analysis, corrective actions |
 
 ## Example question adapters
 
@@ -111,6 +132,22 @@ AWS adapter adds:
 - Karpenter, managed node groups, EKS Pod Identity, and IRSA.
 - CloudFront, Route 53, Global Accelerator, ElastiCache, DynamoDB, Aurora, SQS, and Kinesis selection.
 - AWS account, Region, and Availability Zone failure domains.
+
+### AWS partial-user outage
+
+Required core reading:
+
+- `core/incident-response/cohort-analysis.md`
+- `core/networking/`
+- `core/delivery-gitops/progressive-delivery.md`
+- `core/distributed-systems/partitioning.md`
+
+AWS adapter adds:
+
+- Route 53 and resolver cohorts.
+- WAF labels and CloudFront edge behavior.
+- ALB targets, Availability Zones, VPC paths, EKS pod versions, and data shards.
+- CloudTrail, Config, AWS Health, and CloudWatch evidence sources.
 
 ## Development rule
 

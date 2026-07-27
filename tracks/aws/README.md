@@ -54,12 +54,14 @@ Use two repeatable structures throughout the interview.
 ### Round 2 — Incident response, troubleshooting, and reliability
 
 7. [Route 53-to-application outage troubleshooting](round-2/07-route53-to-application-outage.md)
-8. [EKS API latency doubles while nodes remain healthy](round-2/08-eks-api-latency-nodes-healthy.md)
-9. Deployment succeeds but only a subset of users fail
-10. CloudWatch detects errors but dashboards do not reveal root cause
-11. Terraform apply fails midway and leaves partial infrastructure
-12. EKS pods restart continuously while probes remain healthy
-13. Postmortem after a large AWS production outage
+8. API latency while nodes remain healthy:
+   - [Kubernetes API-server and control-plane latency](round-2/08-eks-api-latency-nodes-healthy.md)
+   - [Customer-facing application API latency with CloudWatch, X-Ray, Prometheus, and Grafana](round-2/08b-application-api-latency-nodes-healthy.md)
+9. [Deployment succeeds but only a subset of users fail](round-2/09-subset-users-fail-after-deployment.md)
+10. [CloudWatch detects errors but dashboards do not reveal root cause](round-2/10-beyond-cloudwatch-dashboards.md)
+11. [Terraform apply fails midway and leaves partial infrastructure](round-2/11-terraform-partial-apply-recovery.md)
+12. [EKS pods restart continuously while probes remain healthy](round-2/12-pods-restart-probes-healthy.md)
+13. [Postmortem after a large AWS production outage](round-2/13-large-aws-outage-postmortem.md)
 
 ### Round 3 — AWS system design, scalability, and leadership
 
@@ -88,8 +90,8 @@ Each completed chapter contains:
 | Round | Scope | Status |
 |---|---|---|
 | Round 1 | EKS, GitOps, Terraform, security, provisioning, autoscaling | Complete on `main` |
-| Round 2 | Incidents, troubleshooting, recovery, postmortems | In progress — questions 7–8 complete |
-| Round 3 | System design, global delivery, DR, observability, event platforms | Planned after Round 2 |
+| Round 2 | Incidents, troubleshooting, recovery, postmortems | Complete in this change |
+| Round 3 | System design, global delivery, DR, observability, event platforms | Next |
 
 ## Current-version notes
 
@@ -97,6 +99,9 @@ Each completed chapter contains:
 - EKS Pod Identity is the preferred default for many new same-account workloads; IRSA remains fully supported and is still useful, especially where its trust model or direct cross-account behavior fits better.
 - For new Terraform S3 backends, evaluate native S3 lockfiles with `use_lockfile = true`. DynamoDB-based locking remains relevant in existing estates and in the interview prompt, but HashiCorp marks it deprecated.
 - Karpenter is generally the preferred dynamic node-provisioning mechanism for heterogeneous EKS workloads; Cluster Autoscaler remains appropriate for stable, pre-defined managed node-group fleets.
+- For new EKS Container Insights deployments, use the current OpenTelemetry-based path; existing classic deployments may require a separate migration plan.
+- CloudWatch investigations can accelerate correlation across telemetry and changes, but generated hypotheses require evidence-based validation.
+- CloudTrail Lake is closed to new customers as of May 31, 2026; existing customers can continue, while new incident-analysis designs should use currently supported CloudWatch and durable CloudTrail architectures.
 
 ## Source discipline
 
@@ -108,5 +113,6 @@ Technical behavior should be verified against primary sources:
 - HashiCorp Terraform documentation
 - Argo CD and Flux documentation
 - Karpenter documentation
+- OpenTelemetry, Prometheus, and Grafana documentation
 
 The interview answer must distinguish a documented guarantee from a design assumption.
