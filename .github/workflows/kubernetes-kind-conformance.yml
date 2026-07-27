@@ -1,0 +1,61 @@
+name: Kubernetes Kind Conformance
+
+on:
+  pull_request:
+    paths:
+      - "core/kubernetes/**"
+      - "labs/kubernetes/02-kind-conformance/**"
+      - ".github/workflows/kubernetes-kind-conformance.yml"
+  push:
+    branches: [main]
+    paths:
+      - "core/kubernetes/**"
+      - "labs/kubernetes/02-kind-conformance/**"
+      - ".github/workflows/kubernetes-kind-conformance.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  kind-conformance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install pinned Kind release
+        env:
+          KIND_VERSION: v0.32.0
+        run: |
+          curl -fsSLO "https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-amd64"
+          curl -fsSLO "https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-amd64.sha256sum"
+          sha256sum --check kind-linux-amd64.sha256sum
+          sudo install -m 0755 kind-linux-amd64 /usr/local/bin/kind
+          kind version
+
+      - name: Verify Docker and kubectl
+        run: |
+          docker version
+          kubectl version --client
+
+      - name: Run disposable Kubernetes conformance lab
+        working-directory: labs/kubernetes/02-kind-conformance
+        env:
+          KEEP_CLUSTER: "false"
+        run: bash run.sh
+
+      - name: Export cluster evidence on failure
+        if: failure()
+        run: |
+          mkdir -p kind-evidence
+          kind export logs kind-evidence --name sre-conformance || true
+
+      - name: Upload failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kind-conformance-failure-evidence
+          path: kind-evidence
+          if-no-files-found: ignore
