@@ -1,0 +1,166 @@
+{
+  "id": "aws-day-01-baseline",
+  "title": "Day 1 Baseline — AWS Staff/Principal Calibration",
+  "description": "A cold baseline across architecture, Terraform state, incident response, postmortems, disaster recovery, and event systems. Complete without reading the model answers first.",
+  "rules": [
+    "Record audio or video externally if possible.",
+    "State assumptions before naming services.",
+    "Keep the initial response between 60 and 120 seconds.",
+    "Answer each follow-up directly instead of returning to a memorized speech.",
+    "Separate production experience from hypothetical architecture.",
+    "Do not guess an AWS quota or unsupported personal metric."
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "title": "Multi-AZ EKS at hyperscale",
+      "prompt": "Design a highly available Amazon EKS platform for two million concurrent users. The application must tolerate one Availability Zone failure without violating its user-facing SLO.",
+      "target_seconds": 90,
+      "followups": [
+        "What additional workload numbers do you need before you can size the platform?",
+        "One AZ fails while the other two are already at 80% utilization. What happens?",
+        "HPA requests 500 additional pods, but the remaining subnets have insufficient pod IPs. How do you respond?",
+        "Why not deploy one extremely large EKS cluster?",
+        "What evidence would justify the claim that the platform supports this scale?"
+      ],
+      "must_cover": [
+        "concurrency translated into requests, bytes, and active connections",
+        "AZ and cluster or cell failure domains",
+        "pod and node scaling as separate control loops",
+        "subnet IPs, quotas, dependencies, and warm capacity",
+        "full-path load test including AZ evacuation"
+      ],
+      "unsafe_signals": [
+        "EKS is managed, therefore the application is highly available",
+        "Karpenter automatically guarantees capacity",
+        "three AZs without surviving-capacity math"
+      ]
+    },
+    {
+      "id": "q3",
+      "title": "Terraform state across accounts and Regions",
+      "prompt": "Design Terraform state management for a multi-account, multi-Region AWS estate used by many engineering teams.",
+      "target_seconds": 90,
+      "followups": [
+        "Why not use one state file for the entire production estate?",
+        "The CI job is gone but the state remains locked. When may you force-unlock it?",
+        "An S3 replica in another Region contains an older state object. Can it become the active backend automatically?",
+        "AWS created a resource, but Terraform timed out before recording it. What is your recovery sequence?",
+        "How do consumers obtain outputs without broad access to sensitive state?"
+      ],
+      "must_cover": [
+        "state treated as a privileged control-plane database",
+        "one writer per state and protected short-lived CI identity",
+        "state segmentation by blast radius and lifecycle",
+        "versioning, encryption, audit, and tested recovery",
+        "configuration, state, and AWS reality reconciliation"
+      ],
+      "unsafe_signals": [
+        "use lock=false during an urgent change",
+        "restore the oldest or newest object without checking lineage and reality",
+        "state replication described as active-active"
+      ]
+    },
+    {
+      "id": "q7",
+      "title": "Route 53-to-application outage",
+      "prompt": "Customers report that they cannot access an application hosted on AWS. Walk through your investigation and mitigation approach.",
+      "target_seconds": 90,
+      "followups": [
+        "Route 53 is healthy. Why can users still fail?",
+        "All Application Load Balancer targets are healthy. What does that not prove?",
+        "VPC Reachability Analyzer reports the path as reachable, but requests still time out. What next?",
+        "Only IPv6 clients and one geographic cohort fail.",
+        "Would you restart the application pods?"
+      ],
+      "must_cover": [
+        "customer impact and one UTC incident timeline",
+        "capture of one real failing transaction",
+        "outside-in request path from resolver through dependency and response",
+        "hypothesis and boundary-specific evidence",
+        "smallest reversible mitigation and external recovery proof"
+      ],
+      "unsafe_signals": [
+        "restart everything before preserving evidence",
+        "component health equated with business transaction health",
+        "multiple uncontrolled mitigation changes"
+      ]
+    },
+    {
+      "id": "q13",
+      "title": "Large-outage postmortem",
+      "prompt": "A global deployment caused a 50-minute customer outage. Describe how you would lead the postmortem and ensure the failure class does not recur.",
+      "target_seconds": 90,
+      "followups": [
+        "A junior engineer initiated the deployment. What is the root cause?",
+        "Who owns the postmortem?",
+        "Leadership asks for the engineer's name in the executive summary.",
+        "The review produces 35 corrective actions. How do you prioritize them?",
+        "When may the postmortem be considered complete?"
+      ],
+      "must_cover": [
+        "customer and business impact",
+        "fact-based UTC timeline",
+        "trigger separated from contributing and safeguard failures",
+        "blameless but accountable ownership",
+        "corrective actions with owners, dates, risk, and acceptance tests"
+      ],
+      "unsafe_signals": [
+        "human error as the complete root cause",
+        "postmortem complete when the document is published",
+        "large unprioritized action list without verification"
+      ]
+    },
+    {
+      "id": "q16",
+      "title": "Multi-Region disaster recovery",
+      "prompt": "Design a multi-Region AWS disaster-recovery strategy with a five-minute RTO and a write RPO below ten seconds.",
+      "target_seconds": 90,
+      "followups": [
+        "A single Route 53 health check fails. Should traffic move immediately?",
+        "The secondary Region has only 25% of normal compute capacity.",
+        "Aurora replication lag is six seconds when the primary Region becomes unreachable.",
+        "The old Region might still accept writes through an internal path.",
+        "The old Region returns after 20 minutes. Should you fail back immediately?"
+      ],
+      "must_cover": [
+        "RTO and RPO by capability",
+        "independently operable regional cells",
+        "destination readiness and capacity realization",
+        "source fencing before write-authority promotion",
+        "canary traffic shift, reconciliation, restored redundancy, and planned failback"
+      ],
+      "unsafe_signals": [
+        "DNS described as the complete DR design",
+        "automated failover from one noisy signal",
+        "traffic moved before old-writer fencing"
+      ]
+    },
+    {
+      "id": "q18",
+      "title": "Millions of events per second",
+      "prompt": "Design an AWS platform that processes five million real-time events per second using the appropriate combination of Kinesis, SQS, SNS, EventBridge, Lambda, and EKS.",
+      "target_seconds": 90,
+      "followups": [
+        "The average event size is 1 KB. What does that imply before protocol and replication overhead?",
+        "One customer generates 40% of traffic and strict per-customer ordering is required.",
+        "A consumer is six hours behind.",
+        "One event permanently crashes the consumer.",
+        "Lambda scales quickly and overwhelms DynamoDB. What control is missing?",
+        "How do you achieve exactly-once business effect?"
+      ],
+      "must_cover": [
+        "events per second and bytes per second",
+        "partition key derived from ordering requirement",
+        "distinct roles for Kinesis, SQS, SNS, EventBridge, Lambda, EKS, and S3",
+        "idempotency, checkpointing, retry ownership, and poison-event handling",
+        "backpressure, replay, consumer lag, and end-to-end freshness"
+      ],
+      "unsafe_signals": [
+        "decorative chaining of every AWS service",
+        "random key suffix that violates required ordering",
+        "transport-level exactly-once claim"
+      ]
+    }
+  ]
+}
