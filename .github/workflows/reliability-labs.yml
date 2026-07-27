@@ -1,0 +1,57 @@
+name: Reliability Engineering Labs
+
+on:
+  push:
+    paths:
+      - "labs/reliability/**"
+      - "core/reliability/**"
+      - ".github/workflows/reliability-labs.yml"
+  pull_request:
+    paths:
+      - "labs/reliability/**"
+      - "core/reliability/**"
+      - ".github/workflows/reliability-labs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Show Python version
+        run: python3 --version
+
+      - name: Compile reliability lab programs
+        run: python3 -m compileall -q labs/reliability
+
+      - name: Run SLO and error-budget tests
+        run: python3 labs/reliability/01-error-budget/test_slo_budget.py -v
+
+      - name: Validate deterministic SLO demo
+        run: |
+          python3 labs/reliability/01-error-budget/slo_budget.py --demo > slo-demo.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path("slo-demo.json").read_text(encoding="utf-8"))
+          cohorts = {item["name"]: item for item in result["cohorts"]}
+
+          if result["aggregate"]["status"] != "HEALTHY":
+              raise AssertionError("aggregate scenario should demonstrate apparent health")
+          if cohorts["critical-write-path"]["status"] != "VIOLATING":
+              raise AssertionError("protected critical cohort must be violating")
+          if result["alert"]["severity"] != "PAGE":
+              raise AssertionError("paired fast-burn windows must page")
+          if result["release_decision"] != "STOP_AND_MITIGATE_FAST_BURN":
+              raise AssertionError("fast burn must stop exposure and trigger mitigation")
+
+          print("SLO budget, cohort, and burn-rate invariants validated")
+          PY
