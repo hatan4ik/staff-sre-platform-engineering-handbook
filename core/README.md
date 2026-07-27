@@ -2,7 +2,7 @@
 
 The `core/` tree contains reusable engineering chapters shared by all interview tracks.
 
-## Planned domains
+## Domains
 
 ```text
 core/
@@ -10,6 +10,7 @@ core/
 ├── networking/
 ├── kubernetes/
 ├── cloud/
+├── platform-engineering/
 ├── service-mesh/
 ├── ebpf-security/
 ├── observability/
@@ -19,6 +20,14 @@ core/
 ├── delivery-gitops/
 └── leadership/
 ```
+
+## Active curriculum indexes
+
+- [Linux](linux/README.md)
+- [Distributed systems](distributed-systems/README.md)
+- [Platform engineering](platform-engineering/README.md)
+
+Additional domains are expanded incrementally. Company tracks should link to canonical foundations rather than duplicate them.
 
 ## Chapter standard
 

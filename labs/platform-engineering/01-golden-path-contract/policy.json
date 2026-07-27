@@ -1,0 +1,23 @@
+{
+  "supportedApiVersions": ["platform.example.com/v1"],
+  "supportedKinds": ["ServiceRequest"],
+  "environments": ["development", "staging", "production"],
+  "regionsByEnvironment": {
+    "development": ["us-east-1", "us-west-2"],
+    "staging": ["us-east-1", "us-west-2"],
+    "production": ["us-east-1", "us-west-2"]
+  },
+  "serviceTiers": {
+    "standard": {
+      "maximumRpoMinutes": 60,
+      "maximumRtoMinutes": 240
+    },
+    "critical": {
+      "maximumRpoMinutes": 5,
+      "maximumRtoMinutes": 30
+    }
+  },
+  "dataClassifications": ["public", "internal", "confidential", "restricted"],
+  "publicExposureAllowedFor": ["public", "internal"],
+  "ownerPrefix": "team-"
+}
