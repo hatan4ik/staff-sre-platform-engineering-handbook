@@ -6,15 +6,16 @@ This module owns reusable incident-response methods shared by AWS, Netflix, Tesl
 
 1. [Request-path debugging from client to dependency](request-path-debugging.md)
 2. [Cohort analysis for partial and selective failures](cohort-analysis.md)
+3. [Postmortems, causal analysis, and corrective-action governance](postmortems.md)
 
 Planned additions:
 
 - Incident command and communications.
-- Postmortems, causal analysis, and corrective-action governance.
 - Change correlation and rollback decisions.
-- Evidence preservation and investigation beyond dashboards.
 - Multi-region failover incident command.
 - Security-incident integration.
+
+Evidence-system design is canonical in [`core/observability/evidence-beyond-dashboards.md`](../observability/evidence-beyond-dashboards.md).
 
 ## Core method
 
@@ -38,6 +39,9 @@ user-facing recovery proof
       |
       v
 causal analysis and owned prevention
+      |
+      v
+verified corrective actions
 ```
 
 ## Ownership rule
