@@ -1,0 +1,196 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sre-conformance
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: probe-server
+  namespace: sre-conformance
+data:
+  server.py: |
+    import http.server
+    import json
+    import os
+    import signal
+    import threading
+    import time
+
+    ready = False
+    draining = False
+    server = None
+
+    def warm_up():
+        global ready
+        time.sleep(3)
+        ready = True
+        print("WARMUP_COMPLETE", flush=True)
+
+    def handle_term(signum, frame):
+        global ready, draining
+        draining = True
+        ready = False
+        print("DRAIN_STARTED", flush=True)
+
+        def finish():
+            time.sleep(4)
+            print("DRAIN_COMPLETE", flush=True)
+            server.shutdown()
+
+        threading.Thread(target=finish, daemon=True).start()
+
+    class Handler(http.server.BaseHTTPRequestHandler):
+        def respond(self, status, payload):
+            body = json.dumps(payload).encode("utf-8")
+            self.send_response(status)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
+        def do_GET(self):
+            forced_unready = os.path.exists("/tmp/force-unready")
+            forced_dead = os.path.exists("/tmp/fail-live")
+
+            if self.path == "/live":
+                self.respond(500 if forced_dead else 200, {"live": not forced_dead})
+                return
+
+            if self.path == "/ready":
+                available = ready and not draining and not forced_unready
+                self.respond(200 if available else 503, {"ready": available})
+                return
+
+            if self.path == "/slow":
+                time.sleep(2)
+
+            self.respond(
+                200,
+                {
+                    "pod": os.environ.get("POD_NAME", "unknown"),
+                    "node": os.environ.get("NODE_NAME", "unknown"),
+                    "ready": ready,
+                    "draining": draining,
+                },
+            )
+
+        def log_message(self, fmt, *args):
+            print("ACCESS " + (fmt % args), flush=True)
+
+    threading.Thread(target=warm_up, daemon=True).start()
+    signal.signal(signal.SIGTERM, handle_term)
+    signal.signal(signal.SIGINT, handle_term)
+
+    server = http.server.ThreadingHTTPServer(("0.0.0.0", 8080), Handler)
+    print("SERVER_STARTED", flush=True)
+    server.serve_forever()
+    server.server_close()
+    print("SERVER_STOPPED", flush=True)
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: probe-demo
+  namespace: sre-conformance
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: probe-demo
+  template:
+    metadata:
+      labels:
+        app: probe-demo
+    spec:
+      terminationGracePeriodSeconds: 15
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: probe-demo
+      containers:
+        - name: server
+          image: python:3.12-alpine
+          imagePullPolicy: IfNotPresent
+          command: ["python", "-u", "/opt/app/server.py"]
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          ports:
+            - name: http
+              containerPort: 8080
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              cpu: 250m
+              memory: 128Mi
+          startupProbe:
+            httpGet:
+              path: /ready
+              port: http
+            periodSeconds: 1
+            failureThreshold: 15
+            timeoutSeconds: 1
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            periodSeconds: 1
+            failureThreshold: 2
+            successThreshold: 1
+            timeoutSeconds: 1
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: http
+            periodSeconds: 2
+            failureThreshold: 3
+            timeoutSeconds: 1
+          volumeMounts:
+            - name: app
+              mountPath: /opt/app
+              readOnly: true
+      volumes:
+        - name: app
+          configMap:
+            name: probe-server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: probe-demo
+  namespace: sre-conformance
+spec:
+  selector:
+    app: probe-demo
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: probe-demo
+  namespace: sre-conformance
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: probe-demo
