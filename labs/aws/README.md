@@ -1,13 +1,14 @@
-# Executable AWS and EKS Incident Labs
+# Executable AWS and EKS Interview Labs
 
-This directory converts the AWS interview chapters into reproducible failure experiments.
+This directory converts the AWS interview chapters and canonical foundations into reproducible failure experiments.
 
-The first labs are intentionally safe and inexpensive:
+The labs are intentionally safe and inexpensive:
 
-- the Kubernetes exercises run on any local or disposable cluster;
+- Kubernetes exercises run on any local or disposable cluster;
 - the Terraform exercise uses the built-in `terraform_data` resource and local files;
-- no AWS account is required for the initial set;
-- each lab separates the production lesson from the mechanics of the toy environment.
+- identity and autoscaling exercises use deterministic Python simulations;
+- no AWS account is required for the current set;
+- every lab separates the production lesson from the mechanics of the toy environment.
 
 ## Lab map
 
@@ -29,25 +30,48 @@ The first labs are intentionally safe and inexpensive:
    - Recover the termination reason, exit code, previous logs, events, and resource evidence.
    - Practice distinguishing process, container, Pod, and node failure domains.
 
+4. [Workload identity claims and credential fallback](04-workload-identity-claims/README.md)
+   - Validate issuer, audience, subject, environment, signature, and lifetime.
+   - Prove negative identities are rejected.
+   - Expose static credentials that shadow federation.
+   - Detect unsafe node-role fallback.
+
+5. [Kubernetes autoscaling control loops and capacity realization](05-autoscaling-control-loop/README.md)
+   - Calculate simplified utilization-based HPA decisions.
+   - Demonstrate how CPU requests change the HPA denominator.
+   - Compare cold node provisioning with warm capacity.
+   - Prove that downstream saturation can defeat otherwise successful scaling.
+
 ## Prerequisites
 
-- Docker plus `kind`, `minikube`, Docker Desktop Kubernetes, or another disposable cluster
-- `kubectl`
-- Python 3.11 or newer
-- Terraform 1.5 or newer for the Terraform lab
+Core requirements:
 
-The manifests use public container images. Pin images to approved digests before using any pattern in a controlled production environment.
+- Python 3.11 or newer.
+
+For the Kubernetes labs:
+
+- Docker plus `kind`, `minikube`, Docker Desktop Kubernetes, or another disposable cluster;
+- `kubectl`;
+- optional Metrics Server for selected observations.
+
+For the Terraform lab:
+
+- Terraform 1.5 or newer.
+
+The Kubernetes manifests use public container images. Pin images to approved digests before using any pattern in a controlled production environment.
 
 ## Automated verification
 
-The [AWS and EKS Incident Labs workflow](../../.github/workflows/aws-incident-labs.yml) performs the non-cluster checks on each relevant push or pull request:
+The [AWS and EKS Interview Labs workflow](../../.github/workflows/aws-incident-labs.yml) performs the non-cluster checks on each relevant push or pull request:
 
 - compiles standalone Python programs;
+- runs Python unit tests for identity and autoscaling invariants;
+- executes deterministic identity and autoscaling smoke scenarios;
 - parses every Kubernetes YAML document;
 - compiles Python programs embedded in ConfigMaps;
 - runs `terraform fmt`, `init`, and `validate`;
 - proves that the Terraform experiment fails after an earlier resource succeeds;
-- performs the documented recovery;
+- performs the documented Terraform recovery;
 - requires the recovered workspace to produce a no-change plan.
 
 The workflow does not claim to replace a real Kubernetes experiment. Run the manifests on a disposable cluster to observe Service routing, readiness, OOM termination, restart counts, previous logs, and events.
@@ -70,10 +94,16 @@ For every lab:
 After running a lab, answer in this order:
 
 1. **Impact** — who is failing and what transaction is broken?
-2. **Scope** — which version, cohort, AZ, node, container, or resource address is affected?
+2. **Scope** — which version, cohort, AZ, node, container, identity, control loop, or resource address is affected?
 3. **Evidence** — what observation falsifies competing hypotheses?
 4. **Mitigation** — what is the smallest reversible change?
-5. **Recovery proof** — which user-facing SLI returned to normal?
+5. **Recovery proof** — which user-facing SLI or security invariant returned to normal?
 6. **Prevention** — what test, guardrail, rollout policy, or observability dimension eliminates the failure class?
 
-These labs support the chapters in [`tracks/aws/round-2`](../../tracks/aws/round-2/) and the scoring model in [`tracks/aws/MOCK_INTERVIEW_SCORECARD.md`](../../tracks/aws/MOCK_INTERVIEW_SCORECARD.md).
+These labs support:
+
+- [`tracks/aws/round-1`](../../tracks/aws/round-1/) for identity, Terraform, and autoscaling;
+- [`tracks/aws/round-2`](../../tracks/aws/round-2/) for cohort, partial-apply, and restart incidents;
+- [`core/security/identity`](../../core/security/identity/);
+- [`core/kubernetes/autoscaling`](../../core/kubernetes/autoscaling/);
+- the scoring model in [`tracks/aws/MOCK_INTERVIEW_SCORECARD.md`](../../tracks/aws/MOCK_INTERVIEW_SCORECARD.md).
