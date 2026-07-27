@@ -35,6 +35,10 @@ fencing = load_module(
     "fencing_demo",
     "labs/distributed-systems/03-fencing-tokens/fencing_demo.py",
 )
+cache_race = load_module(
+    "cache_race_demo",
+    "labs/distributed-systems/04-cache-races/cache_race_demo.py",
+)
 
 
 class RetryAmplificationTests(unittest.TestCase):
@@ -168,6 +172,29 @@ class FencingTokenTests(unittest.TestCase):
         events = fencing.simulate(fenced=True)
         self.assertEqual(events[-1].resource_value, "B:authoritative-write")
         self.assertTrue(events[-1].outcome.startswith("rejected"))
+
+
+class CacheRaceTests(unittest.TestCase):
+    def test_delete_only_invalidation_allows_stale_resurrection(self) -> None:
+        events = cache_race.stale_fill_race(safe=False)
+        final_cache = events[-1].cache
+        self.assertEqual(final_cache.value, "profile-v1")
+        self.assertEqual(final_cache.value_version, 1)
+        self.assertTrue(events[-1].outcome.startswith("accepted"))
+
+    def test_version_fence_rejects_stale_fill(self) -> None:
+        events = cache_race.stale_fill_race(safe=True)
+        final_cache = events[-1].cache
+        self.assertIsNone(final_cache.value)
+        self.assertEqual(final_cache.version_fence, 2)
+        self.assertTrue(events[-1].outcome.startswith("rejected"))
+
+    def test_single_flight_collapses_origin_load(self) -> None:
+        unsafe = cache_race.stampede(1000, single_flight=False)
+        safe = cache_race.stampede(1000, single_flight=True)
+        self.assertEqual(unsafe.origin_loads, 1000)
+        self.assertEqual(safe.origin_loads, 1)
+        self.assertEqual(safe.cache_hits_after_fill, 999)
 
 
 if __name__ == "__main__":
