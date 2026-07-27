@@ -64,3 +64,10 @@ jobs:
           --requests 100
           --json
           > /tmp/cache-result.json
+
+      - name: Smoke-test shard rebalancing demo
+        run: >-
+          python3 labs/distributed-systems/05-shard-rebalancing/shard_rebalance_demo.py
+          all
+          --json
+          > /tmp/shard-rebalance-result.json
