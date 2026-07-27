@@ -10,6 +10,10 @@ Platform engineering builds and operates an internal product that makes safe sof
 4. [Self-service infrastructure with APIs, Crossplane, Terraform, and GitOps](04-self-service-infrastructure-crossplane-gitops.md)
 5. [Platform SLOs, adoption, economics, and operating model](05-platform-slos-adoption-economics.md)
 
+## Hands-on lab
+
+- [Validate a golden-path service request](../../labs/platform-engineering/01-golden-path-contract/README.md) — an executable standard-library Python lab that separates developer intent, platform policy, validation, and provisioning.
+
 ## Staff and Principal expectations
 
 A strong candidate can distinguish a platform product from a centralized operations team; define valuable golden paths; preserve developer autonomy without exporting infrastructure complexity; connect portals, catalogs, APIs, controllers, GitOps, CI/CD, and cloud services; define ownership and tenancy boundaries; and measure developer and business outcomes rather than ticket volume.
