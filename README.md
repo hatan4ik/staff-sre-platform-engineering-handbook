@@ -90,6 +90,19 @@ Start with [`core/kubernetes/autoscaling/README.md`](core/kubernetes/autoscaling
 
 - [`control-loops-capacity-realization.md`](core/kubernetes/autoscaling/control-loops-capacity-realization.md) — HPA, VPA, KEDA, scheduler and node-supply loops; resource-request semantics; Cluster Autoscaler and Karpenter; Spot and durable baseline capacity; topology, disruption, end-to-end capacity-realization timelines, incident workflows, and validation.
 
+### Incident response and selective-failure analysis
+
+Start with [`core/incident-response/README.md`](core/incident-response/README.md).
+
+- [`request-path-debugging.md`](core/incident-response/request-path-debugging.md) — client-to-dependency path isolation, status-code ownership, paired evidence, hypothesis discipline, reversible mitigation, evidence preservation, and external recovery proof.
+- [`cohort-analysis.md`](core/incident-response/cohort-analysis.md) — partial failures, rates and denominators, confounding, release and infrastructure cohorts, selective mitigation, privacy, cardinality, and cohort-specific recovery.
+
+### Observability and diagnostic evidence
+
+Start with [`core/observability/README.md`](core/observability/README.md).
+
+- [`evidence-beyond-dashboards.md`](core/observability/evidence-beyond-dashboards.md) — alert validation, evidence hierarchy, paired traces, structured logs, metrics, profiles, changes, network and synthetic evidence, hypothesis ledgers, telemetry-pipeline health, and cardinality governance.
+
 ### Service mesh, Envoy, Istio, and xDS
 
 Start with [`core/service-mesh/README.md`](core/service-mesh/README.md).
@@ -117,15 +130,17 @@ These runnable labs use Python's standard library and include automated tests:
 
 GitHub Actions compiles these lab programs, runs invariant tests, and executes smoke scenarios on every relevant push or pull request.
 
-### AWS and EKS incident labs
+### AWS and EKS interview labs
 
 Start with [`labs/aws/README.md`](labs/aws/README.md).
 
 1. [`01-cohort-deployment-failure`](labs/aws/01-cohort-deployment-failure/README.md) — a successful rollout where only the new version and one request cohort fail.
 2. [`02-terraform-partial-apply`](labs/aws/02-terraform-partial-apply/README.md) — a safe local partial apply followed by configuration/state/reality reconciliation.
 3. [`03-kubernetes-restart-evidence`](labs/aws/03-kubernetes-restart-evidence/README.md) — OOM and sidecar restarts while application health checks appear successful.
+4. [`04-workload-identity-claims`](labs/aws/04-workload-identity-claims/README.md) — issuer, audience, subject, environment, lifetime, static-key shadowing, and node-role fallback.
+5. [`05-autoscaling-control-loop`](labs/aws/05-autoscaling-control-loop/README.md) — HPA request semantics, warm versus cold capacity, dependency limits, and user-SLI recovery timelines.
 
-The first AWS lab set is designed for a disposable Kubernetes environment and a local Terraform workspace. It does not require an AWS account. Its workflow parses and compiles the manifests and embedded programs, validates Terraform, executes the injected partial failure, and requires recovery to converge to a no-change plan. The live Kubernetes experiments remain intentionally manual so the engineer observes the real runtime evidence.
+The current lab set requires no AWS account. Kubernetes experiments run on a disposable cluster; Terraform uses a local workspace; identity and autoscaling labs use deterministic Python simulations. CI compiles programs, runs unit and smoke tests, parses manifests, validates Terraform, executes the injected partial failure, and requires recovery to converge.
 
 ## Canonical ownership rule
 
@@ -141,7 +156,7 @@ A track chapter should contain only:
 6. Adversarial follow-ups.
 7. Personal-story mapping.
 
-A track must not become a second conflicting Linux, Kubernetes, Terraform, service-mesh, observability, reliability, security, autoscaling, or distributed-systems source of truth. Transitional deep chapters are migrated into `core/` as canonical coverage is completed.
+A track must not become a second conflicting Linux, Kubernetes, Terraform, service-mesh, observability, incident-response, reliability, security, autoscaling, or distributed-systems source of truth. Transitional deep chapters are migrated into `core/` as canonical coverage is completed.
 
 ## Existing interview tracks
 
@@ -151,16 +166,7 @@ A track must not become a second conflicting Linux, Kubernetes, Terraform, servi
 
 ## AWS track
 
-All 18 AWS source questions now have Staff/Principal-level chapters across infrastructure, incidents, and system design. Round 1 includes:
-
-1. Multi-AZ EKS at hyperscale
-2. Terraform plus Argo CD or Flux GitOps
-3. Multi-account and multi-Region Terraform state
-4. EKS security and workload identity
-5. Terraform versus CloudFormation and AWS-native automation
-6. Capacity planning with ASGs, Karpenter, Cluster Autoscaler, and Spot
-
-The track also includes a board review, spoken-answer drills, a mock-interview scorecard, a personal-story matrix, an official-source index, and executable incident labs.
+All 18 AWS source questions now have Staff/Principal-level chapters across infrastructure, incidents, and system design. The track also includes a board review, spoken-answer drills, a mock-interview scorecard, a personal-story matrix, an official-source index, and executable labs.
 
 ## Coordination
 
@@ -169,11 +175,11 @@ The track also includes a board review, spoken-answer drills, a mock-interview s
 
 ## Active delivery pipeline
 
-- Extract reusable request-path, cohort-debugging, and evidence-beyond-dashboards chapters from AWS Round 2.
 - Build canonical Kubernetes runtime, node-failure, fencing, repair, and image-qualification chapters and labs.
 - Build SLO, error-budget, incident-command, postmortem, disaster-recovery, and chaos modules.
+- Expand OpenTelemetry, tracing, profiling, alert-quality, and high-volume observability-platform chapters.
 - Expand Envoy request-path, mTLS, DNS-capture, and multi-cluster service-mesh chapters and labs.
-- Extend automated validation into disposable-cluster execution, GitOps, workload identity, and autoscaling control-loop labs.
+- Extend automated validation into disposable-cluster execution, GitOps, identity, autoscaling, and incident-response labs.
 - Replace duplicated Netflix, Tesla, and AWS theory with concise interview adapters after parity review.
 
 ## Core principle
