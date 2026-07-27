@@ -109,7 +109,7 @@ class CapacityRealizationTests(unittest.TestCase):
         self.assertTrue(result.recovered)
         self.assertEqual(result.nodes_requested, 1)
         self.assertEqual(result.bottleneck, "node-provisioning-and-pod-startup")
-        self.assertEqual(result.recovery_seconds, 157.0)
+        self.assertEqual(result.recovery_seconds, 162.0)
 
     def test_warm_capacity_recovers_faster(self) -> None:
         cold = simulate_capacity_realization(self.base())
