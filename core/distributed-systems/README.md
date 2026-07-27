@@ -41,6 +41,7 @@ Start with the [distributed-systems lab index](../../labs/distributed-systems/RE
 2. [Transactional outbox and idempotent consumer inbox](../../labs/distributed-systems/02-transactional-outbox/README.md)
 3. [Leases and resource-enforced fencing tokens](../../labs/distributed-systems/03-fencing-tokens/README.md)
 4. [Cache stale-fill races, version fences, and stampede control](../../labs/distributed-systems/04-cache-races/README.md)
+5. [Shard maps, online rebalancing, ownership epochs, and skew](../../labs/distributed-systems/05-shard-rebalancing/README.md)
 
 The lab contract is consistent across exercises:
 
