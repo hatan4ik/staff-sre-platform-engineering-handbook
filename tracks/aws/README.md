@@ -8,36 +8,58 @@ A Staff/Principal-level interview curriculum for AWS infrastructure, Amazon EKS,
 
 Reusable engineering foundations remain canonical in this repository's `core/` modules. This AWS track adds:
 
-- AWS service selection and AWS-specific failure modes
-- Amazon EKS implementation details
-- multi-account and multi-region operating models
-- AWS-native identity, networking, security, observability, and recovery procedures
-- concise interview answers, whiteboard flows, adversarial follow-ups, and practical commands
+- AWS service selection and AWS-specific failure modes;
+- Amazon EKS implementation details;
+- multi-account and multi-region operating models;
+- AWS-native identity, networking, security, observability, and recovery procedures;
+- concise interview answers, whiteboard flows, adversarial follow-ups, and practical commands.
 
-The track does **not** duplicate generic Kubernetes, Linux, Terraform, distributed-systems, security, autoscaling, incident-response, observability, reliability, or SRE textbooks.
+The track does **not** duplicate generic Kubernetes, Linux, Terraform, distributed-systems, security, autoscaling, incident-response, observability, reliability, service-mesh, or SRE textbooks.
 
 ## Canonical prerequisites
 
 Use these shared chapters before the AWS-specific adapters:
 
+### Kubernetes and platform runtime
+
+- [`core/kubernetes/control-plane/api-server-etcd-list-watch-admission.md`](../../core/kubernetes/control-plane/api-server-etcd-list-watch-admission.md) — API-server, etcd, admission, APF, LIST/WATCH, controller queues, SLOs, and incident response.
+- [`core/kubernetes/runtime-debugging.md`](../../core/kubernetes/runtime-debugging.md) — container restart, pod replacement, OOM, eviction, probes, PID 1, kubelet, runtime, and controller evidence.
+- [`core/kubernetes/node-lifecycle/failure-fencing-repair.md`](../../core/kubernetes/node-lifecycle/failure-fencing-repair.md) — node health, fencing, drain, repair, and replacement.
+- [`core/kubernetes/node-images/qualification-promotion-rollback.md`](../../core/kubernetes/node-images/qualification-promotion-rollback.md) — immutable image qualification, canaries, rollout rings, and rollback.
+- [`core/kubernetes/autoscaling/control-loops-capacity-realization.md`](../../core/kubernetes/autoscaling/control-loops-capacity-realization.md) — HPA, VPA, KEDA, scheduler and node-supply loops, Cluster Autoscaler versus Karpenter, disruption, topology, and capacity realization.
+
+### Security and delivery
+
 - [`core/security/identity/workload-identity-federation.md`](../../core/security/identity/workload-identity-federation.md) — Kubernetes projected tokens, EKS Pod Identity versus IRSA, cross-cloud federation, SPIFFE/SPIRE, node-role protection, rotation, and incident evidence.
-- [`core/kubernetes/autoscaling/control-loops-capacity-realization.md`](../../core/kubernetes/autoscaling/control-loops-capacity-realization.md) — HPA, VPA, KEDA, scheduler and node-supply loops, Cluster Autoscaler versus Karpenter, disruption, topology, and capacity-realization SLIs.
-- [`core/incident-response/request-path-debugging.md`](../../core/incident-response/request-path-debugging.md) — client-to-dependency path isolation, status-code ownership, paired evidence, hypothesis discipline, reversible mitigation, and external recovery proof.
-- [`core/incident-response/cohort-analysis.md`](../../core/incident-response/cohort-analysis.md) — partial failures, denominators, confounding, release and infrastructure cohorts, narrow mitigation, and cohort-specific recovery.
-- [`core/incident-response/postmortems.md`](../../core/incident-response/postmortems.md) — impact, causal analysis, response quality, recovery debt, corrective-action governance, and verification before closure.
-- [`core/observability/evidence-beyond-dashboards.md`](../../core/observability/evidence-beyond-dashboards.md) — alert validation, structured logs, traces, profiles, changes, network and synthetic evidence, high-cardinality governance, and AI-hypothesis verification.
-- [`core/reliability/slo/error-budgets.md`](../../core/reliability/slo/error-budgets.md) — user journeys, good-event semantics, denominator integrity, error budgets, burn rates, protected cohorts, release policy, and ownership.
+- [`core/security/secrets/secret-delivery-rotation-kubernetes.md`](../../core/security/secrets/secret-delivery-rotation-kubernetes.md) — secret authority, dynamic credentials, delivery, rotation, revocation, and regional recovery.
+- [`core/security/software-supply-chain/artifact-trust-slsa-sigstore.md`](../../core/security/software-supply-chain/artifact-trust-slsa-sigstore.md) — digests, provenance, SBOMs, signatures, attestations, deployment verification, and compromise response.
 - [`core/infrastructure-as-code/terraform-state-integrity.md`](../../core/infrastructure-as-code/terraform-state-integrity.md) — state integrity, current S3 lock files, legacy DynamoDB locking, partial-apply reconciliation, and one-writer recovery.
 - [`core/infrastructure-as-code/tool-selection-and-governance.md`](../../core/infrastructure-as-code/tool-selection-and-governance.md) — Terraform, CloudFormation, CDK, policy, ownership, and migration principles.
 - [`core/delivery-gitops/gitops-progressive-delivery.md`](../../core/delivery-gitops/gitops-progressive-delivery.md) — reconciliation, promotion, progressive delivery, rollback, pruning, and resource ownership.
-- [`core/service-mesh/fine-grained-service-discovery.md`](../../core/service-mesh/fine-grained-service-discovery.md) — service discovery, xDS, dependency scoping, control-plane failure, and convergence.
+
+### Incidents, observability, and reliability
+
+- [`core/incident-response/request-path-debugging.md`](../../core/incident-response/request-path-debugging.md) — client-to-dependency path isolation, status-code ownership, paired evidence, hypothesis discipline, mitigation, and recovery proof.
+- [`core/incident-response/cohort-analysis.md`](../../core/incident-response/cohort-analysis.md) — partial failures, denominators, confounding, release and infrastructure cohorts, and narrow mitigation.
+- [`core/incident-response/postmortems.md`](../../core/incident-response/postmortems.md) — impact, causal analysis, response quality, recovery debt, corrective-action governance, and verification.
+- [`core/observability/evidence-beyond-dashboards.md`](../../core/observability/evidence-beyond-dashboards.md) — alert validation, traces, logs, profiles, changes, network evidence, and hypothesis verification.
+- [`core/observability/opentelemetry-pipelines-and-governance.md`](../../core/observability/opentelemetry-pipelines-and-governance.md) — instrumentation contracts, Collector architecture, queues, sampling, tenancy, redaction, loss, freshness, and synthetic telemetry.
+- [`core/observability/high-volume-telemetry-alerting-profiling.md`](../../core/observability/high-volume-telemetry-alerting-profiling.md) — metrics, cardinality, histograms, tracing, profiling, alert quality, ingest, retention, and query governance.
+- [`core/reliability/slo/error-budgets.md`](../../core/reliability/slo/error-budgets.md) — user journeys, good-event semantics, denominator integrity, budgets, burn rates, protected cohorts, and release policy.
+- [`core/reliability/graceful-degradation-overload-blast-radius.md`](../../core/reliability/graceful-degradation-overload-blast-radius.md) — deadlines, retry budgets, concurrency, admission, load shedding, degraded modes, cells, failover safety, and backlog recovery.
+- [`core/reliability/disaster-recovery/README.md`](../../core/reliability/disaster-recovery/README.md) — RTO/RPO, authority, fencing, failover, failback, and reconciliation.
+- [`core/reliability/chaos-engineering-game-days.md`](../../core/reliability/chaos-engineering-game-days.md) — hypotheses, steady state, abort conditions, game-day governance, and re-testing.
+
+### Service mesh and distributed systems
+
+- [`core/service-mesh/fine-grained-service-discovery.md`](../../core/service-mesh/fine-grained-service-discovery.md) — service discovery, xDS, dependency scope, control-plane failure, and convergence.
+- [`core/service-mesh/envoy-request-path-debugging.md`](../../core/service-mesh/envoy-request-path-debugging.md) — Envoy 504s, resets, timeouts, retries, connection pools, circuit breakers, and effective configuration.
+- [`core/service-mesh/mtls-sds-dns-multicluster.md`](../../core/service-mesh/mtls-sds-dns-multicluster.md) — mTLS, SDS, trust, DNS capture, gateways, multi-cluster, and failover.
 - [`core/linux/README.md`](../../core/linux/README.md) and [`core/distributed-systems/README.md`](../../core/distributed-systems/README.md).
 
-AWS chapters retain AWS-specific implementation details, service limits, failure behavior, commands, and interview framing after canonical parity is confirmed.
+AWS chapters retain AWS-specific implementation details, service limits, failure behavior, commands, and interview framing.
 
 ## Staff-level answer method
-
-Use two repeatable structures throughout the interview.
 
 ### Architecture: `SCOPE`
 
@@ -75,7 +97,7 @@ Use two repeatable structures throughout the interview.
 7. [Route 53-to-application outage troubleshooting](round-2/07-route53-to-application-outage.md)
 8. API latency while nodes remain healthy:
    - [Kubernetes API-server and control-plane latency](round-2/08-eks-api-latency-nodes-healthy.md)
-   - [Customer-facing application API latency with CloudWatch, X-Ray, Prometheus, and Grafana](round-2/08b-application-api-latency-nodes-healthy.md)
+   - [Customer-facing application API latency](round-2/08b-application-api-latency-nodes-healthy.md)
 9. [Deployment succeeds but only a subset of users fail](round-2/09-subset-users-fail-after-deployment.md)
 10. [CloudWatch detects errors but dashboards do not reveal root cause](round-2/10-beyond-cloudwatch-dashboards.md)
 11. [Terraform apply fails midway and leaves partial infrastructure](round-2/11-terraform-partial-apply-recovery.md)
@@ -84,25 +106,25 @@ Use two repeatable structures throughout the interview.
 
 ### Round 3 — AWS system design, scalability, and leadership
 
-14. [Highly available mobile backend for authentication, notifications, remote access, and preferences](round-3/14-highly-available-mobile-backend.md)
-15. [Global secure software-update delivery to millions of devices](round-3/15-global-secure-software-updates.md)
-16. [Multi-Region disaster recovery with minimal downtime and automated failover](round-3/16-multi-region-disaster-recovery.md)
-17. [Actionable observability with CloudWatch, OpenTelemetry, X-Ray, Prometheus, and Grafana](round-3/17-actionable-observability-platform.md)
-18. [Millions of real-time events per second with Kinesis, SQS, SNS, EventBridge, Lambda, and EKS](round-3/18-millions-events-per-second.md)
+14. [Highly available mobile backend](round-3/14-highly-available-mobile-backend.md)
+15. [Global secure software-update delivery](round-3/15-global-secure-software-updates.md)
+16. [Multi-Region disaster recovery](round-3/16-multi-region-disaster-recovery.md)
+17. [Actionable observability platform](round-3/17-actionable-observability-platform.md)
+18. [Millions of real-time events per second](round-3/18-millions-events-per-second.md)
 
 ## Chapter completion standard
 
 Each completed chapter contains:
 
-- a 90-second interview answer
-- explicit assumptions and scope
-- architecture, request-path, or control-flow diagrams
-- production investigation or implementation details
-- security and failure-mode analysis
-- mitigation, rollback, and recovery validation
-- observability and SLOs
-- adversarial follow-up questions
-- common weak answers to avoid
+- a 90-second interview answer;
+- explicit assumptions and scope;
+- architecture, request-path, or control-flow diagrams;
+- production investigation or implementation details;
+- security and failure-mode analysis;
+- mitigation, rollback, and recovery validation;
+- observability and SLOs;
+- adversarial follow-up questions;
+- common weak answers to avoid.
 
 ## Current implementation status
 
@@ -112,11 +134,11 @@ Each completed chapter contains:
 | Round 2 | Incidents, troubleshooting, recovery, postmortems | Complete on `main` |
 | Round 3 | System design, global delivery, DR, observability, event platforms | Complete on `main` |
 | Calibration | FAANG board review, spoken drills, scorecard | Complete initial set |
-| Personal evidence | Truthful production story bank and claim boundaries | Complete initial set |
-| Practice | Interview-day cheatsheet and 30-day execution plan | Complete initial set |
-| Labs | Canonical AWS labs plus track-specific Terraform, Kubernetes, and stream exercises | Complete initial set |
+| Personal evidence | Truthful production story bank and claim boundaries | Complete initial set; missing metrics are explicitly marked |
+| Practice | Interview-day cheatsheet, cold baseline, and 30-day execution plan | Complete initial set |
+| Labs | Canonical and track-specific AWS, Terraform, Kubernetes, reliability, and stream exercises | Complete initial set |
 
-All 18 source questions have Staff/Principal-level answer chapters. The current practice system now covers deep study, concise delivery, adversarial scoring, executable labs, truthful personal evidence, and a daily execution program.
+All 18 source questions have Staff/Principal-level answer chapters. The practice system covers deep study, concise delivery, adversarial scoring, executable labs, truthful personal evidence, and daily execution.
 
 ## Practice and calibration assets
 
@@ -126,11 +148,13 @@ Start with the [practice index](PRACTICE_INDEX.md).
 - [Mock interview scorecard](MOCK_INTERVIEW_SCORECARD.md)
 - [Spoken answer drills](SPOKEN_ANSWER_DRILLS.md)
 - [Truthful personal production story bank](PERSONAL_STORY_BANK.md)
+- [Evidence completion worksheet](EVIDENCE_COMPLETION_WORKSHEET.md)
 - [Interview-day cheatsheet](INTERVIEW_DAY_CHEATSHEET.md)
 - [30-day execution plan](30_DAY_EXECUTION_PLAN.md)
 - [Official source index](OFFICIAL_SOURCES.md)
 - [Canonical AWS and EKS incident labs](../../labs/aws/README.md)
-- [Canonical reliability and error-budget lab](../../labs/reliability/01-error-budget/README.md)
+- [Canonical reliability labs](../../labs/reliability/README.md)
+- [Canonical observability lab](../../labs/observability/README.md)
 - [Additional track-specific practice labs](labs/README.md)
 
 Recommended loop:
@@ -153,30 +177,8 @@ read one chapter
 - Prefer a precise uncertainty statement over a false exact number.
 - Principal readiness requires evidence of organizational influence and measurable outcomes, not technical breadth alone.
 
-## Current-version notes
-
-- Amazon EKS manages a highly available control plane across three Availability Zones in a Region; the customer remains responsible for data-plane and workload reliability.
-- EKS Pod Identity is the preferred default for many new same-account workloads; IRSA remains fully supported and is still useful, especially where its trust model or direct cross-account behavior fits better.
-- For new Terraform S3 backends, evaluate native S3 lockfiles with `use_lockfile = true`. DynamoDB-based locking remains relevant in existing estates and in the interview prompt, but HashiCorp marks it deprecated.
-- Karpenter is generally the preferred dynamic node-provisioning mechanism for heterogeneous EKS workloads; Cluster Autoscaler remains appropriate for stable, pre-defined managed node-group fleets.
-- For new EKS Container Insights deployments, use the current OpenTelemetry-based path; existing classic deployments may require a separate migration plan.
-- CloudWatch investigations can accelerate correlation across telemetry and changes, but generated hypotheses require evidence-based validation.
-- CloudTrail Lake is closed to new customers as of May 31, 2026; existing customers can continue, while new incident-analysis designs should use currently supported CloudWatch and durable CloudTrail architectures.
-- Cognito supports multi-Region replication for eligible user pools, but applications still own endpoint routing, write-authority limitations, federation configuration, and failover testing.
-- The legacy X-Ray SDKs and daemon entered maintenance mode on February 25, 2026; new instrumentation should use OpenTelemetry and export to AWS trace backends.
-- Kinesis Data Streams currently supports on-demand and provisioned operating models, including newer on-demand capabilities; capacity claims still require realistic byte rate, partition-key, consumer, and burst tests.
-
 ## Source discipline
 
-Technical behavior should be verified against primary sources:
-
-- AWS EKS Best Practices Guides
-- AWS service documentation and quotas
-- AWS Well-Architected and Builders' Library guidance
-- Kubernetes documentation
-- HashiCorp Terraform documentation
-- Argo CD and Flux documentation
-- Karpenter documentation
-- OpenTelemetry, Prometheus, and Grafana documentation
+Version-sensitive behavior must be checked against official AWS, Kubernetes, HashiCorp, Argo CD, Flux, Karpenter, OpenTelemetry, Prometheus, Grafana, Envoy, and Istio documentation.
 
 The interview answer must distinguish a documented guarantee from a design assumption.
