@@ -80,10 +80,11 @@ The GitHub connector used for this work cannot create a new top-level repository
 | Processes, scheduling, interrupts, and load | Tesla Linux chapter | `core/linux/02-processes-scheduler.md` | Migrated and normalized |
 | Memory, page cache, NUMA, reclaim, and OOM | Tesla Linux chapter | `core/linux/03-memory.md` | Migrated and normalized |
 | VFS, filesystem, and block I/O | Tesla Linux chapter | `core/linux/04-storage-io.md` | Migrated and normalized |
-| Networking, containers, cgroups, and Linux security | Tesla Linux plan | `core/linux/05-networking-containers-security.md` | Next |
-| Linux observability, eBPF, and incident debugging | Tesla Linux plan | `core/linux/06-observability-debugging.md` | Next |
+| Networking, containers, cgroups, and Linux security | Tesla Linux plan | `core/linux/05-networking-containers-security.md` | Migrated and normalized |
+| Linux observability, eBPF, and production debugging | Tesla Linux plan | `core/linux/06-observability-debugging.md` | Migrated and normalized |
+| Integrated Linux incident scenarios | Shared interview requirements | `core/linux/07-linux-incident-labs.md` | Added as canonical practice layer |
 | eBPF/Cilium/Hubble/Falco/Tetragon | Netflix chapter 2 | `core/ebpf-security/cilium-hubble-falco-tetragon.md` | Migrated and normalized |
-| Fine-grained Envoy/Istio discovery | Netflix chapter 1 | `core/service-mesh/fine-grained-service-discovery.md` | Planned |
+| Fine-grained Envoy/Istio discovery | Netflix chapter 1 | `core/service-mesh/fine-grained-service-discovery.md` | Migrated and normalized |
 | Terraform state and recovery | Netflix and AWS tracks | `core/infrastructure-as-code/terraform-state-integrity.md` | AWS source added; canonical migration planned |
 | GitOps and progressive delivery | AWS Round 1 | `core/delivery-gitops/` | AWS source added; canonical migration planned |
 | IAM and workload identity | Netflix, Tesla, and AWS tracks | `core/security/identity/` | AWS source added; canonical migration planned |
