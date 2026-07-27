@@ -66,7 +66,7 @@ The GitHub connector used for this work cannot create a new top-level repository
 - Amazon EKS managed-control-plane and customer-data-plane boundaries.
 - VPC, Availability Zone, account, Region, IAM, quota, and service-specific failure behavior.
 - EKS Pod Identity, IRSA, Security Groups for Pods, VPC CNI, and AWS Load Balancer Controller details.
-- Terraform S3 backend and legacy DynamoDB locking behavior on AWS.
+- S3 backend implementation, current lock-file behavior, and legacy DynamoDB-lock migration on AWS.
 - CloudFormation, CDK, StackSets, Service Catalog, Control Tower, Config, and Systems Manager trade-offs.
 - Karpenter, managed node groups, EC2 Auto Scaling Groups, and Spot operational details.
 - CloudWatch, X-Ray, AMP, AMG, Route 53, Global Accelerator, CloudFront, Kinesis, SQS, SNS, EventBridge, and Lambda adapters.
@@ -85,7 +85,7 @@ The GitHub connector used for this work cannot create a new top-level repository
 | Integrated Linux incident scenarios | Shared interview requirements | `core/linux/07-linux-incident-labs.md` | Added as canonical practice layer |
 | eBPF/Cilium/Hubble/Falco/Tetragon | Netflix chapter 2 | `core/ebpf-security/cilium-hubble-falco-tetragon.md` | Migrated and normalized |
 | Fine-grained Envoy/Istio discovery | Netflix chapter 1 | `core/service-mesh/fine-grained-service-discovery.md` | Migrated and normalized |
-| Terraform state and recovery | Netflix and AWS tracks | `core/infrastructure-as-code/terraform-state-integrity.md` | AWS source added; canonical migration planned |
+| Terraform state and recovery | Netflix and AWS tracks | `core/infrastructure-as-code/terraform-state-integrity.md` | Migrated and normalized |
 | GitOps and progressive delivery | AWS Round 1 | `core/delivery-gitops/` | AWS source added; canonical migration planned |
 | IAM and workload identity | Netflix, Tesla, and AWS tracks | `core/security/identity/` | AWS source added; canonical migration planned |
 | EKS and Kubernetes autoscaling | Netflix and AWS tracks | `core/kubernetes/autoscaling/` | AWS source added; canonical migration planned |
