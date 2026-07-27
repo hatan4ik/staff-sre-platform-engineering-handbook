@@ -38,8 +38,9 @@ The GitHub connector used for this work cannot create a new top-level repository
 - Terraform state, locking, drift, recovery, modules, and policy.
 - GitOps, CI/CD, artifact integrity, and progressive delivery.
 - Identity, federation, secrets, supply-chain security, and admission control.
-- Observability, OpenTelemetry, Prometheus, tracing, profiling, and alerting.
-- SLOs, error budgets, incident command, postmortems, capacity, DR, and chaos.
+- Observability, OpenTelemetry, Prometheus, tracing, profiling, alerting, and evidence systems.
+- Request-path isolation, cohort analysis, incident command, postmortems, and corrective actions.
+- SLOs, error budgets, capacity, DR, and chaos.
 - Distributed systems, queues, consistency, idempotency, backpressure, and multi-region design.
 
 ### Tesla track owns
@@ -90,17 +91,28 @@ The GitHub connector used for this work cannot create a new top-level repository
 | Workload identity, federation, and SPIFFE | Netflix, Tesla, and AWS tracks | `core/security/identity/workload-identity-federation.md` | Migrated and normalized; cloud-specific adapters retained |
 | Kubernetes autoscaling and capacity realization | Netflix and AWS tracks | `core/kubernetes/autoscaling/control-loops-capacity-realization.md` | Migrated and normalized; AWS capacity adapter retained |
 | IaC tool selection and governance | AWS Round 1 | `core/infrastructure-as-code/tool-selection-and-governance.md` | Migrated and normalized |
-| Request-path and cohort debugging | AWS Round 2 | `core/incident-response/` and `core/networking/` | Source added; canonical migration planned |
+| Client-to-dependency request-path isolation | AWS Round 2 and all tracks | `core/incident-response/request-path-debugging.md` | Migrated and normalized |
+| Selective failures and cohort analysis | AWS Round 2 and progressive-delivery scenarios | `core/incident-response/cohort-analysis.md` | Migrated and normalized |
+| Evidence beyond dashboards | AWS Round 2 and all tracks | `core/observability/evidence-beyond-dashboards.md` | Migrated and normalized |
 | Control-plane and application latency analysis | AWS Round 2 | `core/kubernetes/control-plane/`, `core/observability/`, and `core/reliability/` | Source added; canonical migration planned |
-| Evidence beyond dashboards | AWS Round 2 | `core/observability/` | Source added; canonical migration planned |
 | Runtime restart and OOM debugging | Tesla, Netflix, and AWS tracks | `core/kubernetes/runtime-debugging.md` and `core/linux/` | AWS source added; canonical migration planned |
 | Postmortems and corrective actions | All tracks | `core/incident-response/postmortems.md` | AWS source added; canonical migration planned |
 | Mobile identity, commands, notifications, and preference synchronization | Tesla and AWS tracks | `core/distributed-systems/`, `core/security/identity/`, and `core/reliability/` | AWS system-design source added; canonical extraction planned |
 | Secure fleet and OTA delivery | Tesla and AWS tracks | `core/security/supply-chain/`, `core/delivery-gitops/`, and `core/reliability/blast-radius.md` | AWS system-design source added; canonical extraction planned |
 | Multi-Region disaster recovery | All tracks | `core/reliability/disaster-recovery/` | AWS system-design source added; canonical extraction planned |
-| Observability platform and alert quality | All tracks | `core/observability/` and `core/reliability/slo/` | AWS system-design source added; canonical extraction planned |
+| Observability platform and alert quality | All tracks | `core/observability/` and `core/reliability/slo/` | Evidence chapter added; broader platform extraction planned |
 | High-volume streams, queues, replay, and backpressure | All tracks | `core/distributed-systems/` and `core/reliability/` | AWS system-design source added; canonical extraction planned |
 | SLOs, incidents, multi-region, and chaos | All tracks | `core/reliability/` | Planned |
+
+## Executable-lab migration status
+
+| Lab | Canonical foundation | Status |
+|---|---|---|
+| Cohort-specific deployment failure | `core/incident-response/cohort-analysis.md` and GitOps | Added and automated for static validation |
+| Terraform partial apply | `core/infrastructure-as-code/terraform-state-integrity.md` | Added with automated failure and convergence proof |
+| Kubernetes restart evidence | Linux memory/observability and future runtime chapter | Added and statically validated |
+| Workload identity claims | `core/security/identity/workload-identity-federation.md` | Added with unit tests and deterministic smoke scenarios |
+| Autoscaling control loop | `core/kubernetes/autoscaling/control-loops-capacity-realization.md` | Added with unit tests and deterministic smoke scenarios |
 
 ## AWS interview implementation status
 
@@ -136,10 +148,10 @@ The GitHub connector used for this work cannot create a new top-level repository
 
 - FAANG board review across all 18 AWS answers.
 - Concise spoken-answer sheets and interviewer follow-up drills.
-- Hands-on identity, autoscaling, Terraform, GitOps, and incident labs.
-- Mock interview scorecards.
-- Personal story mapping to the candidate's production experience.
-- Canonical extraction of request-path, observability, postmortem, DR, supply-chain, and reliability foundations.
+- Additional incident, identity, autoscaling, GitOps, and recovery labs.
+- Disposable-cluster execution in CI where safe.
+- Mock interview scorecards and candidate-specific story completion.
+- Canonical extraction of control-plane latency, runtime, postmortem, DR, supply-chain, and reliability foundations.
 - Conversion of deep track chapters into thin adapters after parity review.
 
 ## No-duplication workflow
