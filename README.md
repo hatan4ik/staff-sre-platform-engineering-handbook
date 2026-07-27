@@ -172,9 +172,15 @@ Current scenarios cover error-budget policy, disaster-recovery state transitions
 
 Start with [`labs/observability/README.md`](labs/observability/README.md).
 
-The telemetry-pipeline lab covers critical-signal preservation, tenant quotas, cardinality policy, bounded queues, visible loss, freshness, and deterministic sampling.
+The deterministic telemetry lab covers critical-signal preservation, tenant quotas, cardinality policy, bounded queues, visible loss, freshness, and sampling. A Docker integration lab starts a real OpenTelemetry Collector and proves OTLP/HTTP receipt, memory limiting, batching, resource attributes, and exporter evidence.
 
-GitHub Actions compiles and runs deterministic lab suites, executes the disposable Kind conformance workflow, and uploads machine-readable evidence or failure logs.
+### Service mesh
+
+Start with [`labs/service-mesh/README.md`](labs/service-mesh/README.md).
+
+The mesh contract lab proves xDS ACK/NACK and last-known-good behavior, certificate trust overlap and retirement, bounded stale DNS, gateway and identity checks, data freshness, writer fencing, failover headroom, and retry budgets.
+
+GitHub Actions compiles and runs deterministic lab suites, executes the disposable Kind and real OpenTelemetry Collector workflows, and uploads machine-readable evidence or failure logs.
 
 ## Canonical ownership rule
 
@@ -207,10 +213,10 @@ All 18 AWS source questions have Staff/Principal-level chapters. The track also 
 
 ## Remaining delivery pipeline
 
-The principal remaining engineering work is now concentrated in integration and consolidation:
+The principal remaining engineering work is now concentrated in deeper integration and consolidation:
 
-- add direct service-mesh xDS, certificate-rotation, DNS-capture, and east-west-gateway labs;
-- add real OpenTelemetry Collector, trace-context, profile, and alert-rule integration tests;
+- exercise real Envoy or Istio xDS rejection, SDS rotation, DNS capture, timeout, and east-west-gateway failure behavior;
+- extend OpenTelemetry integration to exporter outages, backpressure, tail-sampling affinity, profiles, and alert-rule evaluation;
 - extend disposable-cluster conformance to API overload, node-image promotion, NetworkPolicy/MTU, CSI recovery, and multi-cluster failures;
 - complete parity review and thin duplicated Netflix, Tesla, and AWS theory into concise adapters;
 - split `tracks/aws/` into a separate top-level adapter repository when repository-creation capability is available;
