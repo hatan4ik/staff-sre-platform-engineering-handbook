@@ -22,9 +22,9 @@ By completing this module, you should be able to:
 2. [Consistency models, invariants, CAP, PACELC, and transaction boundaries](02-consistency-models-cap-pacelc.md)
 3. [Replication, quorum, leader-based systems, and failover](03-replication-quorum-failover.md)
 4. [Consensus, leases, fencing tokens, and split-brain prevention](04-consensus-leases-fencing.md)
-5. Partitioning, sharding, rebalancing, hot keys, and skew — next
-6. Messaging, streams, delivery semantics, and event-driven systems — planned
-7. Caching, invalidation, CDNs, and consistency at the edge — planned
+5. [Partitioning, sharding, rebalancing, hot keys, and skew](05-partitioning-sharding-rebalancing.md)
+6. [Messaging, streams, delivery semantics, and event-driven systems](06-messaging-streams-delivery-semantics.md)
+7. Caching, invalidation, CDNs, and consistency at the edge — next
 8. Resilience patterns, overload control, and cascading-failure containment — planned
 9. Distributed observability and incident labs — planned
 10. Staff/Principal system-design drills — planned
