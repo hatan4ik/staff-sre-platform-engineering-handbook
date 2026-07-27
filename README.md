@@ -102,9 +102,11 @@ Start with [`core/service-mesh/README.md`](core/service-mesh/README.md).
 
 ## Executable labs
 
+### Distributed-systems labs
+
 Start with [`labs/distributed-systems/README.md`](labs/distributed-systems/README.md).
 
-Current runnable labs use Python's standard library and include automated tests:
+These runnable labs use Python's standard library and include automated tests:
 
 1. [`01-retry-amplification`](labs/distributed-systems/01-retry-amplification/README.md) — layered retries, retry ownership, backoff, jitter, and retry-wave evidence.
 2. [`02-transactional-outbox`](labs/distributed-systems/02-transactional-outbox/README.md) — atomic business state plus outbox insertion, relay crash, duplicate delivery, and idempotent consumption.
@@ -113,7 +115,17 @@ Current runnable labs use Python's standard library and include automated tests:
 5. [`05-shard-rebalancing`](labs/distributed-systems/05-shard-rebalancing/README.md) — virtual shards, copy/catch-up/cutover/cleanup, ownership epochs, stale-router rejection, hot-shard detection, and tenant skew.
 6. [`06-queue-redelivery`](labs/distributed-systems/06-queue-redelivery/README.md) — crash-before-ack duplicates, consumer inbox idempotency, visibility timeouts, DLQs, and ordered-group blocking.
 
-GitHub Actions compiles the lab programs, runs invariant tests, and executes smoke scenarios on every relevant push or pull request.
+GitHub Actions compiles these lab programs, runs invariant tests, and executes smoke scenarios on every relevant push or pull request.
+
+### AWS and EKS incident labs
+
+Start with [`labs/aws/README.md`](labs/aws/README.md).
+
+1. [`01-cohort-deployment-failure`](labs/aws/01-cohort-deployment-failure/README.md) — a successful rollout where only the new version and one request cohort fail.
+2. [`02-terraform-partial-apply`](labs/aws/02-terraform-partial-apply/README.md) — a safe local partial apply followed by configuration/state/reality reconciliation.
+3. [`03-kubernetes-restart-evidence`](labs/aws/03-kubernetes-restart-evidence/README.md) — OOM and sidecar restarts while application health checks appear successful.
+
+The first AWS lab set is designed for a disposable Kubernetes environment and a local Terraform workspace. It does not require an AWS account. Automated validation for these manifests and exercises is an active follow-up.
 
 ## Canonical ownership rule
 
@@ -148,6 +160,8 @@ All 18 AWS source questions now have Staff/Principal-level chapters across infra
 5. Terraform versus CloudFormation and AWS-native automation
 6. Capacity planning with ASGs, Karpenter, Cluster Autoscaler, and Spot
 
+The track also includes a board review, spoken-answer drills, a mock-interview scorecard, a personal-story matrix, an official-source index, and executable incident labs.
+
 ## Coordination
 
 - [`curriculum-map.md`](curriculum-map.md) assigns canonical ownership and maps track scenarios to shared prerequisites.
@@ -159,7 +173,7 @@ All 18 AWS source questions now have Staff/Principal-level chapters across infra
 - Build canonical Kubernetes runtime, node-failure, fencing, repair, and image-qualification chapters and labs.
 - Build SLO, error-budget, incident-command, postmortem, disaster-recovery, and chaos modules.
 - Expand Envoy request-path, mTLS, DNS-capture, and multi-cluster service-mesh chapters and labs.
-- Add Terraform-recovery, GitOps, workload-identity, and autoscaling control-loop labs.
+- Automate validation for Terraform recovery, GitOps, workload identity, autoscaling, and AWS/EKS incident labs.
 - Replace duplicated Netflix, Tesla, and AWS theory with concise interview adapters after parity review.
 
 ## Core principle
