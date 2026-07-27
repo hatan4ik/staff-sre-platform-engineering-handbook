@@ -19,9 +19,9 @@ By completing this module, you should be able to:
 ## Chapter map
 
 1. [Foundations: partial failure, time, ordering, retries, and backpressure](01-foundations-failure-time-retries.md)
-2. Consistency models, invariants, CAP, PACELC, and transaction boundaries — next
-3. Replication, quorum, leader-based systems, and failover — planned
-4. Consensus, leases, fencing tokens, and split-brain prevention — planned
+2. [Consistency models, invariants, CAP, PACELC, and transaction boundaries](02-consistency-models-cap-pacelc.md)
+3. [Replication, quorum, leader-based systems, and failover](03-replication-quorum-failover.md)
+4. Consensus, leases, fencing tokens, and split-brain prevention — next
 5. Partitioning, sharding, rebalancing, hot keys, and skew — planned
 6. Messaging, streams, delivery semantics, and event-driven systems — planned
 7. Caching, invalidation, CDNs, and consistency at the edge — planned
