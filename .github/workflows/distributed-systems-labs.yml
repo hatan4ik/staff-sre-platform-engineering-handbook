@@ -1,0 +1,58 @@
+name: Distributed Systems Labs
+
+on:
+  push:
+    paths:
+      - "labs/distributed-systems/**"
+      - ".github/workflows/distributed-systems-labs.yml"
+  pull_request:
+    paths:
+      - "labs/distributed-systems/**"
+      - ".github/workflows/distributed-systems-labs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Show Python version
+        run: python3 --version
+
+      - name: Compile lab programs
+        run: python3 -m compileall -q labs/distributed-systems
+
+      - name: Run unit and invariant tests
+        run: >-
+          python3 -m unittest discover
+          -s labs/distributed-systems/tests
+          -p "test_*.py"
+          -v
+
+      - name: Smoke-test retry simulator
+        run: >-
+          python3 labs/distributed-systems/01-retry-amplification/retry_simulator.py
+          --mode edge
+          --jitter
+          --requests 50
+          --failure-rate 0.5
+          --json
+          > /tmp/retry-result.json
+
+      - name: Smoke-test transactional outbox demo
+        working-directory: labs/distributed-systems/02-transactional-outbox
+        run: python3 outbox_lab.py demo
+
+      - name: Smoke-test fencing demo
+        run: >-
+          python3 labs/distributed-systems/03-fencing-tokens/fencing_demo.py
+          compare
+          --json
+          > /tmp/fencing-result.json
