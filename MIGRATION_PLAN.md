@@ -93,7 +93,7 @@ The GitHub connector used for this work cannot create a new top-level repository
 
 ## AWS interview implementation status
 
-### Round 1 — complete in `aws-devops-interview-track`
+### Round 1 — complete on `main`
 
 - `tracks/aws/round-1/01-multi-az-eks-millions-users.md`
 - `tracks/aws/round-1/02-gitops-terraform-argocd-flux.md`
