@@ -80,6 +80,7 @@ Current runnable labs use Python's standard library and include automated tests:
 3. [`03-fencing-tokens`](labs/distributed-systems/03-fencing-tokens/README.md) — lease expiry, paused former owners, stale writes, and resource-enforced fencing.
 4. [`04-cache-races`](labs/distributed-systems/04-cache-races/README.md) — stale-fill resurrection, version fences, cache stampedes, and single-flight control.
 5. [`05-shard-rebalancing`](labs/distributed-systems/05-shard-rebalancing/README.md) — virtual shards, copy/catch-up/cutover/cleanup, ownership epochs, stale-router rejection, hot-shard detection, and tenant skew.
+6. [`06-queue-redelivery`](labs/distributed-systems/06-queue-redelivery/README.md) — crash-before-ack duplicates, consumer inbox idempotency, visibility timeouts, DLQs, and ordered-group blocking.
 
 GitHub Actions compiles the lab programs, runs invariant tests, and executes smoke scenarios on every relevant push or pull request.
 
@@ -123,7 +124,7 @@ Round 1 contains six Staff/Principal-level chapters:
 
 ## Active delivery pipeline
 
-- Expand executable distributed-systems labs with queue redelivery, network partitions, overload, and failure-recovery experiments.
+- Expand executable distributed-systems labs with network partitions, overload, and failure-recovery experiments.
 - Build Kubernetes node-failure, fencing, repair, and image-qualification labs.
 - Consolidate Kubernetes, Envoy, Istio, xDS, workload identity, and secrets chapters.
 - Deepen Terraform state integrity, GitOps, EKS security, and autoscaling control-loop labs.
