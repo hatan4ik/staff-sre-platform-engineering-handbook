@@ -5,6 +5,9 @@ This module owns reusable Kubernetes foundations shared by AWS, Netflix, Tesla, 
 ## Canonical modules and chapters
 
 - [`control-plane/api-server-etcd-list-watch-admission.md`](control-plane/api-server-etcd-list-watch-admission.md) — API-server request paths, authentication, authorization, admission, API Priority and Fairness, etcd, LIST/WATCH behavior, controller queues, scaling, SLOs, and incident response.
+- [`scheduling/scheduler-placement-diagnostics.md`](scheduling/scheduler-placement-diagnostics.md) — scheduler queues and plugins, requests, taints, affinity, topology spread, volume and device constraints, preemption, autoscaler handoff, evidence, and placement SLOs.
+- [`networking/service-dns-ingress-gateway-request-path.md`](networking/service-dns-ingress-gateway-request-path.md) — Services, EndpointSlices, kube-proxy/eBPF dataplanes, CNI, DNS, NetworkPolicy, Ingress, Gateway API, TLS, dual stack, MTU, conntrack, and request-path debugging.
+- [`storage/csi-stateful-recovery.md`](storage/csi-stateful-recovery.md) — PVC/PV/StorageClass, CSI provisioning, attach/detach, mount, topology, snapshots, backups, writer fencing, restore, and stateful recovery.
 - [`autoscaling/`](autoscaling/) — HPA, VPA, KEDA, scheduling, node supply, disruption, and end-to-end capacity realization.
 - [`node-lifecycle/`](node-lifecycle/) — node health, systemd and runtime failures, fencing, cordon, drain, replacement, and repair automation.
 - [`node-images/qualification-promotion-rollback.md`](node-images/qualification-promotion-rollback.md) — immutable image contracts, provenance, boot and conformance testing, workload compatibility, canary pools, rollout rings, rollback, and fleet governance.
@@ -12,18 +15,17 @@ This module owns reusable Kubernetes foundations shared by AWS, Netflix, Tesla, 
 
 ## Remaining expansion areas
 
-- Scheduler internals and placement diagnostics.
-- Service, EndpointSlice, kube-proxy, CNI, DNS, ingress, and Gateway request paths.
-- Persistent volumes, CSI, attach/detach, topology, and stateful recovery.
-- Probe design and graceful shutdown integrated with overload admission.
-- Disposable-cluster conformance suites for control-plane and node-image failure modes.
+- Business-aware probe design, startup safety, graceful shutdown, and traffic drain as a dedicated chapter.
+- Multi-cluster workload and control-plane fleet operations beyond node and platform lifecycle modules.
+- Disposable-cluster conformance suites covering control-plane, scheduling, networking, storage, node-image, and probe failure modes.
 
-Related foundations:
+## Related foundations
 
 - [`../linux/`](../linux/) — cgroups, namespaces, networking, memory, storage, and kernel evidence.
 - [`../incident-response/`](../incident-response/) — request-path, cohort, and postmortem methods.
 - [`../observability/`](../observability/) — evidence systems and diagnostic telemetry.
 - [`../reliability/`](../reliability/) — SLOs, capacity, DR, overload, and chaos.
+- [`../service-mesh/`](../service-mesh/) — proxy request paths, service identity, DNS capture, gateways, and multi-cluster behavior.
 
 ## Core principle
 
