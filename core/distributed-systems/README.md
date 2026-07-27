@@ -31,7 +31,24 @@ By completing this module, you should be able to:
 
 ## Module status
 
-The canonical distributed-systems curriculum is complete through Chapter 10. Future work should deepen labs, add executable reference implementations, and connect company-specific interview tracks back to these canonical chapters instead of duplicating shared material.
+The canonical distributed-systems curriculum is complete through Chapter 10. Executable labs now accompany the theory and will continue expanding without duplicating shared material in company-specific interview repositories.
+
+## Executable labs
+
+Start with the [distributed-systems lab index](../../labs/distributed-systems/README.md).
+
+1. [Retry amplification, ownership, backoff, and jitter](../../labs/distributed-systems/01-retry-amplification/README.md)
+2. [Transactional outbox and idempotent consumer inbox](../../labs/distributed-systems/02-transactional-outbox/README.md)
+3. [Leases and resource-enforced fencing tokens](../../labs/distributed-systems/03-fencing-tokens/README.md)
+
+The lab contract is consistent across exercises:
+
+- state the invariant
+- inject a realistic failure
+- observe the unsafe behavior
+- apply the control
+- prove the invariant using durable evidence
+- explain latency, availability, and operational trade-offs
 
 ## Core mental model
 
