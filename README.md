@@ -78,6 +78,18 @@ Start with [`core/delivery-gitops/README.md`](core/delivery-gitops/README.md).
 
 - [`gitops-progressive-delivery.md`](core/delivery-gitops/gitops-progressive-delivery.md) — build, promotion, and reconciliation boundaries; resource ownership; CRDs; pruning; secrets; multi-cluster rollout; canary analysis; rollback; and Argo CD/Flux mappings.
 
+### Workload identity, federation, and authorization
+
+Start with [`core/security/identity/README.md`](core/security/identity/README.md).
+
+- [`workload-identity-federation.md`](core/security/identity/workload-identity-federation.md) — projected ServiceAccount tokens, audience restriction, EKS Pod Identity and IRSA, Microsoft Entra Workload ID, GKE Workload Identity Federation, cross-cloud token exchange, SPIFFE/SPIRE, node-role protection, credential-provider chains, rotation, failure behavior, and negative testing.
+
+### Kubernetes autoscaling and capacity realization
+
+Start with [`core/kubernetes/autoscaling/README.md`](core/kubernetes/autoscaling/README.md).
+
+- [`control-loops-capacity-realization.md`](core/kubernetes/autoscaling/control-loops-capacity-realization.md) — HPA, VPA, KEDA, scheduler and node-supply loops; resource-request semantics; Cluster Autoscaler and Karpenter; Spot and durable baseline capacity; topology, disruption, end-to-end capacity-realization timelines, incident workflows, and validation.
+
 ### Service mesh, Envoy, Istio, and xDS
 
 Start with [`core/service-mesh/README.md`](core/service-mesh/README.md).
@@ -117,7 +129,7 @@ A track chapter should contain only:
 6. Adversarial follow-ups.
 7. Personal-story mapping.
 
-A track must not become a second conflicting Linux, Kubernetes, Terraform, service-mesh, observability, reliability, or distributed-systems source of truth. Transitional deep chapters are migrated into `core/` as canonical coverage is completed.
+A track must not become a second conflicting Linux, Kubernetes, Terraform, service-mesh, observability, reliability, security, autoscaling, or distributed-systems source of truth. Transitional deep chapters are migrated into `core/` as canonical coverage is completed.
 
 ## Existing interview tracks
 
@@ -127,7 +139,7 @@ A track must not become a second conflicting Linux, Kubernetes, Terraform, servi
 
 ## AWS track
 
-Round 1 contains six Staff/Principal-level chapters:
+All 18 AWS source questions now have Staff/Principal-level chapters across infrastructure, incidents, and system design. Round 1 includes:
 
 1. Multi-AZ EKS at hyperscale
 2. Terraform plus Argo CD or Flux GitOps
@@ -143,12 +155,12 @@ Round 1 contains six Staff/Principal-level chapters:
 
 ## Active delivery pipeline
 
-- Expand executable distributed-systems labs with network partitions, overload, and failure-recovery experiments.
-- Build Kubernetes node-failure, fencing, repair, and image-qualification labs.
+- Extract reusable request-path, cohort-debugging, and evidence-beyond-dashboards chapters from AWS Round 2.
+- Build canonical Kubernetes runtime, node-failure, fencing, repair, and image-qualification chapters and labs.
+- Build SLO, error-budget, incident-command, postmortem, disaster-recovery, and chaos modules.
 - Expand Envoy request-path, mTLS, DNS-capture, and multi-cluster service-mesh chapters and labs.
-- Add IaC, Terraform-recovery, GitOps, and progressive-delivery labs around the canonical chapters.
-- Deepen EKS security, workload identity, and autoscaling control-loop modules.
-- Connect Tesla, Netflix, and AWS interview adapters back to canonical chapters and runnable exercises.
+- Add Terraform-recovery, GitOps, workload-identity, and autoscaling control-loop labs.
+- Replace duplicated Netflix, Tesla, and AWS theory with concise interview adapters after parity review.
 
 ## Core principle
 
