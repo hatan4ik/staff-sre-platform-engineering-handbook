@@ -1,0 +1,143 @@
+name: AWS and EKS Incident Labs
+
+on:
+  push:
+    paths:
+      - "labs/aws/**"
+      - ".github/workflows/aws-incident-labs.yml"
+  pull_request:
+    paths:
+      - "labs/aws/**"
+      - ".github/workflows/aws-incident-labs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+
+      - name: Show tool versions
+        run: |
+          python3 --version
+          terraform version
+
+      - name: Compile standalone Python programs
+        run: python3 -m compileall -q labs/aws
+
+      - name: Install YAML parser
+        run: python3 -m pip install --disable-pip-version-check PyYAML
+
+      - name: Parse Kubernetes manifests and compile embedded Python
+        run: |
+          python3 - <<'PY'
+          from __future__ import annotations
+
+          import pathlib
+          import yaml
+
+          manifest_paths = sorted(pathlib.Path("labs/aws").glob("**/manifests.yaml"))
+          if not manifest_paths:
+              raise SystemExit("no Kubernetes manifests found")
+
+          documents = 0
+          embedded_programs = 0
+
+          for path in manifest_paths:
+              parsed = list(yaml.safe_load_all(path.read_text(encoding="utf-8")))
+              for index, document in enumerate(parsed, start=1):
+                  if document is None:
+                      continue
+                  documents += 1
+                  if not isinstance(document, dict):
+                      raise AssertionError(f"{path}: document {index} is not a mapping")
+                  for required in ("apiVersion", "kind", "metadata"):
+                      if required not in document:
+                          raise AssertionError(
+                              f"{path}: document {index} missing {required}"
+                          )
+
+                  if document.get("kind") == "ConfigMap":
+                      for name, source in (document.get("data") or {}).items():
+                          if name.endswith(".py"):
+                              compile(source, f"{path}:{name}", "exec")
+                              embedded_programs += 1
+
+          if embedded_programs < 3:
+              raise AssertionError(
+                  f"expected at least 3 embedded Python programs, found {embedded_programs}"
+              )
+
+          print(
+              f"validated {documents} Kubernetes documents and "
+              f"compiled {embedded_programs} embedded Python programs"
+          )
+          PY
+
+      - name: Format and validate Terraform lab
+        working-directory: labs/aws/02-terraform-partial-apply
+        run: |
+          terraform fmt -check
+          terraform init -backend=false -input=false
+          terraform validate
+
+      - name: Prove partial apply fails after an earlier success
+        working-directory: labs/aws/02-terraform-partial-apply
+        run: |
+          set +e
+          terraform apply -input=false -auto-approve > crash.log 2>&1
+          apply_status=$?
+          set -e
+
+          if [ "$apply_status" -eq 0 ]; then
+            echo "expected the injected apply to fail" >&2
+            cat crash.log >&2
+            exit 1
+          fi
+
+          terraform state list | grep -Fx 'terraform_data.network'
+          test -f artifacts/network.txt
+          test -f artifacts/database-attempt.txt
+          test ! -f artifacts/application.txt
+
+          echo "partial apply failed as expected with status $apply_status"
+
+      - name: Prove evidence-based recovery converges
+        working-directory: labs/aws/02-terraform-partial-apply
+        run: |
+          terraform plan \
+            -input=false \
+            -var='fail_database=false' \
+            -out=recovery.tfplan
+          terraform apply -input=false recovery.tfplan
+
+          test -f artifacts/network.txt
+          test -f artifacts/database.txt
+          test -f artifacts/application.txt
+
+          set +e
+          terraform plan \
+            -input=false \
+            -var='fail_database=false' \
+            -detailed-exitcode > convergence.log 2>&1
+          plan_status=$?
+          set -e
+
+          if [ "$plan_status" -ne 0 ]; then
+            echo "expected a converged no-change plan; exit=$plan_status" >&2
+            cat convergence.log >&2
+            exit 1
+          fi
+
+          echo "recovery converged to a no-change plan"
