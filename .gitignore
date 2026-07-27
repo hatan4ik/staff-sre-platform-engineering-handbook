@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Executable lab state
+labs/distributed-systems/02-transactional-outbox/*.db
+labs/distributed-systems/02-transactional-outbox/*.db-shm
+labs/distributed-systems/02-transactional-outbox/*.db-wal
+
+# Local reports
+*.log
+*.tmp
