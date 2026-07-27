@@ -2,6 +2,16 @@
 
 Executable labs for Staff and Principal platform-engineering interviews. All current labs use Python's standard library and model control-plane decisions without requiring cloud credentials or a Kubernetes cluster.
 
+## Run the validation set
+
+From the repository root:
+
+```bash
+python3 labs/platform-engineering/run_all.py
+```
+
+The staged-policy scenario intentionally expects one production denial; the runner treats that expected exit code as a passing test.
+
 ## Labs
 
 1. [Golden-path contract](01-golden-path-contract/README.md) — validate developer intent before provisioning.
